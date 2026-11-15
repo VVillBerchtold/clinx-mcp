@@ -4,8 +4,9 @@ A small program that lets an AI assistant look things up in ClinX's open tables 
 340B drug pricing program: the state laws on the books, the bills in Congress and the state
 legislatures, the rules and notices federal agencies publish, and a calendar of their dates.
 
-**Status: built and tested on one machine. It is not hosted anywhere and not published as a
-package yet.** To use it today you run it yourself, as shown below.
+**Status: running at `https://clinx.org/mcp` since 15 November 2026.** Give that address to an
+assistant that accepts connectors (MCP servers); there is no key and no account. It is not
+published as a package yet, so to run your own copy you start it yourself, as shown below.
 
 ## What it is, in plain words
 
@@ -177,7 +178,6 @@ server on a local port.
 
 ## What is not done
 
-- It is not hosted, so there is no public address to point an assistant at.
 - It is not published as a package, so there is no one-line install.
 - It answers from the state law, bills, federal notices and calendar tables only. The 340B
   scorecards and the registry tables are not offered yet.
