@@ -55,8 +55,15 @@ bill that is not in the table) is said back in plain words, so the assistant can
 
 ## Try it
 
-You need [Node.js](https://nodejs.org) 20 or newer. Nothing else is installed: the server uses
-no outside packages.
+**The quick way.** Give an assistant the address `https://clinx.org/mcp` as a connector (an MCP
+server) and ask it a question. Nothing to install.
+
+**Your own copy.** You need [Node.js](https://nodejs.org) 20 or newer. Nothing else is
+installed: the server uses no outside packages.
+
+    git clone https://github.com/VVillBerchtold/clinx-mcp.git
+    cd clinx-mcp
+    npm test
 
 **As a helper program for an assistant app.** Most apps take a small piece of configuration that
 names the program to start. For Claude Desktop and similar apps:
@@ -100,7 +107,7 @@ It listens at `http://127.0.0.1:8340/mcp`, on your computer only. Ask it somethi
 | `src/stdio.js` | The door for a helper program on your own computer. |
 | `src/http.js` | The door for the web. One request in, one answer out, nothing remembered. |
 | `src/serve.js` | Runs the web door on your own computer. |
-| `src/worker.js` | The web door shaped for an edge host. Not deployed. |
+| `src/worker.js` | The web door shaped for an edge host that runs it by itself. Not deployed: clinx.org serves the same door from the site's own program ([clinx-org](https://github.com/VVillBerchtold/clinx-org), `worker/assistants.ts`). |
 | `src/*.d.ts` | The shapes of the pieces above, for a host written in TypeScript. |
 | `test/` | The tests, and small real slices of the four tables (`test/data/`) they run on. |
 
@@ -165,6 +172,9 @@ What is left out matters more than what is kept:
 
 `test/usage.test.js` checks each of these with a made-up name, number and email address typed
 into every field, and fails if any of it comes out the other side.
+
+The copy at clinx.org/mcp is counted this way and no other. The site's
+[Privacy page](https://clinx.org/privacy/#assistants) says the same to its readers.
 
 ## Tests
 
