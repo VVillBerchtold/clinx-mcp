@@ -1,0 +1,226 @@
+{
+ "dataset_version": "0.6.0",
+ "kinds": [
+  {
+   "description": "Limits what a drug maker may do to hold back 340B drugs from a pharmacy that works under contract with a covered entity, or to put conditions on sending them.",
+   "kind": "contract-pharmacy",
+   "label": "Contract pharmacy access"
+  },
+  {
+   "description": "Limits what an insurer, a pharmacy benefit manager or another payer may do to a 340B covered entity or its pharmacy, such as paying less for a 340B drug or leaving the pharmacy out of a network.",
+   "kind": "payer-nondiscrimination",
+   "label": "Payer and PBM non-discrimination"
+  },
+  {
+   "description": "Requires covered entities, or others, to report 340B figures to the state, or a state office to publish them.",
+   "kind": "reporting",
+   "label": "Reporting"
+  },
+  {
+   "description": "Sets rules for 340B drugs in the state's Medicaid program, such as how they are billed or paid for.",
+   "kind": "medicaid",
+   "label": "Medicaid"
+  },
+  {
+   "description": "Says how a covered entity is to use what it earns or saves through 340B.",
+   "kind": "use-of-savings",
+   "label": "Use of savings"
+  },
+  {
+   "description": "Orders a study, a task force or a one-time report on 340B.",
+   "kind": "study",
+   "label": "Study"
+  },
+  {
+   "description": "Names 340B and does something the kinds above do not cover.",
+   "kind": "other",
+   "label": "Other"
+  }
+ ],
+ "laws": [
+  {
+   "act": "Act 1103 of 2021",
+   "bill": "HB 1881",
+   "binds": "Insurers, pharmacy benefit managers and other payers; drug manufacturers",
+   "citation": "Ark. Code 23-92-601 to 23-92-606",
+   "effective_date": "",
+   "enforcement": "The act names no penalty. The Insurance Commissioner writes the rules.",
+   "kinds": [
+    "contract-pharmacy",
+    "payer-nondiscrimination"
+   ],
+   "law_id": "ar-2021-hb1881",
+   "limits": "Arkansas Medicaid, risk-based provider organizations and self-insured government plans are not third parties under the act.",
+   "more_sha256": "ee0bcdd76613ef5d6c9d21467454316e4164ae9d140810146aee25f38930409e",
+   "more_text": "sources/laws/ar/ar-2021-hb1881.more.txt",
+   "more_url": "https://arkleg.state.ar.us/Bills/Detail?id=HB1881&ddBienniumSession=2021%2F2021R",
+   "quote": "Prohibit a pharmacy from contracting or participating with an entity authorized to participate in 340B drug pricing by denying access to drugs that are manufactured by the pharmaceutical manufacturer",
+   "retrieved": "2026-11-15",
+   "session_year": "2021",
+   "signed_date": "2021-05-03",
+   "source_form": "pdf",
+   "source_note": "The saved pages print no effective date.",
+   "source_sha256": "b86147b7306dad196dcbb94a0ebcef51958438d03ca36e814a5460c3aae5604a",
+   "source_text": "sources/laws/ar/ar-2021-hb1881.txt",
+   "source_url": "https://arkleg.state.ar.us/Acts/FTPDocument?path=%2FACTS%2F2021R%2FPublic%2F&file=1103.pdf&ddBienniumSession=2021%2F2021R",
+   "state": "AR",
+   "summary": "Insurers, pharmacy benefit managers and other payers may not pay a pharmacy less, add separate terms or claim modifiers, or leave it out of a network on the ground that it takes part in 340B. Drug manufacturers may not deny drugs to a pharmacy that contracts with a 340B entity.",
+   "title": "340B Drug Pricing Nondiscrimination Act"
+  },
+  {
+   "act": "Public Act 102-0778",
+   "bill": "HB 4595",
+   "binds": "Pharmacy benefit managers and third-party payers; Medicaid managed care organizations",
+   "citation": "215 ILCS 5/513b1 and 5/424; 305 ILCS 5/5-36",
+   "effective_date": "2022-07-01",
+   "enforcement": "A breach by a pharmacy benefit manager is an unfair or deceptive act in the business of insurance.",
+   "kinds": [
+    "payer-nondiscrimination",
+    "medicaid"
+   ],
+   "law_id": "il-2022-hb4595",
+   "limits": "A term that breaks the rule is void in contracts entered into, amended or renewed after July 1, 2022.",
+   "more_sha256": "11e8e5569d640169128d56e83a776c29725a29093037f5ca03c54f0b55f470e3",
+   "more_text": "sources/laws/il/il-2022-hb4595.more.txt",
+   "more_url": "https://ilga.gov/ftp/legislation/102/BillStatus/HTML/10200HB4595.html",
+   "quote": "A provision that violates subsection (f) in a contract between a pharmacy benefit manager or a third-party payer and a 340B entity that is entered into, amended, or renewed after July 1, 2022 shall be void and unenforceable",
+   "retrieved": "2026-11-15",
+   "session_year": "2022",
+   "signed_date": "2022-05-13",
+   "source_form": "web page",
+   "source_note": "",
+   "source_sha256": "47967a178d737f974946faf717c97287bbb72606249e03cfba0dad336269f6ae",
+   "source_text": "sources/laws/il/il-2022-hb4595.txt",
+   "source_url": "https://my.ilga.gov/ftp/Public%20Acts/102/102-0778.htm",
+   "state": "IL",
+   "summary": "A contract between a pharmacy benefit manager or third-party payer and a 340B entity or 340B pharmacy may not pay it less, add fees or chargebacks, limit a patient's choice, keep it out of a network or otherwise treat it differently for taking part in 340B. A separate subsection sets the same rule for Medicaid managed care organizations.",
+   "title": ""
+  },
+  {
+   "act": "Public Act 104-0758",
+   "bill": "HB 2371",
+   "binds": "Drug manufacturers and any other person; 340B covered entities; the Department of Healthcare and Family Services",
+   "citation": "",
+   "effective_date": "2026-08-07",
+   "enforcement": "The Attorney General enforces. A court may order an injunction, damages to the covered entity and a civil penalty of up to $1,000 for each violation.",
+   "kinds": [
+    "contract-pharmacy",
+    "reporting",
+    "medicaid",
+    "study"
+   ],
+   "law_id": "il-2026-hb2371",
+   "limits": "Hospitals with fewer than 100 licensed beds, Critical Access Hospitals, Safety-Net Hospitals and 340B grantees need not report until January 1, 2029. The Medicaid report is due by January 1, 2028. 340B dispensing is limited to patients who had an outpatient service in the last 18 months.",
+   "more_sha256": "",
+   "more_text": "",
+   "more_url": "",
+   "quote": "No person, including a pharmaceutical manufacturer, may deny, restrict, prohibit, condition, or otherwise interfere with, either directly or indirectly, the acquisition of a 340B drug by, or delivery of a 340B drug to, a 340B covered entity or a 340B contract pharmacy authorized to receive 340B drugs on behalf of the 340B covered entity unless the receipt is prohibited by federal law",
+   "retrieved": "2026-11-15",
+   "session_year": "2026",
+   "signed_date": "",
+   "source_form": "web page",
+   "source_note": "The saved page prints no code number for the act.",
+   "source_sha256": "71af7819337eeb159320295ef1ce2afbf245ff57f7af4b8a00a622e802686a3f",
+   "source_text": "sources/laws/il/il-2026-hb2371.txt",
+   "source_url": "https://www.ilga.gov/Legislation/PublicActs/View/104-0758",
+   "state": "IL",
+   "summary": "No person, a drug manufacturer included, may deny, restrict or place conditions on 340B drugs reaching a covered entity or its contract pharmacy, limit the number or place of contract pharmacies, or demand pricing or claims data. Covered entities file a yearly 340B report with the General Assembly and keep a policy against duplicate discounts; the state Medicaid agency reports once on 340B units and savings.",
+   "title": "Patient Access to Pharmacy Protection Act"
+  },
+  {
+   "act": "Public Act 104-0769",
+   "bill": "HB 4327",
+   "binds": "The Department of Insurance; 340B covered entities and drug manufacturers in Illinois",
+   "citation": "",
+   "effective_date": "2026-08-07",
+   "enforcement": "An answer more than 30 days late draws a fine of $500 a day, or $100 a day for small hospitals, Critical Access Hospitals, Safety-Net Hospitals and 340B grantees.",
+   "kinds": [
+    "reporting",
+    "study"
+   ],
+   "law_id": "il-2026-hb4327",
+   "limits": "The act is repealed on July 1, 2032. It does not regulate pricing, reimbursement or participation in the federal program.",
+   "more_sha256": "",
+   "more_text": "",
+   "more_url": "",
+   "quote": "the Department of Insurance shall conduct a comprehensive study of how 340B covered entities and pharmaceutical manufacturers within Illinois participate in the 340B Drug Discount Program",
+   "retrieved": "2026-11-15",
+   "session_year": "2026",
+   "signed_date": "",
+   "source_form": "web page",
+   "source_note": "The saved page prints no code number for the act.",
+   "source_sha256": "1f9b0a8eeb4c5de72fee7768f93ba57223a61b54ae2278c6b687ad3e83b7df38",
+   "source_text": "sources/laws/il/il-2026-hb4327.txt",
+   "source_url": "https://ilga.gov/Legislation/PublicActs/View/104-0769",
+   "state": "IL",
+   "summary": "The Department of Insurance studies how 340B covered entities and drug manufacturers in Illinois take part in the program and reports to the General Assembly and the Governor by July 1, 2028. Covered entities and manufacturers answer its requests on acquisition cost, payments received, contract pharmacies and the use of savings.",
+   "title": "340B Transparency, Reporting, and Accountability Act"
+  },
+  {
+   "act": "P.L. 2025, ch. 288 and ch. 290",
+   "bill": "S 0114 Substitute A; H 5634 Substitute A",
+   "binds": "Health insurers, pharmacy benefit managers and other third-party payers; drug manufacturers; 340B covered entities",
+   "citation": "R.I. Gen. Laws 5-19.3-1 to 5-19.3-9",
+   "effective_date": "2025-10-01",
+   "enforcement": "The Auditor General may investigate complaints and write rules. A breach is a deceptive trade practice or an unfair sales practice.",
+   "kinds": [
+    "contract-pharmacy",
+    "payer-nondiscrimination",
+    "reporting"
+   ],
+   "law_id": "ri-2025-s114",
+   "limits": "Does not apply to Medicaid as payer. Limited distribution required by 21 U.S.C. 355-1 is allowed. Passed as two acts with the same text, both enacted June 27, 2025.",
+   "more_sha256": "b9f51fc92ef9ad3d0276dd58cff289aa29ca6e087f61887b2c2f6cbdc333c032",
+   "more_text": "sources/laws/ri/ri-2025-s114.more.txt",
+   "more_url": "https://webserver.rilegislature.gov/PublicLaws/law25/law25290.htm",
+   "quote": "Annually on or before April 1, each 340B covered entity participating in the federal 340B drug pricing program established by 42 U.S.C. § 256b shall submit to the office of the governor, the speaker of the house of representatives, the president of the senate, and auditor general a report detailing the 340B covered entity's participation in the program during the previous calendar year",
+   "retrieved": "2026-11-15",
+   "session_year": "2025",
+   "signed_date": "",
+   "source_form": "web page",
+   "source_note": "",
+   "source_sha256": "a72dbbf7fb568ac24b53a5d2bfc1b5a916f0610785025ab1d3f5c21a238a7a35",
+   "source_text": "sources/laws/ri/ri-2025-s114.txt",
+   "source_url": "https://webserver.rilegislature.gov/PublicLaws/law25/law25288.htm",
+   "state": "RI",
+   "summary": "Insurers, pharmacy benefit managers and other payers may not pay a 340B covered entity or contract pharmacy less, add fees or conditions, limit network participation or require a 340B marker on a claim. A manufacturer may not interfere with a 340B drug reaching a contract pharmacy. By April 1 each year a covered entity reports its 340B costs, payments, vendors and claims, and how it uses the savings.",
+   "title": "Defending Affordable Prescription Drug Costs Act"
+  }
+ ],
+ "license": "CC-BY-4.0",
+ "not_listed": [
+  {
+   "name": "O.C.G.A. 33-64-9.1 (SB 313 and HB 946 of 2020)",
+   "reason": "The official text of this section was not reached; the pages that were read did not show its 340B words.",
+   "source_url": "",
+   "state": "GA"
+  }
+ ],
+ "sites": [
+  {
+   "host": "arkleg.state.ar.us",
+   "owner": "Arkansas General Assembly",
+   "state": "AR"
+  },
+  {
+   "host": "ilga.gov",
+   "owner": "Illinois General Assembly",
+   "state": "IL"
+  },
+  {
+   "host": "my.ilga.gov",
+   "owner": "Illinois General Assembly",
+   "state": "IL"
+  },
+  {
+   "host": "www.ilga.gov",
+   "owner": "Illinois General Assembly",
+   "state": "IL"
+  },
+  {
+   "host": "webserver.rilegislature.gov",
+   "owner": "Rhode Island General Assembly",
+   "state": "RI"
+  }
+ ]
+}

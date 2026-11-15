@@ -1,0 +1,20 @@
+{
+  "name": "clinx-340b-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Model Context Protocol server over ClinX's open 340B tables: state laws, bills, federal notices and a calendar of their dates.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "clinx-340b-mcp": "src/stdio.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/stdio.js",
+    "serve": "node src/serve.js",
+    "test": "node --test",
+    "test:live": "CLINX_LIVE=1 node --test test/live.test.js"
+  }
+}
