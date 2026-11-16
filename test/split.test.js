@@ -11,7 +11,7 @@ import { handle } from '../src/core.js';
 import { makeTables, FILES, reportFile } from '../src/tables.js';
 import { split, readReport } from '../src/split.js';
 import { filingPath, filingSlug, latestYears } from '../src/pages.js';
-import { REPORT_UNREAD } from '../src/tools.js';
+import { REPORT_UNREAD, FILING_LINES } from '../src/tools.js';
 
 const DATA = fileURLToPath(new URL('./data', import.meta.url));
 const TODAY = '2026-11-16';
@@ -52,6 +52,20 @@ async function tablesOf(mode, { log = [], change = (name, file) => file, file } 
 }
 const ask = (tables) => async (name, args = {}) => (await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, tables)).result;
 const out = (tables) => async (name, args) => (await ask(tables)(name, args)).structuredContent;
+
+/** One report read part by part, the largest part each time, until the answer offers no more: every part, in order. */
+async function partsOf(call, filingId) {
+  const parts = [await call('get_filing', { filing_id: filingId, limit: FILING_LINES.most })];
+  while (parts.at(-1).more !== undefined) {
+    parts.push(await call('get_filing', { filing_id: filingId, limit: FILING_LINES.most, offset: parts.reduce((n, part) => n + part.lines.length, 0) }));
+  }
+  return parts;
+}
+/** The first part's answer with every line of the report in it. */
+const wholeReport = async (call, filingId) => {
+  const parts = await partsOf(call, filingId);
+  return { ...parts[0], lines: parts.flatMap((part) => part.lines) };
+};
 
 test('split: an index with every record and none of the lines, and a file for each report', async () => {
   const merged = await whole();
@@ -108,12 +122,16 @@ test('both ways give the same answers: the index and one report at a time, or th
   const b = ask(slow);
   const ids = (await whole()).filings.map((f) => f.filing_id);
   assert.equal(ids.length, 64);
+  let lines = 0;
   for (const id of ids) {
-    const x = await a('get_filing', { filing_id: id, limit: 500 });
-    const y = await b('get_filing', { filing_id: id, limit: 500 });
-    assert.equal(x.isError, false, id);
-    assert.deepEqual(x.structuredContent, y.structuredContent, id);
+    assert.equal((await a('get_filing', { filing_id: id })).isError, false, id);
+    const x = await partsOf(out(fast), id);
+    const y = await partsOf(out(slow), id);
+    assert.deepEqual(x, y, id);
+    assert.equal(x.reduce((n, part) => n + part.lines.length, 0), x[0].lines_total, `${id}: every line is read once`);
+    lines += x[0].lines_total;
   }
+  assert.ok(lines > 3321, 'every line of every sample report was compared');
   for (const [name, args] of [['find_filings', { limit: 100 }], ['find_filings', { state: 'OH', limit: 100 }], ['state_overview', { state: 'OH' }], ['state_overview', { state: 'MN' }], ['about_the_data', {}], ['reporting_states', {}]]) {
     assert.deepEqual((await a(name, args)).structuredContent, (await b(name, args)).structuredContent, name);
   }
@@ -152,7 +170,7 @@ test('fallback: when the index cannot be read, the whole file is read and cut wi
   const found = (await out(tables)('find_filings', { state: 'OH', limit: 100 }));
   assert.equal(found.matched, 6);
   assert.ok(log.includes(FILES.filingsIndex) && log.includes(FILES.filings));
-  const one = await out(tables)('get_filing', { filing_id: 'oh-2025-ch050990', limit: 500 });
+  const one = await out(tables)('get_filing', { filing_id: 'oh-2025-ch050990', limit: 150 });
   assert.ok(one.lines.length > 100);
   assert.equal(log.filter((n) => n.startsWith('filings/')).length, 0, 'no report file is asked for');
   // A file at the index's name that is not an index counts as unreadable too.
@@ -232,7 +250,8 @@ test('Ohio: the name is HRSA\'s and says so, and a filer is found by that name a
 
 test('Ohio: get_filing gives the workbook\'s cells, how they were read, and why a figure is withheld', async () => {
   const call = out(await tablesOf('split'));
-  const one = await call('get_filing', { filing_id: 'oh-2025-ch050990', limit: 500 });
+  const one = await wholeReport(call, 'oh-2025-ch050990');
+  assert.equal(one.lines.length, one.lines_total);
   assert.equal(one.official_file.pages, undefined, 'a workbook has no pages');
   assert.match(one.official_file.kind, /Excel workbook/);
   assert.match(one.official_file.kind, /State's own website/);
@@ -257,7 +276,7 @@ test('Ohio: get_filing gives the workbook\'s cells, how they were read, and why 
   assert.ok(one.discrepancies.count === 4 && one.discrepancies.rows.every((d) => d.note), 'the dataset\'s notes are given');
   assert.match(one.how_to_read_lines, /source_cell/);
   // A cell that holds words where a figure belongs keeps the words.
-  const words = (await call('get_filing', { filing_id: 'oh-2025-dsh360059-and-fqhcla415', limit: 500 })).lines.find((l) => l.unit === 'usd' && l.amount === undefined && l.amount_as_filed);
+  const words = (await wholeReport(call, 'oh-2025-dsh360059-and-fqhcla415')).lines.find((l) => l.unit === 'usd' && l.amount === undefined && l.amount_as_filed);
   assert.ok(words, 'a words-only cell');
   assert.ok(Number.isNaN(Number(words.amount_as_filed)));
   const two = await call('get_filing', { filing_id: 'oh-2025-tb452022std452191', limit: 1 });
@@ -268,7 +287,8 @@ test('Ohio: get_filing gives the workbook\'s cells, how they were read, and why 
 test('Ohio: no answer for any sample report shows a count of 1 to 5 where one is withheld', async () => {
   const call = out(await tablesOf('split'));
   for (const id of ['oh-2025-ch050990', 'oh-2025-chc0823800', 'oh-2025-dsh360059', 'oh-2025-tb452022std452191']) {
-    const answer = await call('get_filing', { filing_id: id, limit: 500 });
+    const answer = await wholeReport(call, id);
+    assert.equal(answer.lines.length, answer.lines_total, id);
     for (const l of answer.lines.filter((x) => x.claims_withheld)) assert.equal(l.amount ?? l.claims ?? null, null, `${id} ${l.source_cell}`);
     assert.doesNotMatch(JSON.stringify(answer), /"claims(_as_filed)?":"[1-5]"/);
   }

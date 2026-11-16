@@ -75,8 +75,10 @@ Three tools open it.
   filer's. A line carries `source_cell`, the workbook cell it was read from. A cell that holds
   words where a figure belongs has the words in `amount_as_filed` and no `amount`. `find_filings`
   finds an Ohio filer by HRSA's name or by its 340B ID.
-- A report with many lines (the largest today has 1,030) comes in parts of 250 lines. The
-  answer lists the report's schedules and says how to ask for the next part or for one schedule.
+- A report with many lines (the largest today has 1,030) comes in parts. One answer holds 100
+  lines, or up to 150 when asked with `limit`, which keeps the largest answer well under
+  100,000 characters. The answer says how many lines are left and how to ask for the next part
+  with `offset`, and it lists the report's schedules so that one schedule can be asked for.
 
 Questions to try: "Which states require 340B reports, and which of them publish a report for
 each hospital?" (`reporting_states`); "Find the 2025 reports filed in Rhode Island by health
@@ -141,7 +143,9 @@ tables were last brought up to date. A federal notice nobody has read yet is sti
 the Federal Register's own facts and no sentence; the answer says so.
 
 A mistake in what was asked (a state that is not a two-letter code, a date in the wrong shape, a
-bill that is not in the table) is said back in plain words, so the assistant can correct itself.
+date that cannot exist such as 2026-13-45, a bill that is not in the table) is said back in plain
+words, so the assistant can correct itself. A wrong value longer than 80 characters is said back
+as its first 80 and an ellipsis.
 
 ## Try it
 
@@ -289,7 +293,7 @@ The copy at clinx.org/mcp is counted this way and no other. The site's
 
 ## Tests
 
-    npm test          # 94 tests and 3 live checks that are skipped, no network
+    npm test          # 101 tests and 3 live checks that are skipped, no network
     npm run test:live # three checks against the published files at clinx.org
 
 The tests cover both protocol eras, every tool, every kind of mistaken input, a health center

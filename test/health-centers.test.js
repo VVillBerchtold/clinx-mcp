@@ -63,7 +63,7 @@ test('the five health center tools are listed after the 340B tools, described pl
   for (const name of NAMES) assert.match(INSTRUCTIONS, new RegExp(name));
   assert.match(INSTRUCTIONS, /ranks no health center/);
   assert.doesNotMatch(INSTRUCTIONS, NEVER);
-  assert.equal(SERVER.version, '0.3.0');
+  assert.equal(SERVER.version, '0.3.1');
   assert.match(SERVER.description, /340B/);
   assert.match(SERVER.description, /[Hh]ealth centers/);
 });

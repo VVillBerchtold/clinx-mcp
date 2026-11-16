@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { handle, INSTRUCTIONS } from '../src/core.js';
 import { makeTables } from '../src/tables.js';
 import { localTables } from '../src/disk.js';
-import { TOOLS, FILINGS_UNREAD, REPORTING_UNREAD } from '../src/tools.js';
+import { TOOLS, FILINGS_UNREAD, REPORTING_UNREAD, FILING_LINES } from '../src/tools.js';
 
 const DATA = fileURLToPath(new URL('./data', import.meta.url));
 const TODAY = '2026-11-15';
@@ -31,6 +31,23 @@ function changed(change) {
 const callOn = (tables) => async (name, args = {}) => (await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, tables)).result;
 const run = callOn(localTables({ folder: DATA, now }));
 const out = async (name, args) => (await run(name, args)).structuredContent;
+
+/**
+ * Every line of one report, read the way an assistant has to read a long one: the largest part one
+ * answer may hold, then the next part at the offset the answer names, until no more is offered.
+ * `ask` gives a tool's answer; the first part's other fields are returned with all the lines.
+ */
+async function wholeReport(ask, filingId, more = {}) {
+  const first = await ask('get_filing', { filing_id: filingId, ...more, limit: FILING_LINES.most });
+  const lines = [...first.lines];
+  for (let part = first; part.more !== undefined;) {
+    const next = Number(/ask again with offset (\d+)/.exec(part.more)[1]);
+    assert.equal(next, lines.length, 'the offset the answer names is the next line');
+    part = await ask('get_filing', { filing_id: filingId, ...more, limit: FILING_LINES.most, offset: next });
+    lines.push(...part.lines);
+  }
+  return { ...first, lines };
+}
 
 test('the three new tools are listed, described plainly, and read only', () => {
   const names = TOOLS.map((t) => t.name);
@@ -132,7 +149,7 @@ test('find_filings: mistakes in what was asked are said back plainly', async () 
 });
 
 test('get_filing: one report with every line as filed, the official file and the ClinX page', async () => {
-  const { filing, official_file: file, lines, lines_total: total, clinx_page: page, schedules } = await out('get_filing', { filing_id: 'RI-2025-East-Bay-CAP', limit: 500 });
+  const { filing, official_file: file, lines, lines_total: total, clinx_page: page, schedules } = await wholeReport(out, 'RI-2025-East-Bay-CAP');
   assert.equal(filing.filing_id, 'ri-2025-east-bay-cap');
   assert.equal(filing.entity.name_as_filed.length > 3, true);
   assert.equal(page, 'https://clinx.org/scorecard/ri/east-bay-cap/');
@@ -151,7 +168,7 @@ test('get_filing: every figure is exactly the file\'s, not changed or rounded', 
   const raw = JSON.parse(await readFile(`${DATA}/340b-state-filings.json`, 'utf8'));
   const id = 'ri-2025-wellone';
   const wanted = raw.line_items.filter((l) => l.filing_id === id);
-  const { lines } = await out('get_filing', { filing_id: id, limit: 500 });
+  const { lines } = await wholeReport(out, id);
   assert.equal(lines.length, wanted.length);
   wanted.forEach((row, i) => {
     for (const key of ['amount', 'amount_as_filed', 'label_as_filed', 'name_as_filed', 'ndc_as_filed', 'unit', 'page', 'schedule', 'line']) {
@@ -161,7 +178,7 @@ test('get_filing: every figure is exactly the file\'s, not changed or rounded', 
 });
 
 test('get_filing: withheld small counts are never given, and the reason is explained', async () => {
-  const { lines, withheld, lines_total: total } = await out('get_filing', { filing_id: 'ri-2025-blackstone-valley', schedule: 'G', limit: 500 });
+  const { lines, withheld, lines_total: total } = await wholeReport(out, 'ri-2025-blackstone-valley', { schedule: 'G' });
   assert.ok(total > 50);
   const small = lines.filter((l) => l.claims_withheld);
   assert.ok(small.length > 0);
@@ -173,7 +190,7 @@ test('get_filing: withheld small counts are never given, and the reason is expla
   // Nothing in the whole answer for any report shows a one-to-five count in a claims cell.
   const all = JSON.parse(await readFile(`${DATA}/340b-state-filings.json`, 'utf8')).filings.map((f) => f.filing_id);
   for (const id of all) {
-    const answer = JSON.stringify(await out('get_filing', { filing_id: id, limit: 500 }));
+    const answer = JSON.stringify(await wholeReport(out, id));
     assert.doesNotMatch(answer, /"claims(_as_filed)?":"[1-5]"/, id);
   }
 });
@@ -188,13 +205,14 @@ test('get_filing: a small count the file forgot to mark is still not given', asy
     }
     return file;
   });
-  const { lines, withheld } = (await callOn(tables)('get_filing', { filing_id: 'ri-2025-wellone', limit: 500 })).structuredContent;
+  const changedOut = async (name, args) => (await callOn(tables)(name, args)).structuredContent;
+  const { lines, withheld } = await wholeReport(changedOut, 'ri-2025-wellone');
   assert.doesNotMatch(JSON.stringify(lines), /"claims(_as_filed)?":"3"/);
   assert.ok(withheld.by_reason.fewer_than_6 >= 1);
 });
 
 test('get_filing: how the figures were checked, discrepancies as filed, measures, and attached documents', async () => {
-  const idaho = await out('get_filing', { filing_id: 'id-2025-statewide', limit: 500 });
+  const idaho = await out('get_filing', { filing_id: 'id-2025-statewide' });
   assert.equal(idaho.discrepancies.count, 3);
   const d = idaho.discrepancies.rows.find((row) => row.filed === '1916995');
   assert.deepEqual([d.filed, d.expected, d.difference, d.unit], ['1916995', '1916602', '393', 'count']);
@@ -214,28 +232,103 @@ test('get_filing: how the figures were checked, discrepancies as filed, measures
 });
 
 test('get_filing: a long report is given in parts, and a part can be asked for', async () => {
-  const first = await out('get_filing', { filing_id: 'ri-2025-rhode-island-hospital' });
+  const id = 'ri-2025-rhode-island-hospital';
+  const first = await out('get_filing', { filing_id: id });
   assert.equal(first.lines_total, 1030);
-  assert.equal(first.lines.length, 250);
-  assert.match(first.more, /780 more lines: ask again with offset 250/);
-  const next = await out('get_filing', { filing_id: 'ri-2025-rhode-island-hospital', offset: 250, limit: 500 });
-  assert.equal(next.lines.length, 500);
-  assert.equal(next.lines[0].line, (await out('get_filing', { filing_id: 'ri-2025-rhode-island-hospital', limit: 500 })).lines[250].line);
-  const g = await out('get_filing', { filing_id: 'ri-2025-rhode-island-hospital', schedule: 'G', limit: 500 });
+  assert.equal(first.lines.length, 100, 'one answer holds 100 lines unless more are asked for');
+  assert.equal(first.lines_returned, 100);
+  assert.equal(first.offset, 0);
+  assert.equal(first.more, '930 more lines: ask again with offset 100 for the next part, or with schedule to take one schedule at a time. One answer holds up to 150 lines.');
+  const keys = Object.keys(first);
+  assert.ok(keys.indexOf('more') < keys.indexOf('lines') && keys.indexOf('lines_total') < keys.indexOf('lines'), 'how much is left is said before the lines, not after them');
+  const next = await out('get_filing', { filing_id: id, offset: 100, limit: 150 });
+  assert.equal(next.lines.length, 150);
+  assert.match(next.more, /^780 more lines: ask again with offset 250 /);
+  const all = (await wholeReport(out, id)).lines;
+  assert.equal(all.length, 1030, 'reading part after part gives every line once');
+  assert.deepEqual(next.lines, all.slice(100, 250));
+  assert.deepEqual(first.lines, all.slice(0, 100));
+  const g = await out('get_filing', { filing_id: id, schedule: 'G', limit: 150 });
   assert.equal(g.lines_total, 975);
+  assert.equal(g.lines.length, 150);
   assert.ok(g.lines.every((l) => l.schedule === 'G'));
+  assert.match(g.more, /^825 more lines: ask again with offset 150 /);
   assert.equal(g.schedules.A, 6, 'the answer lists every schedule even when one is asked for');
-  assert.ok(JSON.stringify(first).length < 150000, 'a default answer stays small');
-  const last = await out('get_filing', { filing_id: 'ri-2025-rhode-island-hospital', offset: 1000, limit: 500 });
+  const last = await out('get_filing', { filing_id: id, offset: 1000, limit: 150 });
   assert.equal(last.lines.length, 30);
-  assert.equal(last.more, undefined);
+  assert.equal(last.more, undefined, 'the last part offers nothing more');
+  const past = await out('get_filing', { filing_id: id, offset: 5000 });
+  assert.equal(past.lines.length, 0);
+  assert.equal(past.more, undefined);
+});
+
+test('get_filing: the tool says how many lines one answer holds, and takes no more than that', async () => {
+  const tool = TOOLS.find((t) => t.name === 'get_filing');
+  assert.deepEqual(FILING_LINES, { usual: 100, most: 150 });
+  assert.equal(tool.inputSchema.properties.limit.maximum, 150);
+  assert.equal(tool.inputSchema.properties.limit.minimum, 1);
+  assert.match(tool.inputSchema.properties.limit.description, /default 100, at most 150/);
+  assert.match(tool.description, /One answer holds 100 lines, or up to 150 with limit/);
+  assert.match(tool.description, /how to ask for the next part with offset/);
+  assert.match(tool.inputSchema.properties.offset.description, /next part/);
+  for (const limit of [151, 250, 500]) {
+    const result = await run('get_filing', { filing_id: 'id-2025-statewide', limit });
+    assert.equal(result.isError, true, `limit ${limit}`);
+    assert.equal(result.content[0].text, 'limit must be a whole number from 1 to 150');
+  }
+  assert.equal((await out('get_filing', { filing_id: 'ri-2025-rhode-island-hospital', limit: 150 })).lines.length, 150);
+});
+
+test('get_filing: no answer is too long for an assistant to take in, at the usual or at the largest number of lines', async () => {
+  // The text of an answer, in characters. Directories of servers turn away an answer near 100,000;
+  // the largest report line in these samples is under 600 characters, so 150 of them stay far below.
+  const MOST_CHARACTERS = 80000;
+  const sizeOf = async (args) => {
+    const result = await run('get_filing', args);
+    assert.equal(result.isError, false, JSON.stringify(args));
+    return result.content[0].text.length;
+  };
+  const ids = JSON.parse(await readFile(`${DATA}/340b-state-filings.json`, 'utf8')).filings.map((f) => f.filing_id);
+  assert.equal(ids.length, 55);
+  let largest = 0;
+  for (const id of ids) {
+    const total = (await out('get_filing', { filing_id: id, limit: 1 })).lines_total;
+    for (const limit of [undefined, FILING_LINES.most]) {
+      const step = limit ?? FILING_LINES.usual;
+      for (let offset = 0; offset < Math.max(total, 1); offset += step) {
+        const size = await sizeOf({ filing_id: id, ...(limit ? { limit } : {}), ...(offset ? { offset } : {}) });
+        assert.ok(size < MOST_CHARACTERS, `${id} at offset ${offset} with ${step} lines is ${size} characters`);
+        largest = Math.max(largest, size);
+      }
+    }
+  }
+  assert.ok(largest > 20000, 'the samples do hold a long report, so the check above means something');
 });
 
 test('get_filing: mistakes in what was asked are said back plainly', async () => {
-  for (const [args, saying] of [[{}, /filing_id is required/], [{ filing_id: 'xx-1999-nobody' }, /no filed report with the id/], [{ filing_id: 'id-2025-statewide', schedule: 'Z' }, /no lines in the schedule Z; its schedules are: key_highlights/], [{ filing_id: 'id-2025-statewide', limit: 9000 }, /limit must be a whole number from 1 to 500/], [{ filing_id: 'id-2025-statewide', offset: -1 }, /offset/]]) {
+  for (const [args, saying] of [[{}, /filing_id is required/], [{ filing_id: 'xx-1999-nobody' }, /no filed report with the id/], [{ filing_id: 'id-2025-statewide', schedule: 'Z' }, /no lines in the schedule Z; its schedules are: key_highlights/], [{ filing_id: 'id-2025-statewide', limit: 9000 }, /limit must be a whole number from 1 to 150/], [{ filing_id: 'id-2025-statewide', limit: 0 }, /limit must be a whole number from 1 to 150/], [{ filing_id: 'id-2025-statewide', offset: -1 }, /offset must be a whole number/]]) {
     const result = await run('get_filing', args);
     assert.equal(result.isError, true, JSON.stringify(args));
     assert.match(result.content[0].text, saying);
+  }
+});
+
+test('get_filing: a schedule that is not text is refused in words, and never printed as an object', async () => {
+  for (const schedule of [{}, { name: 'G' }, [], ['G'], 7, 1.5, true, null]) {
+    const result = await run('get_filing', { filing_id: 'id-2025-statewide', schedule });
+    assert.equal(result.isError, true, JSON.stringify(schedule));
+    assert.equal(result.content[0].text, 'schedule must be text, such as G; the answer without a schedule lists the schedules the report has');
+    assert.doesNotMatch(result.content[0].text, /\[object/);
+  }
+  // Text is still taken as before: a schedule the report has, none at all, and one it does not have.
+  assert.equal((await out('get_filing', { filing_id: 'ri-2025-rhode-island-hospital', schedule: 'A' })).lines_total, 6);
+  assert.equal((await out('get_filing', { filing_id: 'id-2025-statewide', schedule: '' })).lines_total, (await out('get_filing', { filing_id: 'id-2025-statewide' })).lines_total);
+  assert.match((await run('get_filing', { filing_id: 'id-2025-statewide', schedule: 'Z' })).content[0].text, /no lines in the schedule Z; its schedules are: key_highlights/);
+  // A word every object answers to is not a schedule.
+  for (const word of ['constructor', 'toString', '__proto__']) {
+    const result = await run('get_filing', { filing_id: 'id-2025-statewide', schedule: word });
+    assert.equal(result.isError, true, word);
+    assert.match(result.content[0].text, new RegExp(`no lines in the schedule ${word};`));
   }
 });
 

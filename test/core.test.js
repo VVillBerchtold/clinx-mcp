@@ -8,6 +8,7 @@ import { handle, answer, SERVER, MODERN, LEGACY, CODE } from '../src/core.js';
 import { makeTables } from '../src/tables.js';
 import { localTables } from '../src/disk.js';
 import { TOOLS } from '../src/tools.js';
+import { echo } from '../src/inputs.js';
 
 export const DATA = fileURLToPath(new URL('./data', import.meta.url));
 // The clock stands still on the day the slices were cut, so "coming up" and "open for comment"
@@ -367,6 +368,94 @@ test('a mistake in what was asked is said back plainly, as the tool\'s answer', 
     assert.match(result.content[0].text, saying);
     assert.equal(result.structuredContent, undefined);
   }
+});
+
+test('a date that cannot exist is refused in words by every tool that takes a date', async () => {
+  // Every input whose description says it is a date, so a tool added later is held to the same rule.
+  const dated = TOOLS.flatMap((tool) => Object.entries(tool.inputSchema.properties ?? {}).filter(([, input]) => /year-month-day/.test(input.description ?? '')).map(([name]) => [tool.name, name]));
+  assert.deepEqual(dated, [['find_notices', 'from'], ['find_notices', 'to'], ['calendar', 'from'], ['calendar', 'to'], ['find_funding_opportunities', 'open_on'], ['health_center_calendar', 'from'], ['health_center_calendar', 'to']]);
+  for (const [tool, input] of dated) {
+    for (const day of ['2026-13-45', '2026-02-30', '2025-02-29', '2026-04-31', '2026-00-10', '2026-11-00', '2026-12-32']) {
+      const result = await run(tool, { [input]: day });
+      assert.equal(result.isError, true, `${tool} ${input} ${day}`);
+      assert.equal(result.content[0].text, `${input} must be a day that exists: there is no ${day} on the calendar. Write a date year-month-day, such as 2027-01-15`);
+      assert.equal(result.structuredContent, undefined);
+    }
+    // A day that exists is taken as before, the 29th of February in a leap year among them.
+    for (const day of ['2024-02-29', '2026-12-31', '2027-01-01']) assert.equal((await run(tool, { [input]: day })).isError, false, `${tool} ${input} ${day}`);
+  }
+  // A date in the wrong shape keeps its own sentence.
+  assert.equal((await run('calendar', { from: '2026-1-5' })).content[0].text, 'from must be a date written year-month-day, such as 2027-01-15');
+  assert.equal((await run('find_funding_opportunities', { open_on: 20270115 })).content[0].text, 'open_on must be a date written year-month-day, such as 2027-01-15');
+});
+
+test('calendar: a bill_id or notice_id that is not text is refused in words, not passed over', async () => {
+  const everything = (await run('calendar', { from: '2000-01-01', limit: 100 })).structuredContent.matched;
+  for (const [name, finder] of [['bill_id', 'find_bills'], ['notice_id', 'find_notices']]) {
+    for (const value of [123, -1, 1.5, true, false, [], ['il-104th-hb2371'], {}, null]) {
+      const result = await run('calendar', { [name]: value, from: '2000-01-01' });
+      assert.equal(result.isError, true, `${name} ${JSON.stringify(value)}`);
+      assert.match(result.content[0].text, new RegExp(`^${name} must be text, such as \\S+; ${finder} returns it$`));
+      assert.equal(result.structuredContent, undefined, 'the whole calendar is not given instead');
+    }
+    // Left empty it is the same as not given.
+    assert.equal((await run('calendar', { [name]: '', from: '2000-01-01', limit: 100 })).structuredContent.matched, everything);
+  }
+  // Text is taken as before, in any case and with spaces around it.
+  const oneBill = (await run('calendar', { bill_id: ' IL-104th-HB2371 ', limit: 100 })).structuredContent;
+  assert.ok(oneBill.matched > 0 && oneBill.matched < everything && oneBill.events.every((e) => e.bill_id === 'il-104th-hb2371'));
+  const oneNotice = (await run('calendar', { notice_id: 'FR-2026-15633' })).structuredContent;
+  assert.ok(oneNotice.matched > 0 && oneNotice.events.every((e) => e.notice_id === 'fr-2026-15633'));
+});
+
+test('a wrong value is said back cut to 80 characters with an ellipsis, so a refusal stays a sentence', async () => {
+  const long = 'x'.repeat(5000);
+  const cut = `${'x'.repeat(80)}…`;
+  assert.equal(echo(long), cut);
+  assert.equal(echo('y'.repeat(80)), 'y'.repeat(80), 'exactly 80 characters are said back whole');
+  assert.equal(echo('y'.repeat(81)), `${'y'.repeat(80)}…`);
+  assert.equal(echo('ri-2025-h5634'), 'ri-2025-h5634');
+  assert.equal(echo(12), '12');
+  assert.equal(echo('é'.repeat(81)), `${'é'.repeat(80)}…`);
+  assert.equal(echo('\u{1F600}'.repeat(81)), `${'\u{1F600}'.repeat(80)}…`, 'a character is never cut in half');
+
+  const cases = [
+    ['get_bill', { bill_id: long }, `no bill with the id ${cut}; use find_bills to look one up`],
+    ['get_law', { law_id: long }, `no law with the id ${cut}; use find_laws to look one up`],
+    ['get_notice', { notice_id: long }, `no rule or notice with the id ${cut}; use find_notices to look one up`],
+    ['get_filing', { filing_id: long }, `no filed report with the id ${cut}; use find_filings to look one up`],
+    ['get_filing', { filing_id: 'id-2025-statewide', schedule: long }, `this report has no lines in the schedule ${cut}; its schedules are: `],
+    ['get_health_center_report', { health_center: long }, `no health center with the key or grant number ${cut}; use find_health_centers to look one up`],
+    ['get_health_center_report', { health_center: '010120', table: long }, `report has no table ${cut}; its tables are: `],
+    ['get_health_center_report', { health_center: '010120', table: 'Table 3A', line: long }, `Table 3A has no line ${cut}; its lines are: `],
+    ['find_funding_opportunities', { opportunity: long }, `no funding opportunity with the number or id ${cut}; use find_funding_opportunities without it to look one up`],
+    ['find_bills', { [long]: 1 }, `find_bills does not take ${cut}. It takes: state, text, stage, role, kind, limit.`],
+  ];
+  for (const [name, args, saying] of cases) {
+    const result = await run(name, args);
+    assert.equal(result.isError, true, `${name} ${Object.keys(args).join(' ')}`);
+    assert.ok(result.content[0].text.includes(saying), `${name}: ${result.content[0].text.slice(0, 200)}`);
+    assert.ok(!result.content[0].text.includes('x'.repeat(81)), `${name} repeats no more than 80 characters of it`);
+  }
+  // A wrong id of 80 characters or fewer is said back whole, as before.
+  assert.equal((await run('get_bill', { bill_id: 'y'.repeat(80) })).content[0].text, `no bill with the id ${'y'.repeat(80)}; use find_bills to look one up`);
+  assert.equal((await run('get_bill', { bill_id: 'RI-1999-Nothing' })).content[0].text, 'no bill with the id RI-1999-Nothing; use find_bills to look one up');
+  // The same in a note on an answer, and in the protocol's own error for a tool that does not exist.
+  const none = (await run('find_filings', { form: long })).structuredContent;
+  assert.equal(none.matched, 0);
+  assert.ok(none.note.startsWith(`No report has a form of ${cut}. The form values held are: `));
+  const unknown = await ask('tools/call', { name: long });
+  assert.equal(unknown.error.code, CODE.params);
+  assert.equal(unknown.error.message, `Unknown tool: ${cut}`);
+  assert.equal((await ask('tools/call', { name: 'no_such_tool' })).error.message, 'Unknown tool: no_such_tool');
+});
+
+test('the version is the same wherever it is stated', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const stated = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')).version;
+  assert.equal(stated, '0.3.1');
+  assert.equal(SERVER.version, stated);
+  assert.equal((await ask('initialize', { protocolVersion: LEGACY[0], capabilities: {}, clientInfo: { name: 't', version: '0' } })).result.serverInfo.version, stated);
 });
 
 test('when the tables cannot be reached, the tool says so instead of failing', async () => {
