@@ -1,0 +1,743 @@
+[
+ {
+  "agency_code": "HHS-HRSA",
+  "agency_name": "Health Resources and Services Administration",
+  "applicant_types": [
+   {
+    "description": "Others (see text field entitled \"Additional Information on Eligibility\" for clarification)",
+    "id": "25"
+   }
+  ],
+  "application_due_note": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "application_due_note_as_published": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "attachment_file_names": [
+   "HRSA-27-017 Full Announcement_final.pdf"
+  ],
+  "award_ceiling": {
+   "as_published": "2880000",
+   "value": 2880000
+  },
+  "award_floor": {
+   "as_published": "320000",
+   "value": 320000
+  },
+  "category": "Mandatory",
+  "change_comment": "",
+  "change_comment_as_published": "",
+  "cost_sharing": false,
+  "date_conflicts": [],
+  "dates": {
+   "application_due": {
+    "as_published": "Dec 11, 2026 12:00:00 AM EST",
+    "date": "2026-12-11"
+   },
+   "archive": {
+    "as_published": "Sep 30, 2027 12:00:00 AM EDT",
+    "date": "2027-09-30"
+   },
+   "earlier_est_application_due": {
+    "as_published": "Sep 29, 2026 12:00:00 AM EDT",
+    "date": "2026-09-29"
+   },
+   "earlier_est_award": {
+    "as_published": "Jun 01, 2027 12:00:00 AM EDT",
+    "date": "2027-06-01"
+   },
+   "earlier_est_notice_posting": {
+    "as_published": "Jul 31, 2026 12:00:00 AM EDT",
+    "date": "2026-07-31"
+   },
+   "earlier_est_project_start": {
+    "as_published": "Jul 01, 2027 12:00:00 AM EDT",
+    "date": "2027-07-01"
+   },
+   "forecast_posted": {
+    "as_published": "Jul 08, 2026 12:00:00 AM EDT",
+    "date": "2026-07-08"
+   },
+   "last_changed": {
+    "as_published": "Oct 29, 2026 09:42:17 AM EDT",
+    "date": "2026-10-29"
+   },
+   "notice_posted": {
+    "as_published": "Oct 29, 2026 12:00:00 AM EDT",
+    "date": "2026-10-29"
+   },
+   "original_application_due": {
+    "as_published": "Dec 11, 2026 12:00:00 AM EST",
+    "date": "2026-12-11"
+   },
+   "search_close": {
+    "as_published": "12/11/2026",
+    "date": "2026-12-11"
+   },
+   "search_open": {
+    "as_published": "10/29/2026",
+    "date": "2026-10-29"
+   }
+  },
+  "description": "The purpose of the THCGME Program is to provide maintenance funding to support the training of residents in existing HRSA-supported primary care residency training programs in community-based ambulatory patient care centers. These programs will prepare residents to provide high-quality care, particularly in rural and medically vulnerable communities, and develop competencies to serve a wide range of populations and communities.",
+  "description_as_published": "<p><span style=\"background-color:transparent;\">The purpose of the THCGME Program is to provide maintenance funding to support the training of residents in existing HRSA-supported primary care residency training programs in community-based ambulatory patient care centers. These programs will prepare residents to provide </span>high-quality care, particularly in rural and medically vulnerable communities, and develop competencies to serve a wide range of populations and communities.</p>",
+  "document_kind": "synopsis",
+  "eligibility": "Existing HRSA THCGME Program payment recipients must continue to meet the program's eligibility requirements to remain eligible for HRSA THCGME funding. Applicants must be community-based, ambulatory patient care centers that operate an accredited primary care residency program. They may operate individually or through a graduate medical education (GME) consortium. The residency program must be in one of the following specialties/disciplines:Family Medicine Internal Medicine Pediatrics Internal Medicine-Pediatrics Obstetrics and Gynecology Psychiatry General Dentistry Pediatric Dentistry Geriatrics Program payment recipients that fail to meet any eligibility criteria will not be considered for funding under this announcement.",
+  "eligibility_as_published": "Existing HRSA THCGME Program payment recipients must continue to meet the program's eligibility requirements to remain eligible for HRSA THCGME funding. Applicants must be community-based, ambulatory patient care centers that operate an accredited primary care residency program. They may operate individually or through a graduate medical education (GME) consortium. The residency program must be in one  of the following specialties/disciplines:Family Medicine  Internal Medicine  Pediatrics  Internal Medicine-Pediatrics  Obstetrics and Gynecology  Psychiatry  General Dentistry  Pediatric Dentistry  Geriatrics Program payment recipients that fail to meet any eligibility criteria will not be considered for funding under this announcement.",
+  "estimated_funding": {
+   "as_published": "20960000",
+   "value": 20960000
+  },
+  "fiscal_year": null,
+  "funding_categories": [
+   {
+    "description": "Health",
+    "id": "HL"
+   }
+  ],
+  "funding_instruments": [
+   {
+    "description": "Grant",
+    "id": "G"
+   }
+  ],
+  "grants_gov_url": "https://www.grants.gov/search-results-detail/363111",
+  "health_center_program": false,
+  "id": "363111",
+  "listings": [
+   {
+    "number": "93.530",
+    "program_title": "Teaching Health Center Graduate Medical Education Payment"
+   }
+  ],
+  "matched_terms": [
+   "health center"
+  ],
+  "more_information_text": "",
+  "more_information_text_as_published": "",
+  "more_information_url": "",
+  "names_health_centers": true,
+  "number": "HRSA-27-017",
+  "number_of_awards": {
+   "as_published": "12",
+   "value": 12
+  },
+  "packages": [
+   {
+    "closing": {
+     "as_published": "2026-12-11",
+     "date": "2026-12-11"
+    },
+    "opening": {
+     "as_published": "2026-10-29",
+     "date": "2026-10-29"
+    },
+    "package_id": "PKG00294471"
+   }
+  ],
+  "record_change_comment": "",
+  "record_change_comment_as_published": "",
+  "revision": 2,
+  "status": "posted",
+  "title": "Teaching Health Center Graduate Medical Education (THCGME) Program",
+  "title_as_published": "Teaching Health Center Graduate Medical Education (THCGME) Program"
+ },
+ {
+  "agency_code": "HHS-HRSA",
+  "agency_name": "Health Resources and Services Administration",
+  "applicant_types": [
+   {
+    "description": "Native American tribal organizations (other than Federally recognized tribal governments)",
+    "id": "11"
+   },
+   {
+    "description": "Nonprofits having a 501(c)(3) status with the IRS, other than institutions of higher education",
+    "id": "12"
+   },
+   {
+    "description": "Unrestricted (i.e., open to any type of entity above), subject to any clarification in text field entitled \"Additional Information on Eligibility\"",
+    "id": "99"
+   },
+   {
+    "description": "Nonprofits that do not have a 501(c)(3) status with the IRS, other than institutions of higher education",
+    "id": "13"
+   },
+   {
+    "description": "Others (see text field entitled \"Additional Information on Eligibility\" for clarification)",
+    "id": "25"
+   }
+  ],
+  "application_due_note": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "application_due_note_as_published": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "attachment_file_names": [],
+  "award_ceiling": {
+   "as_published": "960000",
+   "value": 960000
+  },
+  "award_floor": {
+   "as_published": "160000",
+   "value": 160000
+  },
+  "category": "Mandatory",
+  "change_comment": "",
+  "change_comment_as_published": "",
+  "cost_sharing": false,
+  "date_conflicts": [],
+  "dates": {
+   "archive": {
+    "as_published": "Sep 30, 2027 12:00:00 AM EDT",
+    "date": "2027-09-30"
+   },
+   "est_application_due": {
+    "as_published": "Nov 16, 2026 12:00:00 AM EST",
+    "date": "2026-11-16"
+   },
+   "est_award": {
+    "as_published": "Jun 01, 2027 12:00:00 AM EDT",
+    "date": "2027-06-01"
+   },
+   "est_notice_posting": {
+    "as_published": "Sep 14, 2026 12:00:00 AM EDT",
+    "date": "2026-09-14"
+   },
+   "est_project_start": {
+    "as_published": "Jul 01, 2027 12:00:00 AM EDT",
+    "date": "2027-07-01"
+   },
+   "forecast_posted": {
+    "as_published": "Jul 27, 2026 12:00:00 AM EDT",
+    "date": "2026-07-27"
+   },
+   "last_changed": {
+    "as_published": "Jul 27, 2026 10:11:36 AM EDT",
+    "date": "2026-07-27"
+   },
+   "search_open": {
+    "as_published": "07/27/2026",
+    "date": "2026-07-27"
+   }
+  },
+  "description": "The purpose of the THCGME Program is to prepare residents to provide high-quality care, particularly in rural and medically underserved communities, while developing the competencies they need to serve a wide range of populations and communities. The THCGME does this by providing funding to support the training of residents in HRSA-supported primary care residency training programs in community-based ambulatory patient care centers.",
+  "description_as_published": "<p>The purpose of the THCGME Program is to prepare residents to provide high-quality care,&nbsp;particularly in rural and medically underserved communities, while developing the competencies they need to serve a wide range of populations and communities. The THCGME does this by providing funding to support the training of residents in HRSA-supported primary care residency training programs in community-based ambulatory patient care centers.&nbsp;</p>",
+  "document_kind": "forecast",
+  "eligibility": "An eligible entity is a community-based ambulatory patient care center that operates an accredited primary care residency program, individually or through a graduate medical education (GME) consortium. Eligible primary care residency program specialties include the following: Family Medicine, Internal Medicine, Pediatrics, Internal Medicine-Pediatrics, Obstetrics/Gynecology, Psychiatry, Geriatrics, General Dentistry, and Pediatric Dentistry. The THCGME Program provides an interim payment rate of $160,000 per resident full-time equivalent (FTE) to increase the number of primary care medical and dental residency position in community-based setting.Through this opportunity, payments will be made to support new resident FTE positions for new programs at eligible community-based ambulatory patient care centers. New Teaching Health Centers (THCs) are those applicants seeking funding for residency programs that have never received payment under the HRSA THCGME Program for the applicable residency program in any previous fiscal year. Under this model, a new THC program could apply to receive an award for its initial class of FTEs under the establishment awards type, and in the future apply for a maintenance award to sustain that number of FTEs and for an expansion award to increase that number of FTEs. As described in 340H(h)(2)(B), all resident FTEs for whom THCGME support is requested must be above the program's resident FTE baseline and must not put the program above the number approved by or awaiting approval by, the relevant accrediting body.Eligible entities include: Federally qualified health centers, as defined in section 1905(l)(2)(B) of the Social Security Act [42 U.S.C. 1396d(l)(2)(B)]; Community mental health centers, as defined in section 1861(ff)(3)(B) of the Social Security Act [42 U.S.C. 1395x(ff)(3)(B)]; Rural health clinics, as defined in section 1861(aa)(2) of the Social Security Act [42 U.S.C. 1395x(aa)(2)]; Health centers operated by the Indian Health Service, an Indian tribe or tribal organization, or an urban Indian organization (as defined in section 4 of the Indian Health Care Improvement Act [25 U.S.C. 1603]); An entity receiving funds under Title X of the PHS Act; A community-based GME consortium that operates an accredited primary care residency program.",
+  "eligibility_as_published": "An eligible entity is a community-based ambulatory patient care center that operates an accredited primary care residency program, individually or through a graduate medical education (GME) consortium. Eligible primary care residency program specialties include the following: Family Medicine, Internal Medicine, Pediatrics, Internal Medicine-Pediatrics, Obstetrics/Gynecology, Psychiatry, Geriatrics, General Dentistry, and Pediatric Dentistry.  The THCGME Program provides an interim payment rate of $160,000 per resident full-time equivalent (FTE) to increase the number of primary care medical and dental residency position in community-based setting.Through this opportunity, payments will be made to support new resident FTE positions for new programs at eligible community-based ambulatory patient care centers. New Teaching Health Centers (THCs) are those applicants seeking funding for residency programs that have never received payment under the HRSA THCGME Program for the applicable residency program in any previous fiscal year. Under this model, a new THC program could apply to receive an award for its initial class of FTEs under the establishment awards type, and in the future apply for a maintenance award to sustain that number of FTEs and for an expansion award to increase that number of FTEs. As described in 340H(h)(2)(B), all resident FTEs for whom THCGME support is requested must be above the program's resident FTE baseline and must not put the program above the number approved by or awaiting approval by, the relevant accrediting body.Eligible entities include:   Federally qualified health centers, as defined in section 1905(l)(2)(B) of the Social Security Act [42 U.S.C. 1396d(l)(2)(B)];  Community mental health centers, as defined in section 1861(ff)(3)(B) of the Social Security Act [42 U.S.C. 1395x(ff)(3)(B)];  Rural health clinics, as defined in section 1861(aa)(2) of the Social Security Act [42 U.S.C. 1395x(aa)(2)];  Health centers operated by the Indian Health Service, an Indian tribe or tribal organization, or an urban Indian organization (as defined in section 4 of the Indian Health Care Improvement Act [25 U.S.C. 1603]);   An entity receiving funds under Title X of the PHS Act;  A community-based GME consortium that operates an accredited primary care residency program.",
+  "estimated_funding": {
+   "as_published": "16000000",
+   "value": 16000000
+  },
+  "fiscal_year": 2027,
+  "funding_categories": [
+   {
+    "description": "Health",
+    "id": "HL"
+   }
+  ],
+  "funding_instruments": [
+   {
+    "description": "Grant",
+    "id": "G"
+   }
+  ],
+  "grants_gov_url": "https://www.grants.gov/search-results-detail/363324",
+  "health_center_program": false,
+  "id": "363324",
+  "listings": [
+   {
+    "number": "93.530",
+    "program_title": "Teaching Health Center Graduate Medical Education Payment"
+   }
+  ],
+  "matched_terms": [
+   "health center",
+   "federally qualified"
+  ],
+  "more_information_text": "",
+  "more_information_text_as_published": "",
+  "more_information_url": "",
+  "names_health_centers": true,
+  "number": "HRSA-27-084",
+  "number_of_awards": {
+   "as_published": "12",
+   "value": 12
+  },
+  "packages": [],
+  "record_change_comment": "",
+  "record_change_comment_as_published": "",
+  "revision": 0,
+  "status": "forecasted",
+  "title": "Teaching Health Center Graduate Medical Education (THCGME) Program",
+  "title_as_published": "Teaching Health Center Graduate Medical Education (THCGME) Program"
+ },
+ {
+  "agency_code": "HHS-HRSA",
+  "agency_name": "Health Resources and Services Administration",
+  "applicant_types": [
+   {
+    "description": "Nonprofits that do not have a 501(c)(3) status with the IRS, other than institutions of higher education",
+    "id": "13"
+   },
+   {
+    "description": "State governments",
+    "id": "00"
+   },
+   {
+    "description": "Native American tribal organizations (other than Federally recognized tribal governments)",
+    "id": "11"
+   },
+   {
+    "description": "County governments",
+    "id": "01"
+   },
+   {
+    "description": "Public housing authorities/Indian housing authorities",
+    "id": "08"
+   },
+   {
+    "description": "City or township governments",
+    "id": "02"
+   },
+   {
+    "description": "Nonprofits having a 501(c)(3) status with the IRS, other than institutions of higher education",
+    "id": "12"
+   },
+   {
+    "description": "Special district governments",
+    "id": "04"
+   },
+   {
+    "description": "Native American tribal governments (Federally recognized)",
+    "id": "07"
+   }
+  ],
+  "application_due_note": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "application_due_note_as_published": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "attachment_file_names": [],
+  "award_ceiling": {
+   "as_published": "19182000",
+   "value": 19182000
+  },
+  "award_floor": {
+   "as_published": "1215700",
+   "value": 1215700
+  },
+  "category": "Discretionary",
+  "change_comment": "Updates to align with FY27 Health Center Program Performance Period Extensions.",
+  "change_comment_as_published": "Updates to align with FY27 Health Center Program Performance Period Extensions.",
+  "cost_sharing": false,
+  "date_conflicts": [],
+  "dates": {
+   "archive": {
+    "as_published": "Oct 02, 2027 12:00:00 AM EDT",
+    "date": "2027-10-02"
+   },
+   "est_application_due": {
+    "as_published": "Dec 30, 2026 12:00:00 AM EST",
+    "date": "2026-12-30"
+   },
+   "est_award": {
+    "as_published": "Jul 01, 2027 12:00:00 AM EDT",
+    "date": "2027-07-01"
+   },
+   "est_notice_posting": {
+    "as_published": "Nov 30, 2026 12:00:00 AM EST",
+    "date": "2026-11-30"
+   },
+   "est_project_start": {
+    "as_published": "Jul 01, 2027 12:00:00 AM EDT",
+    "date": "2027-07-01"
+   },
+   "forecast_posted": {
+    "as_published": "Jul 31, 2026 12:00:00 AM EDT",
+    "date": "2026-07-31"
+   },
+   "last_changed": {
+    "as_published": "Sep 23, 2026 03:13:32 PM EDT",
+    "date": "2026-09-23"
+   },
+   "search_open": {
+    "as_published": "07/31/2026",
+    "date": "2026-07-31"
+   }
+  },
+  "description": "The FY 2027 Health Center Program Service Area Competition (SAC) funding improves the health of medically underserved communities and populations by providing grants to support the delivery of comprehensive, high-quality preventive and primary health care services in the United States and its territories. For each SAC Notice of Funding Opportunity (NOFO), service areas available for competition are announced in the Service Area Announcement Table (SAAT). Throughout the year, we may announce additional service areas in a Service Area Competition-Additional Area (SAC-AA) if an awarded health center cannot continue to provide services in the funded service area.",
+  "description_as_published": "<p>The FY 2027 Health Center Program Service Area Competition (SAC) funding improves the health of medically underserved communities and populations by providing grants to support the delivery of comprehensive, high-quality preventive and primary health care services in the United States and its territories. For each SAC Notice of Funding Opportunity (NOFO), service areas available for competition are announced in the Service Area Announcement Table (SAAT). Throughout the year, we may announce additional service areas in a Service Area Competition-Additional Area (SAC-AA) if an awarded health center cannot continue to provide services in the funded service area.</p>",
+  "document_kind": "forecast",
+  "eligibility": "",
+  "eligibility_as_published": "",
+  "estimated_funding": {
+   "as_published": "460992400",
+   "value": 460992400
+  },
+  "fiscal_year": 2027,
+  "funding_categories": [
+   {
+    "description": "Health",
+    "id": "HL"
+   }
+  ],
+  "funding_instruments": [
+   {
+    "description": "Grant",
+    "id": "G"
+   }
+  ],
+  "grants_gov_url": "https://www.grants.gov/search-results-detail/363419",
+  "health_center_program": true,
+  "id": "363419",
+  "listings": [
+   {
+    "number": "93.224",
+    "program_title": "Health Center Program"
+   }
+  ],
+  "matched_terms": [
+   "health center"
+  ],
+  "more_information_text": "",
+  "more_information_text_as_published": "",
+  "more_information_url": "",
+  "names_health_centers": true,
+  "number": "HRSA-27-006",
+  "number_of_awards": {
+   "as_published": "83",
+   "value": 83
+  },
+  "packages": [],
+  "record_change_comment": "Updates to align with FY27 Health Center Program Performance Period Extensions.",
+  "record_change_comment_as_published": "Updates to align with FY27 Health Center Program Performance Period Extensions.",
+  "revision": 12,
+  "status": "forecasted",
+  "title": "Fiscal Year (FY) 2027 Service Area Competition (SAC)",
+  "title_as_published": "Fiscal Year (FY) 2027 Service Area Competition (SAC)"
+ },
+ {
+  "agency_code": "HHS-HRSA",
+  "agency_name": "Health Resources and Services Administration",
+  "applicant_types": [
+   {
+    "description": "Nonprofits that do not have a 501(c)(3) status with the IRS, other than institutions of higher education",
+    "id": "13"
+   },
+   {
+    "description": "Special district governments",
+    "id": "04"
+   },
+   {
+    "description": "Native American tribal governments (Federally recognized)",
+    "id": "07"
+   },
+   {
+    "description": "County governments",
+    "id": "01"
+   },
+   {
+    "description": "Nonprofits having a 501(c)(3) status with the IRS, other than institutions of higher education",
+    "id": "12"
+   },
+   {
+    "description": "State governments",
+    "id": "00"
+   },
+   {
+    "description": "Public housing authorities/Indian housing authorities",
+    "id": "08"
+   },
+   {
+    "description": "City or township governments",
+    "id": "02"
+   },
+   {
+    "description": "Native American tribal organizations (other than Federally recognized tribal governments)",
+    "id": "11"
+   }
+  ],
+  "application_due_note": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "application_due_note_as_published": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "attachment_file_names": [],
+  "award_ceiling": {
+   "as_published": "15335500",
+   "value": 15335500
+  },
+  "award_floor": {
+   "as_published": "567000",
+   "value": 567000
+  },
+  "category": "Discretionary",
+  "change_comment": "Updates to align with FY27 Health Center Program Performance Period Extensions.",
+  "change_comment_as_published": "Updates to align with FY27 Health Center Program Performance Period Extensions.",
+  "cost_sharing": false,
+  "date_conflicts": [],
+  "dates": {
+   "archive": {
+    "as_published": "Oct 02, 2027 12:00:00 AM EDT",
+    "date": "2027-10-02"
+   },
+   "est_application_due": {
+    "as_published": "Jan 08, 2027 12:00:00 AM EST",
+    "date": "2027-01-08"
+   },
+   "est_award": {
+    "as_published": "Aug 01, 2027 12:00:00 AM EDT",
+    "date": "2027-08-01"
+   },
+   "est_notice_posting": {
+    "as_published": "Dec 09, 2026 12:00:00 AM EST",
+    "date": "2026-12-09"
+   },
+   "est_project_start": {
+    "as_published": "Aug 01, 2027 12:00:00 AM EDT",
+    "date": "2027-08-01"
+   },
+   "forecast_posted": {
+    "as_published": "Jul 31, 2026 12:00:00 AM EDT",
+    "date": "2026-07-31"
+   },
+   "last_changed": {
+    "as_published": "Sep 23, 2026 03:25:35 PM EDT",
+    "date": "2026-09-23"
+   },
+   "search_open": {
+    "as_published": "07/31/2026",
+    "date": "2026-07-31"
+   }
+  },
+  "description": "The FY 2027 Health Center Program Service Area Competition (SAC) funding improves the health of medically underserved communities and populations by providing grants to support the delivery of comprehensive, high-quality preventive and primary health care services in the United States and its territories. For each SAC Notice of Funding Opportunity (NOFO), service areas available for competition are announced in the Service Area Announcement Table (SAAT). Throughout the year, we may announce additional service areas in a Service Area Competition-Additional Area (SAC-AA) if an awarded health center cannot continue to provide services in the funded service area.",
+  "description_as_published": "<p>The FY 2027 Health Center Program Service Area Competition (SAC) funding improves the health of medically underserved communities and populations by providing grants to support the delivery of comprehensive, high-quality preventive and primary health care services in the United States and its territories. For each SAC Notice of Funding Opportunity (NOFO), service areas available for competition are announced in the Service Area Announcement Table (SAAT). Throughout the year, we may announce additional service areas in a Service Area Competition-Additional Area (SAC-AA) if an awarded health center cannot continue to provide services in the funded service area.</p>",
+  "document_kind": "forecast",
+  "eligibility": "",
+  "eligibility_as_published": "",
+  "estimated_funding": {
+   "as_published": "288945600",
+   "value": 288945600
+  },
+  "fiscal_year": 2027,
+  "funding_categories": [
+   {
+    "description": "Health",
+    "id": "HL"
+   }
+  ],
+  "funding_instruments": [
+   {
+    "description": "Grant",
+    "id": "G"
+   }
+  ],
+  "grants_gov_url": "https://www.grants.gov/search-results-detail/363421",
+  "health_center_program": true,
+  "id": "363421",
+  "listings": [
+   {
+    "number": "93.224",
+    "program_title": "Health Center Program"
+   }
+  ],
+  "matched_terms": [
+   "health center"
+  ],
+  "more_information_text": "",
+  "more_information_text_as_published": "",
+  "more_information_url": "",
+  "names_health_centers": true,
+  "number": "HRSA-27-008",
+  "number_of_awards": {
+   "as_published": "80",
+   "value": 80
+  },
+  "packages": [],
+  "record_change_comment": "Updates to align with FY27 Health Center Program Performance Period Extensions.",
+  "record_change_comment_as_published": "Updates to align with FY27 Health Center Program Performance Period Extensions.",
+  "revision": 10,
+  "status": "forecasted",
+  "title": "Fiscal Year (FY) 2027 Service Area Competition (SAC)",
+  "title_as_published": "Fiscal Year (FY) 2027 Service Area Competition (SAC)"
+ },
+ {
+  "agency_code": "HHS-HRSA",
+  "agency_name": "Health Resources and Services Administration",
+  "applicant_types": [
+   {
+    "description": "City or township governments",
+    "id": "02"
+   },
+   {
+    "description": "County governments",
+    "id": "01"
+   },
+   {
+    "description": "For profit organizations other than small businesses",
+    "id": "22"
+   },
+   {
+    "description": "Nonprofits having a 501(c)(3) status with the IRS, other than institutions of higher education",
+    "id": "12"
+   },
+   {
+    "description": "Private institutions of higher education",
+    "id": "20"
+   },
+   {
+    "description": "Native American tribal governments (Federally recognized)",
+    "id": "07"
+   },
+   {
+    "description": "Native American tribal organizations (other than Federally recognized tribal governments)",
+    "id": "11"
+   },
+   {
+    "description": "Nonprofits that do not have a 501(c)(3) status with the IRS, other than institutions of higher education",
+    "id": "13"
+   },
+   {
+    "description": "Public and State controlled institutions of higher education",
+    "id": "06"
+   },
+   {
+    "description": "Public housing authorities/Indian housing authorities",
+    "id": "08"
+   },
+   {
+    "description": "State governments",
+    "id": "00"
+   },
+   {
+    "description": "Independent school districts",
+    "id": "05"
+   },
+   {
+    "description": "Special district governments",
+    "id": "04"
+   },
+   {
+    "description": "Small businesses",
+    "id": "23"
+   }
+  ],
+  "application_due_note": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "application_due_note_as_published": "Electronically submitted applications must be submitted no later than 11:59 p.m., ET, on the listed application due date.",
+  "attachment_file_names": [
+   "HRSA-27-072 FINAL.pdf"
+  ],
+  "award_ceiling": {
+   "as_published": "1000000",
+   "value": 1000000
+  },
+  "award_floor": {
+   "as_published": "0",
+   "value": 0
+  },
+  "category": "Discretionary",
+  "change_comment": "",
+  "change_comment_as_published": "",
+  "cost_sharing": false,
+  "date_conflicts": [],
+  "dates": {
+   "application_due": {
+    "as_published": "Jan 08, 2027 12:00:00 AM EST",
+    "date": "2027-01-08"
+   },
+   "archive": {
+    "as_published": "Apr 30, 2027 12:00:00 AM EDT",
+    "date": "2027-04-30"
+   },
+   "earlier_est_application_due": {
+    "as_published": "Sep 20, 2026 12:00:00 AM EDT",
+    "date": "2026-09-20"
+   },
+   "earlier_est_award": {
+    "as_published": "Jan 30, 2027 12:00:00 AM EST",
+    "date": "2027-01-30"
+   },
+   "earlier_est_notice_posting": {
+    "as_published": "Aug 21, 2026 12:00:00 AM EDT",
+    "date": "2026-08-21"
+   },
+   "earlier_est_project_start": {
+    "as_published": "Mar 01, 2027 12:00:00 AM EST",
+    "date": "2027-03-01"
+   },
+   "forecast_posted": {
+    "as_published": "Aug 12, 2026 12:00:00 AM EDT",
+    "date": "2026-08-12"
+   },
+   "last_changed": {
+    "as_published": "Nov 06, 2026 08:59:45 AM EST",
+    "date": "2026-11-06"
+   },
+   "notice_posted": {
+    "as_published": "Nov 06, 2026 12:00:00 AM EST",
+    "date": "2026-11-06"
+   },
+   "original_application_due": {
+    "as_published": "Jan 08, 2027 12:00:00 AM EST",
+    "date": "2027-01-08"
+   },
+   "search_close": {
+    "as_published": "01/08/2027",
+    "date": "2027-01-08"
+   },
+   "search_open": {
+    "as_published": "11/06/2026",
+    "date": "2026-11-06"
+   }
+  },
+  "description": "The purpose of Women's Initiative for Screening and Health (WISH) is to improve women’s health across the lifespan by increasing access to and availability of preventive health services. Through a multidisciplinary coalition of healthcare providers, academic institutions, and patient-centered organizations, WISH drives a comprehensive strategy to: (1) review and recommend evidence-based updates to the HRSA-supported women’s preventive service guidelines (Guidelines), (2) raise awareness and knowledge of the (Guidelines), and (3) increase adoption and use of the Guidelines in clinical practice.",
+  "description_as_published": "<p>The purpose of Women's Initiative for Screening and Health (WISH) is to improve women’s health across the lifespan by increasing access to and availability of preventive health services. Through a multidisciplinary coalition of healthcare providers, academic institutions, and patient-centered organizations, WISH drives a comprehensive strategy to: (1) review and recommend evidence-based updates to the HRSA-supported women’s preventive service guidelines (Guidelines), (2) raise awareness and knowledge of the (Guidelines), and (3) increase adoption and use of the Guidelines in clinical practice.&nbsp;</p>",
+  "document_kind": "synopsis",
+  "eligibility": "",
+  "eligibility_as_published": "",
+  "estimated_funding": {
+   "as_published": "1000000",
+   "value": 1000000
+  },
+  "fiscal_year": null,
+  "funding_categories": [
+   {
+    "description": "Health",
+    "id": "HL"
+   }
+  ],
+  "funding_instruments": [
+   {
+    "description": "Cooperative Agreement",
+    "id": "CA"
+   }
+  ],
+  "grants_gov_url": "https://www.grants.gov/search-results-detail/363546",
+  "health_center_program": false,
+  "id": "363546",
+  "listings": [
+   {
+    "number": "93.110",
+    "program_title": "Special Projects of Regional and National Significance"
+   }
+  ],
+  "matched_terms": [],
+  "more_information_text": "",
+  "more_information_text_as_published": "",
+  "more_information_url": "",
+  "names_health_centers": false,
+  "number": "HRSA-27-072",
+  "number_of_awards": {
+   "as_published": "1",
+   "value": 1
+  },
+  "packages": [
+   {
+    "closing": {
+     "as_published": "2027-01-08",
+     "date": "2027-01-08"
+    },
+    "opening": {
+     "as_published": "2026-11-06",
+     "date": "2026-11-06"
+    },
+    "package_id": "PKG00294540"
+   }
+  ],
+  "record_change_comment": "",
+  "record_change_comment_as_published": "",
+  "revision": 2,
+  "status": "posted",
+  "title": "Women's Initiative for Screening and Health (WISH)",
+  "title_as_published": "Women's Initiative for Screening and Health (WISH)"
+ }
+]

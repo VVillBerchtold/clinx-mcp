@@ -1,0 +1,373 @@
+{
+ "notes": {
+  "counts": "Counts of rows in HRSA's files on the snapshot's day. 'designations' counts each designation once; 'file_rows' counts the component rows HRSA publishes for those designations (a county, county subdivision or census tract each).",
+  "state": "A designation is placed in the state HRSA gives as its primary state. Components in other states are shown in the 'states' column of a row.",
+  "updated": "'updated' means only that HRSA's 'last update date' for the designation falls in the window. The file does not say what was updated.",
+  "window": "The window is the 365 days up to and including the snapshot's day, counted from the snapshot's day and never from the clock."
+ },
+ "snapshot_day": "2026-11-16",
+ "states": {
+  "MA": {
+   "change_rows": 0,
+   "designations": {
+    "hpsa-dh": {
+     "Designated": {
+      "designations": 55,
+      "file_rows": 153
+     },
+     "Proposed For Withdrawal": {
+      "designations": 6,
+      "file_rows": 95
+     },
+     "Withdrawn": {
+      "designations": 46,
+      "file_rows": 177
+     }
+    },
+    "hpsa-mh": {
+     "Designated": {
+      "designations": 53,
+      "file_rows": 76
+     },
+     "Proposed For Withdrawal": {
+      "designations": 3,
+      "file_rows": 4
+     },
+     "Withdrawn": {
+      "designations": 46,
+      "file_rows": 434
+     }
+    },
+    "hpsa-pc": {
+     "Designated": {
+      "designations": 64,
+      "file_rows": 145
+     },
+     "Proposed For Withdrawal": {
+      "designations": 4,
+      "file_rows": 52
+     },
+     "Withdrawn": {
+      "designations": 99,
+      "file_rows": 1035
+     }
+    },
+    "mua": {
+     "Designated": {
+      "designations": 46,
+      "file_rows": 295
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 1,
+      "file_rows": 1
+     }
+    }
+   },
+   "designations_from_other_primary_states_with_components_here": 0,
+   "designations_with_components_in_other_states": 0,
+   "recent_events": {
+    "hpsa-dh": {
+     "designated": 6,
+     "updated": 23,
+     "withdrawn": 0
+    },
+    "hpsa-mh": {
+     "designated": 5,
+     "updated": 19,
+     "withdrawn": 0
+    },
+    "hpsa-pc": {
+     "designated": 4,
+     "updated": 34,
+     "withdrawn": 2
+    },
+    "mua": {
+     "designated": 0,
+     "updated": 0,
+     "withdrawn": 0
+    }
+   },
+   "sites": {
+    "Active": 296
+   },
+   "sites_added_to_scope_in_window": 18,
+   "sites_not_active": 0
+  },
+  "PR": {
+   "change_rows": 0,
+   "designations": {
+    "hpsa-dh": {
+     "Designated": {
+      "designations": 100,
+      "file_rows": 100
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 23,
+      "file_rows": 90
+     }
+    },
+    "hpsa-mh": {
+     "Designated": {
+      "designations": 75,
+      "file_rows": 75
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 48,
+      "file_rows": 148
+     }
+    },
+    "hpsa-pc": {
+     "Designated": {
+      "designations": 43,
+      "file_rows": 43
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 98,
+      "file_rows": 238
+     }
+    },
+    "mua": {
+     "Designated": {
+      "designations": 72,
+      "file_rows": 72
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 0,
+      "file_rows": 0
+     }
+    }
+   },
+   "designations_from_other_primary_states_with_components_here": 0,
+   "designations_with_components_in_other_states": 0,
+   "recent_events": {
+    "hpsa-dh": {
+     "designated": 1,
+     "updated": 7,
+     "withdrawn": 0
+    },
+    "hpsa-mh": {
+     "designated": 1,
+     "updated": 7,
+     "withdrawn": 0
+    },
+    "hpsa-pc": {
+     "designated": 1,
+     "updated": 8,
+     "withdrawn": 0
+    },
+    "mua": {
+     "designated": 0,
+     "updated": 0,
+     "withdrawn": 0
+    }
+   },
+   "sites": {
+    "Active": 164
+   },
+   "sites_added_to_scope_in_window": 16,
+   "sites_not_active": 0
+  },
+  "RI": {
+   "change_rows": 0,
+   "designations": {
+    "hpsa-dh": {
+     "Designated": {
+      "designations": 14,
+      "file_rows": 26
+     },
+     "Proposed For Withdrawal": {
+      "designations": 2,
+      "file_rows": 3
+     },
+     "Withdrawn": {
+      "designations": 16,
+      "file_rows": 52
+     }
+    },
+    "hpsa-mh": {
+     "Designated": {
+      "designations": 14,
+      "file_rows": 146
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 19,
+      "file_rows": 81
+     }
+    },
+    "hpsa-pc": {
+     "Designated": {
+      "designations": 14,
+      "file_rows": 15
+     },
+     "Proposed For Withdrawal": {
+      "designations": 3,
+      "file_rows": 4
+     },
+     "Withdrawn": {
+      "designations": 28,
+      "file_rows": 114
+     }
+    },
+    "mua": {
+     "Designated": {
+      "designations": 12,
+      "file_rows": 77
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 0,
+      "file_rows": 0
+     }
+    }
+   },
+   "designations_from_other_primary_states_with_components_here": 0,
+   "designations_with_components_in_other_states": 0,
+   "recent_events": {
+    "hpsa-dh": {
+     "designated": 3,
+     "updated": 4,
+     "withdrawn": 1
+    },
+    "hpsa-mh": {
+     "designated": 1,
+     "updated": 2,
+     "withdrawn": 1
+    },
+    "hpsa-pc": {
+     "designated": 1,
+     "updated": 10,
+     "withdrawn": 0
+    },
+    "mua": {
+     "designated": 0,
+     "updated": 0,
+     "withdrawn": 0
+    }
+   },
+   "sites": {
+    "Active": 71
+   },
+   "sites_added_to_scope_in_window": 8,
+   "sites_not_active": 0
+  },
+  "XX": {
+   "change_rows": 0,
+   "designations": {
+    "hpsa-dh": {
+     "Designated": {
+      "designations": 2,
+      "file_rows": 2
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 0,
+      "file_rows": 0
+     }
+    },
+    "hpsa-mh": {
+     "Designated": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 0,
+      "file_rows": 0
+     }
+    },
+    "hpsa-pc": {
+     "Designated": {
+      "designations": 5,
+      "file_rows": 5
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 0,
+      "file_rows": 0
+     }
+    },
+    "mua": {
+     "Designated": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Proposed For Withdrawal": {
+      "designations": 0,
+      "file_rows": 0
+     },
+     "Withdrawn": {
+      "designations": 0,
+      "file_rows": 0
+     }
+    }
+   },
+   "designations_from_other_primary_states_with_components_here": 0,
+   "designations_with_components_in_other_states": 0,
+   "recent_events": {
+    "hpsa-dh": {
+     "designated": 1,
+     "updated": 2,
+     "withdrawn": 0
+    },
+    "hpsa-mh": {
+     "designated": 0,
+     "updated": 0,
+     "withdrawn": 0
+    },
+    "hpsa-pc": {
+     "designated": 0,
+     "updated": 1,
+     "withdrawn": 0
+    },
+    "mua": {
+     "designated": 0,
+     "updated": 0,
+     "withdrawn": 0
+    }
+   },
+   "sites": {
+    "Active": 377
+   },
+   "sites_added_to_scope_in_window": 12,
+   "sites_not_active": 0
+  }
+ },
+ "window_end": "2026-11-16",
+ "window_start": "2025-11-16"
+}

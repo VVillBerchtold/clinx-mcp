@@ -1,9 +1,14 @@
-# ClinX 340B server
+# ClinX open data server
 
-A small program that lets an AI assistant look things up in ClinX's open tables about the federal
-340B drug pricing program: the state laws on the books, the bills in Congress and the state
-legislatures, the rules and notices federal agencies publish, the reports that hospitals, health
-centers and states have filed about 340B, and a calendar of their dates.
+A small program that lets an AI assistant look things up in ClinX's open data. ClinX is a platform
+of tools for clinics, and its open data comes in two groups.
+
+- **The federal 340B drug pricing program:** the state laws on the books, the bills in Congress
+  and the state legislatures, the rules and notices federal agencies publish, the reports that
+  hospitals, health centers and states have filed about 340B, and a calendar of their dates.
+- **Health centers:** what each health center reported to HRSA in the Uniform Data System, HRSA's
+  funding opportunities with their dates, and HRSA's shortage designations and health center
+  sites with what changed in the last 365 days.
 
 **Status: running at `https://clinx.org/mcp` since 15 November 2026.** Give that address to an
 assistant that accepts connectors (MCP servers); there is no key and no account. It is not
@@ -13,18 +18,21 @@ published as a package yet, so to run your own copy you start it yourself, as sh
 
 Assistants such as Claude can be given "tools": small lookups they may call while answering a
 question. The Model Context Protocol (MCP) is the common way to offer such tools. This is an MCP
-server with twelve of them.
+server with seventeen of them.
 
 Ask an assistant "which states passed a contract pharmacy law this year?" and, with this server
 connected, it does not have to guess or search the web. It asks the server, gets rows from the
 same tables anyone can download from [clinx.org/data](https://clinx.org/data/), and answers with
 the link to each official page.
 
-The server holds no data of its own. It reads the six public files from clinx.org, keeps them
-in memory for an hour, and answers from that copy. It only reads. It has no sign-in, no key, no
+The server holds no data of its own. It reads public files from clinx.org, keeps them in memory
+for an hour, and answers from that copy. The six 340B tables are read when the first question
+arrives. A health center file is read only when a health center question is asked. It only reads. It has no sign-in, no key, no
 account, and it keeps nothing about who asked what.
 
-## The twelve tools
+## The seventeen tools
+
+Eleven answer about 340B, five about health centers, and `about_the_data` covers both groups.
 
 | Tool | What it answers |
 | --- | --- |
@@ -39,7 +47,7 @@ account, and it keeps nothing about who asked what.
 | `find_filings` | Filed reports, by state, year, entity name or 340B ID, entity type, kind of record or form. Short rows with the ClinX page and the official source; says plainly when a list is cut short. |
 | `get_filing` | One filed report in full: every line as filed with its label, unit and amount, which claim counts are withheld and why, how the figures were checked, recorded discrepancies, and the official file's address, size and SHA-256. A very long report comes in parts. |
 | `state_overview` | One place at a glance: a state's laws, its bills by stage, which group of reporting states it is in, how many filed reports ClinX holds for it, and what is next. `FED` gives the federal agencies. |
-| `about_the_data` | Where the tables come from, when each was last brought up to date, what the filed reports table holds, the licence. |
+| `about_the_data` | Where the tables come from, when each was last brought up to date, what the filed reports table holds, what the three health center sets are and the day each was read, what HRSA's marks mean, what ClinX does not do, the licence. |
 
 ### The filed reports
 
@@ -74,6 +82,47 @@ Questions to try: "Which states require 340B reports, and which of them publish 
 each hospital?" (`reporting_states`); "Find the 2025 reports filed in Rhode Island by health
 centers" (`find_filings`); "What did the Idaho 2025 report print for total claims, and were
 there any differences between its figures?" (`get_filing`).
+
+### The health center tools
+
+Five tools answer about health centers. Each reads files that ClinX built from a federal
+agency's own files, and each answer names the agency's file and the day ClinX read it.
+
+| Tool | What it answers |
+| --- | --- |
+| `find_health_centers` | The health centers that have records, by state, by words in the name, city or grant number, or by a year of report. Short rows in the order of the names, each with its key and its ClinX page. |
+| `get_health_center_report` | What one health center reported to HRSA for one year. With no table named: the tables of that year, how many cells each has and how many hold a value or a mark. With a table named: every line of it with HRSA's titles and each value as published. A long table comes in parts. |
+| `find_funding_opportunities` | HRSA's funding opportunities as Grants.gov lists them, by words, by status (forecasted or posted), only those of the Health Center Program, or those open on a day. With a number such as `HRSA-27-006`, that one in full. |
+| `health_center_calendar` | The dated lines of the health center funding calendar between two days: a notice expected, an application due, an award expected, comments closing, a rule taking effect. Each row links the official page. |
+| `shortage_area_changes` | Shortage designations and health center sites. With no state: the national counts. With a state: its counts by kind and status. With `show`: the designations that changed in the last 365 days, the ones proposed for withdrawal, or the sites added to scope. |
+
+A few things about these answers are deliberate.
+
+- **A value is given as HRSA published it**, character for character. Nothing is rounded, added
+  up or estimated. A number HRSA's workbook holds with an exponent (`2e+05`) is given that way
+  and marked as such.
+- **A mark is given as the mark, with its meaning in words.** HRSA writes `-` where a cell has
+  no entry, `--` where it withheld a small count of patients, and `---` where it withheld a
+  value as confidential. The server passes each on and never works out what was withheld.
+- **Some cells have no value on ClinX.** A count of patients from 1 to 15 is not repeated, and
+  text a health center typed into a cell is not kept. The answer says which of the two it is.
+- **Some years do not name a health center in every sheet.** Then the table is listed with the
+  status `unnamed` and no value is given for it.
+- **No tool puts health centers in the order of a figure,** and none compares one with another.
+  A list is in the order of the names.
+- **A forecast is a forecast.** A date or an amount on a forecasted opportunity is the agency's
+  estimate, and the answer says so on every row.
+- **No contact person.** The line of a funding notice that names whom to write to is never read
+  into memory, so no tool can give it out.
+- **Each health center file is its own piece.** If one cannot be read, the tool that needs it
+  says so plainly and every other tool goes on answering.
+
+Questions to try: "Which health centers in Rhode Island have records, and for which years?"
+(`find_health_centers`); "What did that health center report in Table 3A for 2025?"
+(`get_health_center_report`); "Which HRSA funding opportunities are open today, and when are
+they due?" (`find_funding_opportunities`); "What health center funding dates fall in December?"
+(`health_center_calendar`); "Which shortage designations in Rhode Island are proposed for
+withdrawal?" (`shortage_area_changes`).
 
 A bill at the stage `Did not pass` ended without becoming law; it is finished, and no tool shows
 it as pending. The calendar has a kind `report due` for the day a state's report is due.
@@ -156,8 +205,11 @@ function, which is how the program on your own computer works with a plain copy 
 | `src/core.js` | The server itself: reads one message, writes one answer. |
 | `src/split.js` | Cuts the filed reports file into an index and one small file for each report. |
 | `src/pages.js` | Where each filed report is shown on clinx.org. |
-| `src/tools.js` | The twelve tools: what each takes and how it answers from the tables. |
-| `src/tables.js` | Fetches the six public files and keeps them for an hour. Holds a report's lines as text and reads them back only for the report asked for. |
+| `src/tools.js` | The list of all seventeen tools, and the eleven about 340B with `about_the_data`: what each takes and how it answers from the tables. |
+| `src/health-center-tools.js` | The five health center tools, and what `about_the_data` says about the health center sets. |
+| `src/health-centers.js` | The health center files: their names, the shape each is checked for, and when each is read. |
+| `src/inputs.js` | Small helpers both groups of tools share for checking what was asked. |
+| `src/tables.js` | Fetches the six 340B files and keeps them for an hour. Holds a report's lines as text and reads them back only for the report asked for. Hands the health center pieces to the tools. |
 | `src/disk.js` | Reads the table files from a folder instead, for a program on your own computer. |
 | `src/usage.js` | Describes a request by kind, for a host that wants to count what is asked. See below. |
 | `src/stdio.js` | The door for a helper program on your own computer. |
@@ -178,7 +230,7 @@ older 2025-11-25, 2025-06-18, 2025-03-26 and 2024-11-05. A request that names th
 is answered the newer way. Everything else is answered the older way.
 
 On 15 November 2026 Claude Code 2.1.306 was pointed at the server. It opened with
-`server/discover`, was told 2026-07-28, and listed the tools (seven then, twelve now). Those exact messages are now
+`server/discover`, was told 2026-07-28, and listed the tools (seven then, seventeen now). Those exact messages are now
 one of the tests. A whole question asked through an assistant, start to finish, has not been
 tried yet; nor has any other client.
 
@@ -187,13 +239,16 @@ tried yet; nor has any other client.
 - **Read-only.** No tool changes anything anywhere.
 - **Nothing about the asker is kept.** No log of questions, no cookies, no sessions, no sign-in.
   Run on your own computer, the server counts nothing at all.
-- **It cannot be turned on another site.** The only addresses it ever fetches are the six
-  table files on clinx.org, at most once an hour, whatever it is asked.
+- **It cannot be turned on another site.** The only addresses it ever fetches are the
+  public data files under clinx.org/data/. The small ones are fetched at most once an hour,
+  and one health center's or one state's file only when a question names it, whatever it is asked.
 - **Small requests only.** The web door takes `POST` with JSON, up to 64 KB, and nothing else.
 - **On your own computer** it listens on `127.0.0.1` only and refuses calls from web pages that
   are not on that computer, so a page you visit cannot reach it.
 - If clinx.org cannot be reached, a tool says so. If a refetch fails, the copy already held is
   still served.
+- **No contact person.** The health center tools give no contact person's name, email address
+  or phone number.
 
 ## Counting what is asked, without knowing who asked
 
@@ -209,9 +264,9 @@ A description has eight fields and never more:
 | `method` | `tools/call` | The kind of request. |
 | `tool` | `find_bills` | The tool called, if one was. |
 | `outcome` | `answered` | Answered, a mistake in what was asked, refused, or the tables could not be reached. |
-| `place` | `TX` | The state asked about, `US` or `FED`. |
+| `place` | `TX` | The state asked about, `US` or `FED`. A territory's code is not kept. |
 | `filters` | `kind=contract-pharmacy text` | The filters used, by name. |
-| `looked_up` | `ri-2025-hb5634` | The public row a "get" tool found. |
+| `looked_up` | `ri-2025-hb5634` | The public row a "get" tool found: a bill, a law, a notice or a filed report. A health center's key is not kept. |
 | `client` | `claude-code` | The name the assistant program gives itself. |
 | `version` | `2026-07-28` | The protocol version it asked for. |
 
@@ -234,10 +289,11 @@ The copy at clinx.org/mcp is counted this way and no other. The site's
 
 ## Tests
 
-    npm test          # 67 tests and 2 live checks that are skipped, no network
-    npm run test:live # two checks against the published tables at clinx.org
+    npm test          # 94 tests and 3 live checks that are skipped, no network
+    npm run test:live # three checks against the published files at clinx.org
 
-The tests cover both protocol eras, every tool, every kind of mistaken input, what a host is
+The tests cover both protocol eras, every tool, every kind of mistaken input, a health center
+file that cannot be read (its tool says so and the others go on answering), what a host is
 told about a request and what it is not, the helper program
 started and driven as an app would drive it, and the web door both as a function and as a real
 server on a local port.
@@ -245,11 +301,15 @@ server on a local port.
 ## What is not done
 
 - It is not published as a package, so there is no one-line install.
-- It answers from the state law, bills, federal notices, calendar, filed reports and reporting
-  states tables. The registry tables are not offered yet, and the drug rows of a report are
+- For 340B it answers from the state law, bills, federal notices, calendar, filed reports and
+  reporting states tables. The registry tables are not offered yet, and the drug rows of a report are
   given as lines of that report, not as a separate search.
 - Federal notices go back to January 2025. Court cases, and which drug makers an agency has
   approved for the rebate pilot, are not in the tables.
+- Health center records are held for the states ClinX has read so far; `find_health_centers`
+  says which. A health center's sites and the ZIP codes of its patients are on its ClinX page
+  and in its file, and no tool gives them yet. The Federal Register documents of the funding
+  calendar are given as dated lines, not as a search of their own.
 - Hearings appear once a legislature posts an agenda that names a listed bill. In November 2026,
   with most legislatures out of session, there are none.
 

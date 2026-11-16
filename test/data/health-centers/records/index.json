@@ -1,0 +1,127 @@
+{
+ "about": "The health centers that have a records page on ClinX, one entry for each, in the order of their keys. The name, city, funding types, urban or rural and the number of sites are as HRSA’s file for the health center’s latest year prints them. The key is the health center’s number in HRSA’s Uniform Data System files. Each health center’s own file holds every published value of every year.",
+ "years": [
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "latest_year": 2025,
+ "states": [
+  "MA",
+  "RI"
+ ],
+ "workbooks": {
+  "2021": {
+   "file": "H80-2021.xlsx",
+   "url": "https://data.hrsa.gov/DataDownload/StaticDocuments/H80-2021.xlsx",
+   "read_on": "2026-11-16",
+   "hrsa_last_refreshed": "10/31/2022 12:00 AM EST"
+  },
+  "2022": {
+   "file": "H80-2022.xlsx",
+   "url": "https://data.hrsa.gov/DataDownload/StaticDocuments/H80-2022.xlsx",
+   "read_on": "2026-11-16",
+   "hrsa_last_refreshed": "05/12/2023 12:00 AM EST"
+  },
+  "2023": {
+   "file": "H80-2023.xlsx",
+   "url": "https://data.hrsa.gov/DataDownload/StaticDocuments/H80-2023.xlsx",
+   "read_on": "2026-11-16",
+   "hrsa_last_refreshed": "05/10/2024 12:00 AM EST"
+  },
+  "2024": {
+   "file": "H80-2024.xlsx",
+   "url": "https://data.hrsa.gov/DataDownload/StaticDocuments/H80-2024.xlsx",
+   "read_on": "2026-11-16",
+   "hrsa_last_refreshed": "05/08/2025 12:00 AM EST"
+  },
+  "2025": {
+   "file": "H80-2025.xlsx",
+   "url": "https://data.hrsa.gov/DataDownload/StaticDocuments/H80-2025.xlsx",
+   "read_on": "2026-11-16",
+   "hrsa_last_refreshed": "05/07/2026 12:00 AM EST"
+  }
+ },
+ "health_centers": [
+  {
+   "key": "010120",
+   "grant_number": "H80CS00001",
+   "name": "CITY OF SPRINGFIELD, MASSACHUSETTS",
+   "city": "Springfield",
+   "state": "MA",
+   "years": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "funding_types": [
+    {
+     "flag": "HP",
+     "words": "Homeless Population"
+    }
+   ],
+   "urban_rural": "Urban",
+   "sites": 7,
+   "page": "/health-centers/records/010120/",
+   "file": "/data/health-centers/records/centers/010120.json"
+  },
+  {
+   "key": "010480",
+   "grant_number": "H80CS00308",
+   "name": "NORTHWEST COMMUNITY HEALTH CARE",
+   "city": "Pascoag",
+   "state": "RI",
+   "years": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "funding_types": [
+    {
+     "flag": "CHC",
+     "words": "Community Health Center"
+    }
+   ],
+   "urban_rural": "Rural",
+   "sites": 7,
+   "page": "/health-centers/records/010480/",
+   "file": "/data/health-centers/records/centers/010480.json"
+  },
+  {
+   "key": "01E00040",
+   "grant_number": "H80CS12879",
+   "name": "TRI-COUNTY COMMUNITY ACTION AGENCY",
+   "earlier_names": [
+    {
+     "year": 2021,
+     "name": "TRI-TOWN ECONOMIC OPPORTUNITY COMMITTEE"
+    }
+   ],
+   "city": "Johnston",
+   "state": "RI",
+   "years": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "funding_types": [
+    {
+     "flag": "CHC",
+     "words": "Community Health Center"
+    }
+   ],
+   "urban_rural": "Urban",
+   "sites": 3,
+   "page": "/health-centers/records/01e00040/",
+   "file": "/data/health-centers/records/centers/01e00040.json"
+  }
+ ]
+}

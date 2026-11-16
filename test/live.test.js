@@ -59,3 +59,28 @@ test('the published filed reports and reporting states answer the newer tools', 
   assert.match(one.official_file.sha256, /^[0-9a-f]{64}$/);
   assert.ok(one.lines_total > 0);
 });
+
+test('the published health center files answer every health center tool', { skip: !live && 'set CLINX_LIVE=1 to run' }, async () => {
+  const about = (await run('about_the_data')).structuredContent;
+  assert.ok(about.health_centers.records.health_centers > 10 && /^\d{4}-\d{2}-\d{2}$/.test(about.health_centers.funding.read_on), JSON.stringify(about.health_centers).slice(0, 300));
+
+  const centers = (await run('find_health_centers', { limit: 100 })).structuredContent;
+  assert.ok(centers.matched > 10 && centers.health_centers.every((c) => c.clinx_page.startsWith('https://clinx.org/health-centers/records/')));
+  const one = centers.health_centers[0];
+  const report = (await run('get_health_center_report', { health_center: one.key })).structuredContent;
+  assert.ok(report.tables.length >= 10 && report.tables.some((t) => t.table === 'Table 3A'));
+  const table = (await run('get_health_center_report', { health_center: one.key, table: 'Table 3A' })).structuredContent;
+  assert.ok(table.lines.length > 10 && table.lines.every((l) => Array.isArray(l.cells)));
+
+  const funding = (await run('find_funding_opportunities', { limit: 100 })).structuredContent;
+  assert.ok(funding.matched > 5 && funding.opportunities.every((o) => o.grants_gov_page.startsWith('https://www.grants.gov/')));
+  const dates = (await run('health_center_calendar', { from: '2026-01-01', limit: 100 })).structuredContent;
+  assert.ok(dates.matched > 20 && dates.dates.every((d) => d.official_page.startsWith('https://')));
+
+  const nation = (await run('shortage_area_changes')).structuredContent;
+  assert.ok(nation.states_and_territories.length >= 50 && nation.national_counts.designations);
+  const state = (await run('shortage_area_changes', { state: 'RI' })).structuredContent;
+  assert.ok(state.counts.designations['hpsa-pc']);
+  const rows = (await run('shortage_area_changes', { state: 'RI', show: 'recent' })).structuredContent;
+  assert.ok(rows.designations.every((r) => r.state === 'RI'));
+});

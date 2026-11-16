@@ -1,0 +1,137 @@
+{
+ "about": "The three sets of public health center information on ClinX, with the day each was read from the agency’s files. The counts are counts of rows in those files on that day.",
+ "records": {
+  "what": "What each health center reported to HRSA in the Uniform Data System, as HRSA publishes it in one workbook for each year.",
+  "source": "HRSA, Health Center Program Uniform Data System, awardee workbooks",
+  "years": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "latest_year": 2025,
+  "states": [
+   "MA",
+   "RI"
+  ],
+  "health_centers": 45,
+  "read_on": "2026-11-16",
+  "hrsa_last_refreshed": "05/07/2026 12:00 AM EST",
+  "page": "/health-centers/records/",
+  "index": "/data/health-centers/records/index.json",
+  "lines": "/data/health-centers/records/lines.json"
+ },
+ "funding": {
+  "what": "HRSA’s funding opportunities as listed on Grants.gov, the Federal Register documents that name the Health Center Program, and the dated lines both give.",
+  "source": "Grants.gov and the Federal Register",
+  "read_on": "2026-11-16",
+  "opportunities": 49,
+  "register_documents": 32,
+  "dated_lines": 151,
+  "page": "/health-centers/funding/",
+  "files": "/data/health-centers/funding/"
+ },
+ "areas": {
+  "what": "HRSA’s shortage designations (primary care, dental health and mental health shortage areas, and medically underserved areas and populations) and its list of health center sites, with what changed in the last 365 days.",
+  "source": "HRSA Data Warehouse download files",
+  "read_on": "2026-11-16",
+  "window_start": "2025-11-16",
+  "window_end": "2026-11-16",
+  "states_and_territories": 60,
+  "national_counts": {
+   "designations": {
+    "hpsa-dh": {
+     "Designated": {
+      "designations": 7244,
+      "file_rows": 17082
+     },
+     "Proposed For Withdrawal": {
+      "designations": 804,
+      "file_rows": 7281
+     },
+     "Withdrawn": {
+      "designations": 5379,
+      "file_rows": 23282
+     }
+    },
+    "hpsa-mh": {
+     "Designated": {
+      "designations": 6566,
+      "file_rows": 15313
+     },
+     "Proposed For Withdrawal": {
+      "designations": 620,
+      "file_rows": 8267
+     },
+     "Withdrawn": {
+      "designations": 4403,
+      "file_rows": 18633
+     }
+    },
+    "hpsa-pc": {
+     "Designated": {
+      "designations": 7890,
+      "file_rows": 22217
+     },
+     "Proposed For Withdrawal": {
+      "designations": 1015,
+      "file_rows": 9976
+     },
+     "Withdrawn": {
+      "designations": 9020,
+      "file_rows": 48840
+     }
+    },
+    "mua": {
+     "Designated": {
+      "designations": 4156,
+      "file_rows": 17097
+     },
+     "Proposed For Withdrawal": {
+      "designations": 47,
+      "file_rows": 170
+     },
+     "Withdrawn": {
+      "designations": 727,
+      "file_rows": 2886
+     }
+    }
+   },
+   "recent_events": {
+    "hpsa-dh": {
+     "designated": 900,
+     "updated": 1513,
+     "withdrawn": 133
+    },
+    "hpsa-mh": {
+     "designated": 634,
+     "updated": 1301,
+     "withdrawn": 138
+    },
+    "hpsa-pc": {
+     "designated": 896,
+     "updated": 2701,
+     "withdrawn": 362
+    },
+    "mua": {
+     "designated": 38,
+     "updated": 189,
+     "withdrawn": 51
+    }
+   },
+   "sites": {
+    "Active": 19616
+   }
+  },
+  "notes": {
+   "counts": "Counts of rows in HRSA's files on the snapshot's day. 'designations' counts each designation once; 'file_rows' counts the component rows HRSA publishes for those designations (a county, county subdivision or census tract each).",
+   "state": "A designation is placed in the state HRSA gives as its primary state. Components in other states are shown in the 'states' column of a row.",
+   "updated": "'updated' means only that HRSA's 'last update date' for the designation falls in the window. The file does not say what was updated.",
+   "window": "The window is the 365 days up to and including the snapshot's day, counted from the snapshot's day and never from the clock."
+  },
+  "page": "/health-centers/shortage-areas/",
+  "files": "/data/health-centers/areas/"
+ },
+ "home": "/health-centers/"
+}

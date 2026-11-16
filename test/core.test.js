@@ -79,7 +79,7 @@ test('the older protocol: ping, the tool list and a tool call work without _meta
   assert.deepEqual((await ask('ping')).result, {});
   const { result } = await ask('tools/list');
   assert.equal(result.resultType, undefined);
-  assert.deepEqual(result.tools.map((t) => t.name), ['find_bills', 'get_bill', 'find_laws', 'get_law', 'find_notices', 'get_notice', 'calendar', 'reporting_states', 'find_filings', 'get_filing', 'state_overview', 'about_the_data']);
+  assert.deepEqual(result.tools.map((t) => t.name), ['find_bills', 'get_bill', 'find_laws', 'get_law', 'find_notices', 'get_notice', 'calendar', 'reporting_states', 'find_filings', 'get_filing', 'state_overview', 'find_health_centers', 'get_health_center_report', 'find_funding_opportunities', 'health_center_calendar', 'shortage_area_changes', 'about_the_data']);
 });
 
 test('a notification gets no answer', async () => {

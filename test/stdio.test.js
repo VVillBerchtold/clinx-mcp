@@ -35,7 +35,7 @@ test('an older client: handshake, list the tools, call one, close', async () => 
   assert.equal(replies.length, 3, 'the notification gets no answer');
   const byId = Object.fromEntries(replies.map((r) => [r.id, r]));
   assert.equal(byId[0].result.protocolVersion, '2025-06-18');
-  assert.equal(byId[1].result.tools.length, 12);
+  assert.equal(byId[1].result.tools.length, 17);
   assert.equal(byId[2].result.structuredContent.matched, 2);
   assert.ok(raw.endsWith('\n'));
   assert.ok(raw.split('\n').filter(Boolean).every((line) => line.startsWith('{')), 'one JSON message per line, nothing else');
@@ -77,7 +77,7 @@ test('the messages Claude Code 2.1.306 sent when it connected on 15 November 202
   assert.equal(code, 0);
   const byId = Object.fromEntries(replies.map((r) => [r.id, r]));
   assert.deepEqual(byId['server-discover-probe-1'].result.supportedVersions, ['2026-07-28']);
-  assert.equal(byId[0].result.tools.length, 12);
+  assert.equal(byId[0].result.tools.length, 17);
   assert.equal(byId[1].result.resultType, 'complete');
   assert.equal(byId[1].result.structuredContent.matched, 2);
 });

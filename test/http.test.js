@@ -112,7 +112,7 @@ test('the real local server answers over this computer\'s network', async (t) =>
 
   const listed = await call({ jsonrpc: '2.0', id: 1, method: 'tools/list', params: { _meta: META } }, { 'mcp-protocol-version': '2026-07-28', 'mcp-method': 'tools/list' });
   assert.equal(listed.status, 200);
-  assert.equal((await listed.json()).result.tools.length, 12);
+  assert.equal((await listed.json()).result.tools.length, 17);
 
   const called = await call({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'calendar', arguments: { state: 'IL' } } });
   assert.equal((await called.json()).result.isError, false);

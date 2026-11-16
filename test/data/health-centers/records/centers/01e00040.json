@@ -1,0 +1,1446 @@
+{
+ "grant_number": "H80CS12879",
+ "key": "01E00040",
+ "marks": {
+  "-": "no_entry",
+  "--": "withheld_small",
+  "---": "withheld_confidential",
+  "withheld_by_clinx": "withheld_by_clinx"
+ },
+ "years": {
+  "2021": {
+   "health_center": {
+    "FundingCHC": "TRUE",
+    "FundingHO": "FALSE",
+    "FundingMHC": "FALSE",
+    "FundingPH": "FALSE",
+    "GrantNumber": "H80CS12879",
+    "HealthCenterCity": "Johnston",
+    "HealthCenterName": "TRI-TOWN ECONOMIC OPPORTUNITY COMMITTEE",
+    "HealthCenterOtherAddress": "",
+    "HealthCenterState": "RI",
+    "HealthCenterStreetAddress": "1126 Hartford Ave",
+    "HealthCenterZIPCode": "02919",
+    "ReportingYear": "2021",
+    "UrbanRuralFlag": "Urban",
+    "sheet_row": 85
+   },
+   "one_read_cells": [],
+   "reads": "two_reads",
+   "sites": {
+    "columns": [
+     "sheet_row",
+     "site_name",
+     "site_type",
+     "site_status",
+     "location_type",
+     "location_setting",
+     "operational_schedule",
+     "calendar_schedule",
+     "weekly_hours_as_published",
+     "service_area_population",
+     "operated_by",
+     "street",
+     "city",
+     "state",
+     "zip",
+     "data_as_of"
+    ],
+    "rows": [
+     [
+      "915",
+      "Tri-County Community Health Center",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "54.00",
+      "Urban",
+      "Health Center/Applicant",
+      "1126 Hartford Avenue",
+      "Johnston",
+      "RI",
+      "02919-7130",
+      "12/31/2021 11:59 PM EST"
+     ],
+     [
+      "916",
+      "Tri-County Community Health Center of North Providence",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "48.00",
+      "Urban",
+      "Health Center/Applicant",
+      "33 Maple Avenue",
+      "North Providence",
+      "RI",
+      "02911-2415",
+      "12/31/2021 11:59 PM EST"
+     ]
+    ]
+   },
+   "source": {
+    "file": "H80-2021.xlsx",
+    "report_last_refreshed": "10/31/2022 12:00 AM EST"
+   },
+   "tables": {
+    "HITInformation": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "OtherDataElements": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table4": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table5": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table6A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table6B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_1": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_2": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table8A": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table9D": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table9E": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Workforce": {
+     "sheet_row": "86",
+     "status": "row_present"
+    }
+   },
+   "values": {
+    "T3a_L10_Ca": "41",
+    "T3a_L10_Cb": "57",
+    "T3a_L11_Ca": "58",
+    "T3a_L11_Cb": "52",
+    "T3a_L12_Ca": "43",
+    "T3a_L12_Cb": "58",
+    "T3a_L13_Ca": "52",
+    "T3a_L13_Cb": "61",
+    "T3a_L14_Ca": "48",
+    "T3a_L14_Cb": "56",
+    "T3a_L15_Ca": "65",
+    "T3a_L15_Cb": "48",
+    "T3a_L16_Ca": "34",
+    "T3a_L16_Cb": "61",
+    "T3a_L17_Ca": "46",
+    "T3a_L17_Cb": "34",
+    "T3a_L18_Ca": "44",
+    "T3a_L18_Cb": "55",
+    "T3a_L19_Ca": "31",
+    "T3a_L19_Cb": "45",
+    "T3a_L1_Ca": "45",
+    "T3a_L1_Cb": "37",
+    "T3a_L20_Ca": "42",
+    "T3a_L20_Cb": "59",
+    "T3a_L21_Ca": "21",
+    "T3a_L21_Cb": "46",
+    "T3a_L22_Ca": "40",
+    "T3a_L22_Cb": "66",
+    "T3a_L23_Ca": "37",
+    "T3a_L23_Cb": "59",
+    "T3a_L24_Ca": "30",
+    "T3a_L24_Cb": "52",
+    "T3a_L25_Ca": "37",
+    "T3a_L25_Cb": "64",
+    "T3a_L26_Ca": "187",
+    "T3a_L26_Cb": "451",
+    "T3a_L27_Ca": "253",
+    "T3a_L27_Cb": "491",
+    "T3a_L28_Ca": "252",
+    "T3a_L28_Cb": "391",
+    "T3a_L29_Ca": "202",
+    "T3a_L29_Cb": "303",
+    "T3a_L2_Ca": "32",
+    "T3a_L2_Cb": "52",
+    "T3a_L30_Ca": "180",
+    "T3a_L30_Cb": "241",
+    "T3a_L31_Ca": "203",
+    "T3a_L31_Cb": "265",
+    "T3a_L32_Ca": "203",
+    "T3a_L32_Cb": "271",
+    "T3a_L33_Ca": "157",
+    "T3a_L33_Cb": "233",
+    "T3a_L34_Ca": "111",
+    "T3a_L34_Cb": "160",
+    "T3a_L35_Ca": "42",
+    "T3a_L35_Cb": "101",
+    "T3a_L36_Ca": "27",
+    "T3a_L36_Cb": "46",
+    "T3a_L37_Ca": "--",
+    "T3a_L37_Cb": "21",
+    "T3a_L38_Ca": "--",
+    "T3a_L38_Cb": "25",
+    "T3a_L39_Ca": "2934",
+    "T3a_L39_Cb": "4273",
+    "T3a_L3_Ca": "46",
+    "T3a_L3_Cb": "35",
+    "T3a_L4_Ca": "50",
+    "T3a_L4_Cb": "32",
+    "T3a_L5_Ca": "42",
+    "T3a_L5_Cb": "46",
+    "T3a_L6_Ca": "56",
+    "T3a_L6_Cb": "47",
+    "T3a_L7_Ca": "55",
+    "T3a_L7_Cb": "56",
+    "T3a_L8_Ca": "46",
+    "T3a_L8_Cb": "57",
+    "T3a_L9_Ca": "54",
+    "T3a_L9_Cb": "39"
+   },
+   "zip_codes": {
+    "columns": [
+     "sheet_row",
+     "zip",
+     "zip_type",
+     "uninsured_as_published",
+     "uninsured_mark",
+     "medicaid_chip_other_public_as_published",
+     "medicaid_chip_other_public_mark",
+     "medicare_as_published",
+     "medicare_mark",
+     "private_as_published",
+     "private_mark",
+     "total_as_published",
+     "total_mark"
+    ],
+    "rows": [
+     [
+      "5584",
+      "02831",
+      "ZipCode",
+      "-",
+      "no_entry",
+      "--",
+      "withheld_small",
+      "--",
+      "withheld_small",
+      "--",
+      "withheld_small",
+      "--",
+      "withheld_small"
+     ],
+     [
+      "5585",
+      "02863",
+      "ZipCode",
+      "--",
+      "withheld_small",
+      "42",
+      "",
+      "--",
+      "withheld_small",
+      "--",
+      "withheld_small",
+      "65",
+      ""
+     ]
+    ]
+   }
+  },
+  "2022": {
+   "health_center": {
+    "FundingCHC": "TRUE",
+    "FundingHO": "FALSE",
+    "FundingMHC": "FALSE",
+    "FundingPH": "FALSE",
+    "GrantNumber": "H80CS12879",
+    "HealthCenterCity": "Johnston",
+    "HealthCenterName": "TRI-COUNTY COMMUNITY ACTION AGENCY",
+    "HealthCenterOtherAddress": "-",
+    "HealthCenterState": "RI",
+    "HealthCenterStreetAddress": "1126 Hartford Ave",
+    "HealthCenterZIPCode": "02919",
+    "ReportingYear": "2022",
+    "UrbanRuralFlag": "Urban",
+    "sheet_row": 85
+   },
+   "one_read_cells": [],
+   "reads": "two_reads",
+   "sites": {
+    "columns": [
+     "sheet_row",
+     "site_name",
+     "site_type",
+     "site_status",
+     "location_type",
+     "location_setting",
+     "operational_schedule",
+     "calendar_schedule",
+     "weekly_hours_as_published",
+     "service_area_population",
+     "operated_by",
+     "street",
+     "city",
+     "state",
+     "zip",
+     "data_as_of"
+    ],
+    "rows": [
+     [
+      "951",
+      "Tri-County Community Health Center",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "54.00",
+      "Urban",
+      "Health Center/Applicant",
+      "1126 Hartford Avenue",
+      "Johnston",
+      "RI",
+      "02919-7130",
+      "12/31/2022 11:59 PM EST"
+     ],
+     [
+      "952",
+      "Tri-County Community Health Center of North Providence",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "48.00",
+      "Urban",
+      "Health Center/Applicant",
+      "33 Maple Avenue",
+      "North Providence",
+      "RI",
+      "02911-2415",
+      "12/31/2022 11:59 PM EST"
+     ]
+    ]
+   },
+   "source": {
+    "file": "H80-2022.xlsx",
+    "report_last_refreshed": "05/12/2023 12:00 AM EST"
+   },
+   "tables": {
+    "HITInformation": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "OtherDataElements": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table4": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table5": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table6A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table6B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_1": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_2": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table8A": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table9D": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table9E": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Workforce": {
+     "sheet_row": "86",
+     "status": "row_present"
+    }
+   },
+   "values": {
+    "T3a_L10_Ca": "36",
+    "T3a_L10_Cb": "37",
+    "T3a_L11_Ca": "51",
+    "T3a_L11_Cb": "48",
+    "T3a_L12_Ca": "41",
+    "T3a_L12_Cb": "55",
+    "T3a_L13_Ca": "60",
+    "T3a_L13_Cb": "56",
+    "T3a_L14_Ca": "45",
+    "T3a_L14_Cb": "50",
+    "T3a_L15_Ca": "48",
+    "T3a_L15_Cb": "52",
+    "T3a_L16_Ca": "50",
+    "T3a_L16_Cb": "49",
+    "T3a_L17_Ca": "44",
+    "T3a_L17_Cb": "64",
+    "T3a_L18_Ca": "43",
+    "T3a_L18_Cb": "52",
+    "T3a_L19_Ca": "34",
+    "T3a_L19_Cb": "46",
+    "T3a_L1_Ca": "27",
+    "T3a_L1_Cb": "22",
+    "T3a_L20_Ca": "28",
+    "T3a_L20_Cb": "56",
+    "T3a_L21_Ca": "34",
+    "T3a_L21_Cb": "40",
+    "T3a_L22_Ca": "29",
+    "T3a_L22_Cb": "67",
+    "T3a_L23_Ca": "30",
+    "T3a_L23_Cb": "62",
+    "T3a_L24_Ca": "43",
+    "T3a_L24_Cb": "48",
+    "T3a_L25_Ca": "35",
+    "T3a_L25_Cb": "60",
+    "T3a_L26_Ca": "158",
+    "T3a_L26_Cb": "415",
+    "T3a_L27_Ca": "248",
+    "T3a_L27_Cb": "467",
+    "T3a_L28_Ca": "234",
+    "T3a_L28_Cb": "378",
+    "T3a_L29_Ca": "222",
+    "T3a_L29_Cb": "312",
+    "T3a_L2_Ca": "32",
+    "T3a_L2_Cb": "34",
+    "T3a_L30_Ca": "171",
+    "T3a_L30_Cb": "245",
+    "T3a_L31_Ca": "189",
+    "T3a_L31_Cb": "252",
+    "T3a_L32_Ca": "194",
+    "T3a_L32_Cb": "282",
+    "T3a_L33_Ca": "187",
+    "T3a_L33_Cb": "229",
+    "T3a_L34_Ca": "131",
+    "T3a_L34_Cb": "188",
+    "T3a_L35_Ca": "57",
+    "T3a_L35_Cb": "112",
+    "T3a_L36_Ca": "31",
+    "T3a_L36_Cb": "63",
+    "T3a_L37_Ca": "--",
+    "T3a_L37_Cb": "19",
+    "T3a_L38_Ca": "--",
+    "T3a_L38_Cb": "21",
+    "T3a_L39_Ca": "2849",
+    "T3a_L39_Cb": "4150",
+    "T3a_L3_Ca": "29",
+    "T3a_L3_Cb": "31",
+    "T3a_L4_Ca": "36",
+    "T3a_L4_Cb": "35",
+    "T3a_L5_Ca": "61",
+    "T3a_L5_Cb": "26",
+    "T3a_L6_Ca": "32",
+    "T3a_L6_Cb": "48",
+    "T3a_L7_Ca": "41",
+    "T3a_L7_Cb": "38",
+    "T3a_L8_Ca": "47",
+    "T3a_L8_Cb": "44",
+    "T3a_L9_Ca": "53",
+    "T3a_L9_Cb": "47",
+    "T9E_L10_Ca": "136088",
+    "T9E_L11_Ca": "4375451",
+    "T9E_L1_Ca": "2520041",
+    "T9E_L1a_Ca": "0",
+    "T9E_L1b_Ca": "1772687",
+    "T9E_L1c_Ca": "0",
+    "T9E_L1e_Ca": "0",
+    "T9E_L1g_Ca": "1772687",
+    "T9E_L1k_Ca": "0",
+    "T9E_L1p_Other": "-",
+    "T9E_L2_Ca": "0",
+    "T9E_L3_Ca": "83269",
+    "T9E_L3a_Ca": "0",
+    "T9E_L3b_Other": "-",
+    "T9E_L5_Ca": "83269",
+    "T9E_L6_Ca": "227271",
+    "T9E_L6a_Ca": "0",
+    "T9E_L6a_Other": "-",
+    "T9E_L7_Ca": "1408782",
+    "T9E_L8_Ca": "0",
+    "T9E_L8_Other": "-",
+    "T9E_L9_Ca": "1636053",
+    "T9e_L1l_Ca": "0",
+    "T9e_L1m_Ca": "0",
+    "T9e_L1n_Ca": "0",
+    "T9e_L1o_Ca": "747354",
+    "T9e_L1p_Ca": "0",
+    "T9e_L1q_Ca": "747354",
+    "T9e_L3b_Ca": "0"
+   },
+   "zip_codes": {
+    "columns": [
+     "sheet_row",
+     "zip",
+     "zip_type",
+     "uninsured_as_published",
+     "uninsured_mark",
+     "medicaid_chip_other_public_as_published",
+     "medicaid_chip_other_public_mark",
+     "medicare_as_published",
+     "medicare_mark",
+     "private_as_published",
+     "private_mark",
+     "total_as_published",
+     "total_mark"
+    ],
+    "rows": [
+     [
+      "6119",
+      "02857",
+      "ZipCode",
+      "-",
+      "no_entry",
+      "33",
+      "",
+      "--",
+      "withheld_small",
+      "--",
+      "withheld_small",
+      "51",
+      ""
+     ],
+     [
+      "6120",
+      "02828",
+      "ZipCode",
+      "--",
+      "withheld_small",
+      "46",
+      "",
+      "--",
+      "withheld_small",
+      "19",
+      "",
+      "73",
+      ""
+     ]
+    ]
+   }
+  },
+  "2023": {
+   "health_center": {
+    "FundingCHC": "TRUE",
+    "FundingHO": "FALSE",
+    "FundingMHC": "FALSE",
+    "FundingPH": "FALSE",
+    "GrantNumber": "H80CS12879",
+    "HealthCenterCity": "Johnston",
+    "HealthCenterName": "TRI-COUNTY COMMUNITY ACTION AGENCY",
+    "HealthCenterOtherAddress": "-",
+    "HealthCenterState": "RI",
+    "HealthCenterStreetAddress": "1126 HARTFORD AVE",
+    "HealthCenterZIPCode": "02919",
+    "ReportingYear": "2023",
+    "UrbanRuralFlag": "Urban",
+    "sheet_row": 85
+   },
+   "one_read_cells": [],
+   "reads": "two_reads",
+   "sites": {
+    "columns": [
+     "sheet_row",
+     "site_name",
+     "site_type",
+     "site_status",
+     "location_type",
+     "location_setting",
+     "operational_schedule",
+     "calendar_schedule",
+     "weekly_hours_as_published",
+     "service_area_population",
+     "operated_by",
+     "street",
+     "city",
+     "state",
+     "zip",
+     "data_as_of"
+    ],
+    "rows": [
+     [
+      "972",
+      "Tri-County Community Health Center",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "54.00",
+      "Urban",
+      "Health Center/Applicant",
+      "1126 Hartford Avenue",
+      "Johnston",
+      "RI",
+      "02919-7130",
+      "12/31/2023 11:59 PM EST"
+     ],
+     [
+      "973",
+      "Tri-County Community Health Center of North Providence",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "48.00",
+      "Urban",
+      "Health Center/Applicant",
+      "33 Maple Avenue",
+      "North Providence",
+      "RI",
+      "02911-2415",
+      "12/31/2023 11:59 PM EST"
+     ]
+    ]
+   },
+   "source": {
+    "file": "H80-2023.xlsx",
+    "report_last_refreshed": "05/10/2024 12:00 AM EST"
+   },
+   "tables": {
+    "HITInformation": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "OtherDataElements": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table4": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table5": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table6A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table6B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_1": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_2": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table8A": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table9D": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table9E": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Workforce": {
+     "sheet_row": "86",
+     "status": "row_present"
+    }
+   },
+   "values": {
+    "T3a_L10_Ca": "67",
+    "T3a_L10_Cb": "56",
+    "T3a_L11_Ca": "51",
+    "T3a_L11_Cb": "53",
+    "T3a_L12_Ca": "68",
+    "T3a_L12_Cb": "56",
+    "T3a_L13_Ca": "59",
+    "T3a_L13_Cb": "62",
+    "T3a_L14_Ca": "63",
+    "T3a_L14_Cb": "67",
+    "T3a_L15_Ca": "56",
+    "T3a_L15_Cb": "63",
+    "T3a_L16_Ca": "62",
+    "T3a_L16_Cb": "62",
+    "T3a_L17_Ca": "62",
+    "T3a_L17_Cb": "58",
+    "T3a_L18_Ca": "46",
+    "T3a_L18_Cb": "65",
+    "T3a_L19_Ca": "39",
+    "T3a_L19_Cb": "54",
+    "T3a_L1_Ca": "36",
+    "T3a_L1_Cb": "40",
+    "T3a_L20_Ca": "28",
+    "T3a_L20_Cb": "52",
+    "T3a_L21_Ca": "39",
+    "T3a_L21_Cb": "54",
+    "T3a_L22_Ca": "25",
+    "T3a_L22_Cb": "57",
+    "T3a_L23_Ca": "35",
+    "T3a_L23_Cb": "70",
+    "T3a_L24_Ca": "35",
+    "T3a_L24_Cb": "64",
+    "T3a_L25_Ca": "37",
+    "T3a_L25_Cb": "54",
+    "T3a_L26_Ca": "179",
+    "T3a_L26_Cb": "390",
+    "T3a_L27_Ca": "245",
+    "T3a_L27_Cb": "487",
+    "T3a_L28_Ca": "259",
+    "T3a_L28_Cb": "415",
+    "T3a_L29_Ca": "238",
+    "T3a_L29_Cb": "315",
+    "T3a_L2_Ca": "36",
+    "T3a_L2_Cb": "33",
+    "T3a_L30_Ca": "188",
+    "T3a_L30_Cb": "274",
+    "T3a_L31_Ca": "200",
+    "T3a_L31_Cb": "241",
+    "T3a_L32_Ca": "224",
+    "T3a_L32_Cb": "281",
+    "T3a_L33_Ca": "179",
+    "T3a_L33_Cb": "248",
+    "T3a_L34_Ca": "142",
+    "T3a_L34_Cb": "206",
+    "T3a_L35_Ca": "70",
+    "T3a_L35_Cb": "112",
+    "T3a_L36_Ca": "27",
+    "T3a_L36_Cb": "62",
+    "T3a_L37_Ca": "--",
+    "T3a_L37_Cb": "30",
+    "T3a_L38_Ca": "--",
+    "T3a_L38_Cb": "20",
+    "T3a_L39_Ca": "3161",
+    "T3a_L39_Cb": "4429",
+    "T3a_L3_Ca": "39",
+    "T3a_L3_Cb": "41",
+    "T3a_L4_Ca": "35",
+    "T3a_L4_Cb": "33",
+    "T3a_L5_Ca": "52",
+    "T3a_L5_Cb": "58",
+    "T3a_L6_Ca": "77",
+    "T3a_L6_Cb": "44",
+    "T3a_L7_Ca": "40",
+    "T3a_L7_Cb": "50",
+    "T3a_L8_Ca": "52",
+    "T3a_L8_Cb": "44",
+    "T3a_L9_Ca": "52",
+    "T3a_L9_Cb": "58"
+   },
+   "zip_codes": {
+    "columns": [
+     "sheet_row",
+     "zip",
+     "zip_type",
+     "uninsured_as_published",
+     "uninsured_mark",
+     "medicaid_chip_other_public_as_published",
+     "medicaid_chip_other_public_mark",
+     "medicare_as_published",
+     "medicare_mark",
+     "private_as_published",
+     "private_mark",
+     "total_as_published",
+     "total_mark"
+    ],
+    "rows": [
+     [
+      "5904",
+      "02911",
+      "ZipCode",
+      "64",
+      "",
+      "531",
+      "",
+      "102",
+      "",
+      "168",
+      "",
+      "865",
+      ""
+     ],
+     [
+      "5905",
+      "02825",
+      "ZipCode",
+      "--",
+      "withheld_small",
+      "16",
+      "",
+      "--",
+      "withheld_small",
+      "--",
+      "withheld_small",
+      "26",
+      ""
+     ]
+    ]
+   }
+  },
+  "2024": {
+   "health_center": {
+    "FundingCHC": "TRUE",
+    "FundingHO": "FALSE",
+    "FundingMHC": "FALSE",
+    "FundingPH": "FALSE",
+    "GrantNumber": "H80CS12879",
+    "HealthCenterCity": "Johnston",
+    "HealthCenterName": "TRI-COUNTY COMMUNITY ACTION AGENCY",
+    "HealthCenterOtherAddress": "-",
+    "HealthCenterState": "RI",
+    "HealthCenterStreetAddress": "1126 HARTFORD AVE",
+    "HealthCenterZIPCode": "02919",
+    "ReportingYear": "2024",
+    "UrbanRuralFlag": "Urban",
+    "sheet_row": 85
+   },
+   "one_read_cells": [],
+   "reads": "two_reads",
+   "sites": {
+    "columns": [
+     "sheet_row",
+     "site_name",
+     "site_type",
+     "site_status",
+     "location_type",
+     "location_setting",
+     "operational_schedule",
+     "calendar_schedule",
+     "weekly_hours_as_published",
+     "service_area_population",
+     "operated_by",
+     "street",
+     "city",
+     "state",
+     "zip",
+     "data_as_of"
+    ],
+    "rows": [
+     [
+      "998",
+      "Tri-County CAA Health Center Pediatric Dental Clinic (formerly St. Joseph's)",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "-",
+      "-",
+      "40.00",
+      "Urban",
+      "Health Center/Applicant",
+      "1637 Mineral Spring Ave",
+      "North Providence",
+      "RI",
+      "02904-4042",
+      "12/31/2024 11:59 PM EST"
+     ],
+     [
+      "999",
+      "Tri-County Community Health Center",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "54.00",
+      "Urban",
+      "Health Center/Applicant",
+      "1126 Hartford Avenue",
+      "Johnston",
+      "RI",
+      "02919-7130",
+      "12/31/2024 11:59 PM EST"
+     ],
+     [
+      "1000",
+      "Tri-County Community Health Center of North Providence",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "48.00",
+      "Urban",
+      "Health Center/Applicant",
+      "33 Maple Avenue",
+      "North Providence",
+      "RI",
+      "02911-2415",
+      "12/31/2024 11:59 PM EST"
+     ]
+    ]
+   },
+   "source": {
+    "file": "H80-2024.xlsx",
+    "report_last_refreshed": "05/08/2025 12:00 AM EST"
+   },
+   "tables": {
+    "HITInformation": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "OtherDataElements": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table4": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table5": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table6A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table6B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_1": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_2": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table8A": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table9D": {
+     "sheet_row": null,
+     "status": "row_withheld_unnamed"
+    },
+    "Table9E": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Workforce": {
+     "sheet_row": "86",
+     "status": "row_present"
+    }
+   },
+   "values": {
+    "T3a_L10_Ca": "181",
+    "T3a_L10_Cb": "161",
+    "T3a_L11_Ca": "165",
+    "T3a_L11_Cb": "137",
+    "T3a_L12_Ca": "179",
+    "T3a_L12_Cb": "150",
+    "T3a_L13_Ca": "180",
+    "T3a_L13_Cb": "149",
+    "T3a_L14_Ca": "175",
+    "T3a_L14_Cb": "191",
+    "T3a_L15_Ca": "190",
+    "T3a_L15_Cb": "161",
+    "T3a_L16_Ca": "183",
+    "T3a_L16_Cb": "195",
+    "T3a_L17_Ca": "177",
+    "T3a_L17_Cb": "189",
+    "T3a_L18_Ca": "165",
+    "T3a_L18_Cb": "156",
+    "T3a_L19_Ca": "134",
+    "T3a_L19_Cb": "142",
+    "T3a_L1_Ca": "49",
+    "T3a_L1_Cb": "39",
+    "T3a_L20_Ca": "63",
+    "T3a_L20_Cb": "105",
+    "T3a_L21_Ca": "60",
+    "T3a_L21_Cb": "73",
+    "T3a_L22_Ca": "61",
+    "T3a_L22_Cb": "65",
+    "T3a_L23_Ca": "44",
+    "T3a_L23_Cb": "63",
+    "T3a_L24_Ca": "38",
+    "T3a_L24_Cb": "70",
+    "T3a_L25_Ca": "29",
+    "T3a_L25_Cb": "66",
+    "T3a_L26_Ca": "207",
+    "T3a_L26_Cb": "372",
+    "T3a_L27_Ca": "243",
+    "T3a_L27_Cb": "476",
+    "T3a_L28_Ca": "256",
+    "T3a_L28_Cb": "442",
+    "T3a_L29_Ca": "246",
+    "T3a_L29_Cb": "370",
+    "T3a_L2_Ca": "64",
+    "T3a_L2_Cb": "66",
+    "T3a_L30_Ca": "196",
+    "T3a_L30_Cb": "294",
+    "T3a_L31_Ca": "200",
+    "T3a_L31_Cb": "249",
+    "T3a_L32_Ca": "216",
+    "T3a_L32_Cb": "271",
+    "T3a_L33_Ca": "194",
+    "T3a_L33_Cb": "258",
+    "T3a_L34_Ca": "132",
+    "T3a_L34_Cb": "198",
+    "T3a_L35_Ca": "72",
+    "T3a_L35_Cb": "108",
+    "T3a_L36_Ca": "40",
+    "T3a_L36_Cb": "78",
+    "T3a_L37_Ca": "--",
+    "T3a_L37_Cb": "29",
+    "T3a_L38_Ca": "--",
+    "T3a_L38_Cb": "20",
+    "T3a_L39_Ca": "5202",
+    "T3a_L39_Cb": "6300",
+    "T3a_L3_Ca": "98",
+    "T3a_L3_Cb": "82",
+    "T3a_L4_Ca": "116",
+    "T3a_L4_Cb": "105",
+    "T3a_L5_Ca": "131",
+    "T3a_L5_Cb": "132",
+    "T3a_L6_Ca": "177",
+    "T3a_L6_Cb": "167",
+    "T3a_L7_Ca": "205",
+    "T3a_L7_Cb": "124",
+    "T3a_L8_Ca": "156",
+    "T3a_L8_Cb": "171",
+    "T3a_L9_Ca": "162",
+    "T3a_L9_Cb": "176"
+   },
+   "zip_codes": {
+    "columns": [
+     "sheet_row",
+     "zip",
+     "zip_type",
+     "uninsured_as_published",
+     "uninsured_mark",
+     "medicaid_chip_other_public_as_published",
+     "medicaid_chip_other_public_mark",
+     "medicare_as_published",
+     "medicare_mark",
+     "private_as_published",
+     "private_mark",
+     "total_as_published",
+     "total_mark"
+    ],
+    "rows": [
+     [
+      "5712",
+      "02814",
+      "ZipCode",
+      "--",
+      "withheld_small",
+      "30",
+      "",
+      "--",
+      "withheld_small",
+      "--",
+      "withheld_small",
+      "51",
+      ""
+     ],
+     [
+      "5713",
+      "02830",
+      "ZipCode",
+      "--",
+      "withheld_small",
+      "--",
+      "withheld_small",
+      "0",
+      "",
+      "--",
+      "withheld_small",
+      "20",
+      ""
+     ]
+    ]
+   }
+  },
+  "2025": {
+   "health_center": {
+    "FundingCHC": "TRUE",
+    "FundingHP": "FALSE",
+    "FundingMSAW": "FALSE",
+    "FundingRPH": "FALSE",
+    "GrantNumber": "H80CS12879",
+    "HealthCenterCity": "Johnston",
+    "HealthCenterName": "TRI-COUNTY COMMUNITY ACTION AGENCY",
+    "HealthCenterOtherAddress": "-",
+    "HealthCenterState": "RI",
+    "HealthCenterStreetAddress": "1126 HARTFORD AVE",
+    "HealthCenterZIPCode": "02919",
+    "ReportingYear": "2025",
+    "UrbanRuralFlag": "Urban",
+    "sheet_row": 85
+   },
+   "one_read_cells": [],
+   "reads": "two_reads",
+   "sites": {
+    "columns": [
+     "sheet_row",
+     "site_name",
+     "site_type",
+     "site_status",
+     "location_type",
+     "location_setting",
+     "operational_schedule",
+     "calendar_schedule",
+     "weekly_hours_as_published",
+     "service_area_population",
+     "operated_by",
+     "street",
+     "city",
+     "state",
+     "zip",
+     "data_as_of"
+    ],
+    "rows": [
+     [
+      "991",
+      "Tri-County CAA Health Center Pediatric Dental Clinic (formerly St. Joseph's)",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "-",
+      "-",
+      "40.00",
+      "Urban",
+      "Health Center/Applicant",
+      "1637 Mineral Spring Ave",
+      "North Providence",
+      "RI",
+      "02904-4042",
+      "12/31/2025 11:59 PM EST"
+     ],
+     [
+      "992",
+      "Tri-County Community Health Center",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "54.00",
+      "Urban",
+      "Health Center/Applicant",
+      "1126 Hartford Avenue",
+      "Johnston",
+      "RI",
+      "02919-7130",
+      "12/31/2025 11:59 PM EST"
+     ],
+     [
+      "993",
+      "Tri-County Community Health Center of North Providence",
+      "Service Delivery Site",
+      "Active",
+      "Permanent",
+      "All Other Clinic Types",
+      "Full-Time",
+      "Year-Round",
+      "48.00",
+      "Urban",
+      "Health Center/Applicant",
+      "33 Maple Avenue",
+      "North Providence",
+      "RI",
+      "02911-2415",
+      "12/31/2025 11:59 PM EST"
+     ]
+    ]
+   },
+   "source": {
+    "file": "H80-2025.xlsx",
+    "report_last_refreshed": "05/07/2026 12:00 AM EST"
+   },
+   "tables": {
+    "HITInformation": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "OtherDataElements": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table3B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table4": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table5": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table6A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table6B": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_1": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table7_2": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table8A": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table9D": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Table9E": {
+     "sheet_row": "86",
+     "status": "row_present"
+    },
+    "Workforce": {
+     "sheet_row": "86",
+     "status": "row_present"
+    }
+   },
+   "values": {
+    "T3a_L10_Ca": "194",
+    "T3a_L10_Cb": "200",
+    "T3a_L11_Ca": "224",
+    "T3a_L11_Cb": "177",
+    "T3a_L12_Ca": "178",
+    "T3a_L12_Cb": "161",
+    "T3a_L13_Ca": "202",
+    "T3a_L13_Cb": "177",
+    "T3a_L14_Ca": "193",
+    "T3a_L14_Cb": "178",
+    "T3a_L15_Ca": "190",
+    "T3a_L15_Cb": "217",
+    "T3a_L16_Ca": "216",
+    "T3a_L16_Cb": "174",
+    "T3a_L17_Ca": "190",
+    "T3a_L17_Cb": "203",
+    "T3a_L18_Ca": "202",
+    "T3a_L18_Cb": "205",
+    "T3a_L19_Ca": "168",
+    "T3a_L19_Cb": "155",
+    "T3a_L1_Ca": "42",
+    "T3a_L1_Cb": "39",
+    "T3a_L20_Ca": "110",
+    "T3a_L20_Cb": "125",
+    "T3a_L21_Ca": "56",
+    "T3a_L21_Cb": "93",
+    "T3a_L22_Ca": "48",
+    "T3a_L22_Cb": "78",
+    "T3a_L23_Ca": "64",
+    "T3a_L23_Cb": "86",
+    "T3a_L24_Ca": "45",
+    "T3a_L24_Cb": "81",
+    "T3a_L25_Ca": "41",
+    "T3a_L25_Cb": "72",
+    "T3a_L26_Ca": "231",
+    "T3a_L26_Cb": "391",
+    "T3a_L27_Ca": "252",
+    "T3a_L27_Cb": "465",
+    "T3a_L28_Ca": "263",
+    "T3a_L28_Cb": "501",
+    "T3a_L29_Ca": "287",
+    "T3a_L29_Cb": "431",
+    "T3a_L2_Ca": "73",
+    "T3a_L2_Cb": "55",
+    "T3a_L30_Ca": "222",
+    "T3a_L30_Cb": "334",
+    "T3a_L31_Ca": "202",
+    "T3a_L31_Cb": "284",
+    "T3a_L32_Ca": "236",
+    "T3a_L32_Cb": "298",
+    "T3a_L33_Ca": "217",
+    "T3a_L33_Cb": "300",
+    "T3a_L34_Ca": "150",
+    "T3a_L34_Cb": "219",
+    "T3a_L35_Ca": "85",
+    "T3a_L35_Cb": "120",
+    "T3a_L36_Ca": "43",
+    "T3a_L36_Cb": "81",
+    "T3a_L37_Ca": "16",
+    "T3a_L37_Cb": "39",
+    "T3a_L38_Ca": "--",
+    "T3a_L38_Cb": "28",
+    "T3a_L39_Ca": "5886",
+    "T3a_L39_Cb": "7054",
+    "T3a_L3_Ca": "102",
+    "T3a_L3_Cb": "80",
+    "T3a_L4_Ca": "134",
+    "T3a_L4_Cb": "104",
+    "T3a_L5_Ca": "157",
+    "T3a_L5_Cb": "141",
+    "T3a_L6_Ca": "185",
+    "T3a_L6_Cb": "181",
+    "T3a_L7_Ca": "219",
+    "T3a_L7_Cb": "202",
+    "T3a_L8_Ca": "253",
+    "T3a_L8_Cb": "175",
+    "T3a_L9_Ca": "187",
+    "T3a_L9_Cb": "204",
+    "T9e_L10_Ca": "750000",
+    "T9e_L11_Ca": "5175860",
+    "T9e_L1_Ca": "2193051",
+    "T9e_L1a_Ca": "0",
+    "T9e_L1b_Ca": "2193051",
+    "T9e_L1c_Ca": "0",
+    "T9e_L1e_Ca": "0",
+    "T9e_L1g_Ca": "2193051",
+    "T9e_L1k_Ca": "0",
+    "T9e_L1o_Ca": "0",
+    "T9e_L1p2_Ca": "0",
+    "T9e_L1p2_other": "-",
+    "T9e_L1q_Ca": "0",
+    "T9e_L2_Ca": "0",
+    "T9e_L3_Ca": "0",
+    "T9e_L3_other": "-",
+    "T9e_L3a_Ca": "0",
+    "T9e_L5_Ca": "0",
+    "T9e_L6_Ca": "1925000",
+    "T9e_L6a_Ca": "57809",
+    "T9e_L7_Ca": "0",
+    "T9e_L7_other": "-",
+    "T9e_L8_Ca": "250000",
+    "T9e_L9_Ca": "2232809"
+   },
+   "zip_codes": {
+    "columns": [
+     "sheet_row",
+     "zip",
+     "zip_type",
+     "uninsured_as_published",
+     "uninsured_mark",
+     "medicaid_chip_other_public_as_published",
+     "medicaid_chip_other_public_mark",
+     "medicare_as_published",
+     "medicare_mark",
+     "private_as_published",
+     "private_mark",
+     "total_as_published",
+     "total_mark"
+    ],
+    "rows": [
+     [
+      "6013",
+      "02830",
+      "ZipCode",
+      "0",
+      "",
+      "17",
+      "",
+      "--",
+      "withheld_small",
+      "--",
+      "withheld_small",
+      "24",
+      ""
+     ],
+     [
+      "6014",
+      "02908",
+      "ZipCode",
+      "16",
+      "",
+      "924",
+      "",
+      "23",
+      "",
+      "145",
+      "",
+      "1108",
+      ""
+     ]
+    ]
+   }
+  }
+ }
+}
