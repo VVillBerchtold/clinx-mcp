@@ -1,7 +1,7 @@
 // The tables for a program run on a person's own computer.
 //
 // In plain words: by default the helper program and the local web door read the open files from
-// clinx.org. Set CLINX_DATA_DIR to a folder that holds the four table files and they are read
+// clinx.org. Set CLINX_DATA_DIR to a folder that holds the table files and they are read
 // from that folder instead, with no network. The tests run that way.
 
 import { readFile } from 'node:fs/promises';

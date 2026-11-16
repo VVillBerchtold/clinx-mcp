@@ -79,7 +79,7 @@ test('the older protocol: ping, the tool list and a tool call work without _meta
   assert.deepEqual((await ask('ping')).result, {});
   const { result } = await ask('tools/list');
   assert.equal(result.resultType, undefined);
-  assert.deepEqual(result.tools.map((t) => t.name), ['find_bills', 'get_bill', 'find_laws', 'get_law', 'find_notices', 'get_notice', 'calendar', 'state_overview', 'about_the_data']);
+  assert.deepEqual(result.tools.map((t) => t.name), ['find_bills', 'get_bill', 'find_laws', 'get_law', 'find_notices', 'get_notice', 'calendar', 'reporting_states', 'find_filings', 'get_filing', 'state_overview', 'about_the_data']);
 });
 
 test('a notification gets no answer', async () => {
@@ -390,9 +390,9 @@ test('the tables are fetched once an hour, and a failed refetch keeps the copy a
   const held = makeTables({ source: 'https://clinx.org/data/', fetcher, now: () => clock });
   assert.equal((await held()).bills.length, 14);
   await held();
-  assert.equal(calls, 4, 'four files, fetched once');
+  assert.equal(calls, 6, 'six files, fetched once');
   clock = 2 * 60 * 60 * 1000;
   down = true;
   assert.equal((await held()).bills.length, 14, 'the held copy is still served');
-  assert.equal(calls, 8);
+  assert.equal(calls, 12);
 });

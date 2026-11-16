@@ -117,3 +117,19 @@ test('the web door hands each request to the host\'s counter, and a broken count
   const none = await post({ jsonrpc: '2.0', id: 1, method: 'ping' }, {});
   assert.equal(none.status, 200, 'with no counter given, nothing is counted at all');
 });
+
+test('the filings tools are counted by kind: typed words never, the public id found yes, an unreadable file as unreachable', async () => {
+  const found = await call('find_filings', { state: 'ri', entity: 'my private search words', year: 2025, entity_type: 'hospital' });
+  assert.equal(found.outcome, 'answered');
+  assert.equal(found.place, 'RI');
+  assert.equal(found.filters, 'entity entity_type year');
+  assert.equal(found.looked_up, '');
+  const one = await call('get_filing', { filing_id: 'RI-2025-WellOne', limit: 5 });
+  assert.equal(one.looked_up, 'ri-2025-wellone', 'the id found, not the words typed');
+  assert.equal((await call('get_filing', { filing_id: 'nobody-knows' })).outcome, 'mistake');
+  assert.equal((await call('reporting_states', { group: 'own-reports' })).filters, 'group');
+
+  const broken = localTables({ folder: DATA + '/nowhere-at-all', now: () => 0 });
+  const down = describeRequest({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'find_filings', arguments: {} } }, await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'find_filings', arguments: {} } }, broken));
+  assert.equal(down.outcome, 'tables unreachable', 'the core tables are missing too, so this is the older kind of unreachable');
+});

@@ -6,7 +6,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { handle } from '../src/core.js';
-import { makeTables } from '../src/tables.js';
+import { makeTables, FILES } from '../src/tables.js';
 
 const live = process.env.CLINX_LIVE === '1';
 const tables = makeTables();
@@ -41,4 +41,21 @@ test('the published tables answer every tool', { skip: !live && 'set CLINX_LIVE=
     const overview = await run('state_overview', { state });
     assert.equal(overview.isError, false, state);
   }
+});
+
+// The two newest files reach clinx.org only when the site is next published. Until then this test
+// says so and skips, rather than failing the check of everything else.
+test('the published filed reports and reporting states answer the newer tools', { skip: !live && 'set CLINX_LIVE=1 to run' }, async (t) => {
+  const held = await tables();
+  if (!held.filings || !held.reporting) {
+    t.skip(`clinx.org does not publish ${[held.filings ? '' : FILES.filings, held.reporting ? '' : FILES.reporting].filter(Boolean).join(' and ')} yet; run this again after the site is published with them`);
+    return;
+  }
+  const states = (await run('reporting_states')).structuredContent;
+  assert.ok(states.matched >= 11 && states.groups.length >= 4);
+  const filings = (await run('find_filings', { state: 'RI', limit: 100 })).structuredContent;
+  assert.ok(filings.matched >= 14);
+  const one = (await run('get_filing', { filing_id: filings.filings[0].filing_id })).structuredContent;
+  assert.match(one.official_file.sha256, /^[0-9a-f]{64}$/);
+  assert.ok(one.lines_total > 0);
 });

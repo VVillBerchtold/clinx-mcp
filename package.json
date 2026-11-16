@@ -1,8 +1,8 @@
 {
   "name": "clinx-340b-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "A Model Context Protocol server over ClinX's open 340B tables: state laws, bills, federal notices and a calendar of their dates.",
+  "description": "A Model Context Protocol server over ClinX's open 340B tables: state laws, bills, federal notices, filed reports and a calendar of their dates.",
   "license": "MIT",
   "type": "module",
   "bin": {

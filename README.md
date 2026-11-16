@@ -2,7 +2,8 @@
 
 A small program that lets an AI assistant look things up in ClinX's open tables about the federal
 340B drug pricing program: the state laws on the books, the bills in Congress and the state
-legislatures, the rules and notices federal agencies publish, and a calendar of their dates.
+legislatures, the rules and notices federal agencies publish, the reports that hospitals, health
+centers and states have filed about 340B, and a calendar of their dates.
 
 **Status: running at `https://clinx.org/mcp` since 15 November 2026.** Give that address to an
 assistant that accepts connectors (MCP servers); there is no key and no account. It is not
@@ -12,18 +13,18 @@ published as a package yet, so to run your own copy you start it yourself, as sh
 
 Assistants such as Claude can be given "tools": small lookups they may call while answering a
 question. The Model Context Protocol (MCP) is the common way to offer such tools. This is an MCP
-server with nine of them.
+server with twelve of them.
 
 Ask an assistant "which states passed a contract pharmacy law this year?" and, with this server
 connected, it does not have to guess or search the web. It asks the server, gets rows from the
 same tables anyone can download from [clinx.org/data](https://clinx.org/data/), and answers with
 the link to each official page.
 
-The server holds no data of its own. It reads the four public files from clinx.org, keeps them
+The server holds no data of its own. It reads the six public files from clinx.org, keeps them
 in memory for an hour, and answers from that copy. It only reads. It has no sign-in, no key, no
 account, and it keeps nothing about who asked what.
 
-## The nine tools
+## The twelve tools
 
 | Tool | What it answers |
 | --- | --- |
@@ -34,8 +35,42 @@ account, and it keeps nothing about who asked what.
 | `find_notices` | Federal rules, proposed rules and notices that name 340B, by kind of document, role, words, day of publication, or whether comments are still open. |
 | `get_notice` | One rule or notice in full: the agency that wrote it, what it does about 340B, its comment deadline, the day it takes effect and every other day it sets. |
 | `calendar` | Dated steps, hearings, session days and federal dates. With no dates given: what is coming up from today. |
-| `state_overview` | One place at a glance: a state's laws, its bills by stage, and what is next. `FED` gives the federal agencies. |
-| `about_the_data` | Where the tables come from, when each was last brought up to date, the licence. |
+| `reporting_states` | The states whose law requires 340B reports, grouped by what the public can see, with what is public, where it stands, whether ClinX holds the figures, and the official sources. Filter by state or group. |
+| `find_filings` | Filed reports, by state, year, entity name or 340B ID, entity type, kind of record or form. Short rows with the ClinX page and the official source; says plainly when a list is cut short. |
+| `get_filing` | One filed report in full: every line as filed with its label, unit and amount, which claim counts are withheld and why, how the figures were checked, recorded discrepancies, and the official file's address, size and SHA-256. A very long report comes in parts. |
+| `state_overview` | One place at a glance: a state's laws, its bills by stage, which group of reporting states it is in, how many filed reports ClinX holds for it, and what is next. `FED` gives the federal agencies. |
+| `about_the_data` | Where the tables come from, when each was last brought up to date, what the filed reports table holds, the licence. |
+
+### The filed reports
+
+The Scorecard at clinx.org holds the reports that covered entities and states file about 340B.
+Three tools open it.
+
+- Every figure is given exactly as the official file prints it. Columns ending `_as_filed` hold
+  the printed text; `amount` and `claims` hold the same figure as a number, written as text just
+  as the table has it. The server never rounds, estimates or fills in a figure.
+- A claim count of 1 to 5 is never given, and neither is anything that would let a reader work
+  one out. A row with a withheld count says `claims_withheld`, and the answer explains each
+  reason. Every other figure on the row stays as filed. The server also holds back a small count
+  that a file forgot to mark.
+- The server ranks no one and calls no filer better or worse than another. It adds no sums.
+  The three measures a report may carry (gross margin, external cost and the share) are the
+  dataset's own, worked out from that one report's lines.
+- A "filing" here is one record: a filer's own report, a row a state printed about one filer
+  in its own report, or a state's totals. A filer's own report has a page on the site; a row a
+  state printed, or a state's totals, points to the page of that state's reports.
+- The tools are written for any form, kind of record and entity type the table holds. A value
+  the code has not seen is returned as it is, with its own words.
+- A report with many lines (the largest today has 1,030) comes in parts of 250 lines. The
+  answer lists the report's schedules and says how to ask for the next part or for one schedule.
+
+Questions to try: "Which states require 340B reports, and which of them publish a report for
+each hospital?" (`reporting_states`); "Find the 2025 reports filed in Rhode Island by health
+centers" (`find_filings`); "What did the Idaho 2025 report print for total claims, and were
+there any differences between its figures?" (`get_filing`).
+
+A bill at the stage `Did not pass` ended without becoming law; it is finished, and no tool shows
+it as pending. The calendar has a kind `report due` for the day a state's report is due.
 
 Every row in an answer carries the link to the official page it came from, and every answer says
 the day its table was last brought up to date. The plain sentences about each law, bill and
@@ -93,23 +128,26 @@ It listens at `http://127.0.0.1:8340/mcp`, on your computer only. Ask it somethi
       -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"state_overview","arguments":{"state":"RI"}}}'
 
 **From files on disk instead of clinx.org.** Set `CLINX_DATA_DIR` to a folder that holds
-`340b-state-laws.json`, `340b-bills.json`, `340b-notices.json` and `340b-events.json`.
+`340b-state-laws.json`, `340b-bills.json`, `340b-notices.json` and `340b-events.json`, and
+if you want the filed reports, `340b-state-filings.json` and `340b-reporting-states.json`. The
+last two are read on their own: if either is missing or cannot be read, the other nine tools
+answer as before and the three new ones say the file could not be read.
 
 ## What is in this folder
 
 | File | What it does |
 | --- | --- |
 | `src/core.js` | The server itself: reads one message, writes one answer. |
-| `src/tools.js` | The nine tools: what each takes and how it answers from the tables. |
-| `src/tables.js` | Fetches the four public files and keeps them for an hour. |
-| `src/disk.js` | Reads the four files from a folder instead, for a program on your own computer. |
+| `src/tools.js` | The twelve tools: what each takes and how it answers from the tables. |
+| `src/tables.js` | Fetches the six public files and keeps them for an hour. Holds a report's lines as text and reads them back only for the report asked for. |
+| `src/disk.js` | Reads the table files from a folder instead, for a program on your own computer. |
 | `src/usage.js` | Describes a request by kind, for a host that wants to count what is asked. See below. |
 | `src/stdio.js` | The door for a helper program on your own computer. |
 | `src/http.js` | The door for the web. One request in, one answer out, nothing remembered. |
 | `src/serve.js` | Runs the web door on your own computer. |
 | `src/worker.js` | The web door shaped for an edge host that runs it by itself. Not deployed: clinx.org serves the same door from the site's own program ([clinx-org](https://github.com/VVillBerchtold/clinx-org), `worker/assistants.ts`). |
 | `src/*.d.ts` | The shapes of the pieces above, for a host written in TypeScript. |
-| `test/` | The tests, and small real slices of the four tables (`test/data/`) they run on. |
+| `test/` | The tests, and small real slices of the tables (`test/data/`) they run on. |
 
 ## Which versions of the protocol it speaks
 
@@ -122,7 +160,7 @@ older 2025-11-25, 2025-06-18, 2025-03-26 and 2024-11-05. A request that names th
 is answered the newer way. Everything else is answered the older way.
 
 On 15 November 2026 Claude Code 2.1.306 was pointed at the server. It opened with
-`server/discover`, was told 2026-07-28, and listed the tools (seven then, nine now). Those exact messages are now
+`server/discover`, was told 2026-07-28, and listed the tools (seven then, twelve now). Those exact messages are now
 one of the tests. A whole question asked through an assistant, start to finish, has not been
 tried yet; nor has any other client.
 
@@ -131,7 +169,7 @@ tried yet; nor has any other client.
 - **Read-only.** No tool changes anything anywhere.
 - **Nothing about the asker is kept.** No log of questions, no cookies, no sessions, no sign-in.
   Run on your own computer, the server counts nothing at all.
-- **It cannot be turned on another site.** The only addresses it ever fetches are the four
+- **It cannot be turned on another site.** The only addresses it ever fetches are the six
   table files on clinx.org, at most once an hour, whatever it is asked.
 - **Small requests only.** The web door takes `POST` with JSON, up to 64 KB, and nothing else.
 - **On your own computer** it listens on `127.0.0.1` only and refuses calls from web pages that
@@ -178,8 +216,8 @@ The copy at clinx.org/mcp is counted this way and no other. The site's
 
 ## Tests
 
-    npm test          # 45 tests, no network
-    npm run test:live # one more, against the published tables at clinx.org
+    npm test          # 67 tests and 2 live checks that are skipped, no network
+    npm run test:live # two checks against the published tables at clinx.org
 
 The tests cover both protocol eras, every tool, every kind of mistaken input, what a host is
 told about a request and what it is not, the helper program
@@ -189,8 +227,9 @@ server on a local port.
 ## What is not done
 
 - It is not published as a package, so there is no one-line install.
-- It answers from the state law, bills, federal notices and calendar tables only. The 340B
-  scorecards and the registry tables are not offered yet.
+- It answers from the state law, bills, federal notices, calendar, filed reports and reporting
+  states tables. The registry tables are not offered yet, and the drug rows of a report are
+  given as lines of that report, not as a separate search.
 - Federal notices go back to January 2025. Court cases, and which drug makers an agency has
   approved for the rebate pilot, are not in the tables.
 - Hearings appear once a legislature posts an agenda that names a listed bill. In November 2026,
