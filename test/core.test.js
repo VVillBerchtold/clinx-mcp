@@ -390,9 +390,9 @@ test('the tables are fetched once an hour, and a failed refetch keeps the copy a
   const held = makeTables({ source: 'https://clinx.org/data/', fetcher, now: () => clock });
   assert.equal((await held()).bills.length, 14);
   await held();
-  assert.equal(calls, 6, 'six files, fetched once');
+  assert.equal(calls, 7, 'six files and the index that is not there (the whole file is read instead), fetched once');
   clock = 2 * 60 * 60 * 1000;
   down = true;
   assert.equal((await held()).bills.length, 14, 'the held copy is still served');
-  assert.equal(calls, 12);
+  assert.equal(calls, 14);
 });

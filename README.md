@@ -61,6 +61,12 @@ Three tools open it.
   state printed, or a state's totals, points to the page of that state's reports.
 - The tools are written for any form, kind of record and entity type the table holds. A value
   the code has not seen is returned as it is, with its own words.
+- Ohio's reports are Excel workbooks the Department of Health posts on its own site. A workbook
+  prints a 340B ID and no name, so `entity` is left out for an Ohio record and the name is given
+  as `hrsa_name`, with the day of HRSA's list and a sentence saying it is HRSA's and not the
+  filer's. A line carries `source_cell`, the workbook cell it was read from. A cell that holds
+  words where a figure belongs has the words in `amount_as_filed` and no `amount`. `find_filings`
+  finds an Ohio filer by HRSA's name or by its 340B ID.
 - A report with many lines (the largest today has 1,030) comes in parts of 250 lines. The
   answer lists the report's schedules and says how to ask for the next part or for one schedule.
 
@@ -133,11 +139,23 @@ if you want the filed reports, `340b-state-filings.json` and `340b-reporting-sta
 last two are read on their own: if either is missing or cannot be read, the other nine tools
 answer as before and the three new ones say the file could not be read.
 
+**The filed reports are read one at a time.** The whole filed reports file is 24 MB, more than
+a small web host will serve as one file. clinx.org also publishes `340b-filings-index.json`
+(each report without its lines) and one file for each report, `filings/<filing id>.json`. The
+server reads the index once an hour and a report's file only when `get_filing` asks for that
+report, and keeps the last few for an hour. `src/split.js` cuts the whole file into those pieces
+and the site calls it when it is built. If a folder or a host has the index, the server uses it;
+if the index cannot be read it reads `340b-state-filings.json` whole and cuts it with the same
+function, which is how the program on your own computer works with a plain copy of the data.
+`src/pages.js` is the rule for where each report is shown on clinx.org.
+
 ## What is in this folder
 
 | File | What it does |
 | --- | --- |
 | `src/core.js` | The server itself: reads one message, writes one answer. |
+| `src/split.js` | Cuts the filed reports file into an index and one small file for each report. |
+| `src/pages.js` | Where each filed report is shown on clinx.org. |
 | `src/tools.js` | The twelve tools: what each takes and how it answers from the tables. |
 | `src/tables.js` | Fetches the six public files and keeps them for an hour. Holds a report's lines as text and reads them back only for the report asked for. |
 | `src/disk.js` | Reads the table files from a folder instead, for a program on your own computer. |
