@@ -270,7 +270,7 @@ export const TOOLS = [
       properties: {
         state: STATE,
         text: { type: 'string', description: 'Words to look for in the bill number, title and summary.' },
-        stage: { type: 'string', enum: STAGES, description: 'How far the bill has got. Did not pass means the bill ended without becoming law: it is finished and nothing is pending.' },
+        stage: { type: 'string', enum: STAGES, description: 'How far the bill has gone. Did not pass means the bill ended without becoming law: it is finished and nothing is pending.' },
         role: { type: 'string', enum: ROLES },
         kind: { type: 'string', enum: KINDS, description: 'What the bill does about 340B.' },
         limit: LIMIT,
@@ -605,7 +605,7 @@ export const TOOLS = [
   {
     name: 'state_overview',
     title: '340B in one place',
-    description: 'A short picture of 340B law and legislation in one state (or US for Congress): how many laws are on the books and of what kind, how many bills name 340B and how far they have got, which group of reporting states it is in (what the public can see of its 340B reports) and how many filed reports ClinX holds for it, and the next dates on the calendar, with links to the pages that hold the detail. With FED it gives the federal agencies instead: how many rules and notices name 340B, which are open for comment, and the next federal dates.',
+    description: 'A short picture of 340B law and legislation in one state (or US for Congress): how many laws are on the books and of what kind, how many bills name 340B and how far they have gone, which group of reporting states it is in (what the public can see of its 340B reports) and how many filed reports ClinX holds for it, and the next dates on the calendar, with links to the pages that hold the detail. With FED it gives the federal agencies instead: how many rules and notices name 340B, which are open for comment, and the next federal dates.',
     inputSchema: { type: 'object', additionalProperties: false, required: ['state'], properties: { state: PLACE } },
     run(t, args) {
       const state = stateOf(args, { agencies: true });
