@@ -145,7 +145,7 @@ function stageGroup(stage) {
 }
 const ROLES = ['main', 'part', 'mention'];
 const KINDS = ['contract-pharmacy', 'payer-nondiscrimination', 'reporting', 'medicaid', 'use-of-savings', 'study', 'other'];
-const EVENT_KINDS = ['introduced', 'sent to committee', 'reported by committee', 'failed in committee', 'vote on passage', 'sent for signature', 'signed', 'vetoed', 'became law', 'hearing', 'session starts', 'session ends', 'notice published', 'comments close', 'takes effect', 'date set by a notice', 'report due'];
+const EVENT_KINDS = ['introduced', 'sent to committee', 'reported by committee', 'failed in committee', 'vote on passage', 'sent for signature', 'signed', 'vetoed', 'became law', 'hearing', 'report due', 'session starts', 'session ends', 'notice published', 'comments close', 'takes effect', 'date set by a notice'];
 const NOTICE_TYPES = ['Rule', 'Proposed Rule', 'Notice', 'Presidential Document'];
 
 // ---- Filed reports and the states with a reporting law ----------------------------------------
