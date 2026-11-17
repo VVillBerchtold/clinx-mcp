@@ -34,7 +34,8 @@ test('a newer client: one request in, one JSON answer out, with matching headers
   assert.equal(reply.headers.get('mcp-session-id'), null, 'no sessions');
   const body = await reply.json();
   assert.equal(body.result.resultType, 'complete');
-  assert.equal(body.result.structuredContent.matched, 1);
+  assert.equal(JSON.parse(body.result.content[0].text).matched, 1);
+  assert.equal(body.result.structuredContent, undefined, 'the answer is sent once, as text');
 });
 
 test('a header that disagrees with the body is refused', async () => {

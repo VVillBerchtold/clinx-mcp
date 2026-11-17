@@ -10,6 +10,7 @@ import { handle, INSTRUCTIONS } from '../src/core.js';
 import { makeTables } from '../src/tables.js';
 import { localTables } from '../src/disk.js';
 import { TOOLS, FILINGS_UNREAD, REPORTING_UNREAD, FILING_LINES } from '../src/tools.js';
+import { ANSWER_MOST, sizeOf } from '../src/inputs.js';
 
 const DATA = fileURLToPath(new URL('./data', import.meta.url));
 const TODAY = '2026-11-15';
@@ -30,7 +31,13 @@ function changed(change) {
 }
 const callOn = (tables) => async (name, args = {}) => (await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, tables)).result;
 const run = callOn(localTables({ folder: DATA, now }));
-const out = async (name, args) => (await run(name, args)).structuredContent;
+/** A whole reply as it is sent, in characters: the answer with the wrapping every reply has. */
+const wholeReply = async (tables, name, args = {}) => JSON.stringify(await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, tables)).length;
+// The wrapping around an answer is about 90 characters; this leaves room for it and no more.
+const REPLY_MOST = ANSWER_MOST + 500;
+/** A tool's answer as an object. The reply carries it once, as JSON in one block of text. */
+const read = (result) => JSON.parse(result.content[0].text);
+const out = async (name, args) => read(await run(name, args));
 
 /**
  * Every line of one report, read the way an assistant has to read a long one: the largest part one
@@ -205,7 +212,7 @@ test('get_filing: a small count the file forgot to mark is still not given', asy
     }
     return file;
   });
-  const changedOut = async (name, args) => (await callOn(tables)(name, args)).structuredContent;
+  const changedOut = async (name, args) => read(await callOn(tables)(name, args));
   const { lines, withheld } = await wholeReport(changedOut, 'ri-2025-wellone');
   assert.doesNotMatch(JSON.stringify(lines), /"claims(_as_filed)?":"3"/);
   assert.ok(withheld.by_reason.fewer_than_6 >= 1);
@@ -279,15 +286,9 @@ test('get_filing: the tool says how many lines one answer holds, and takes no mo
   assert.equal((await out('get_filing', { filing_id: 'ri-2025-rhode-island-hospital', limit: 150 })).lines.length, 150);
 });
 
-test('get_filing: no answer is too long for an assistant to take in, at the usual or at the largest number of lines', async () => {
-  // The text of an answer, in characters. Directories of servers turn away an answer near 100,000;
-  // the largest report line in these samples is under 600 characters, so 150 of them stay far below.
-  const MOST_CHARACTERS = 80000;
-  const sizeOf = async (args) => {
-    const result = await run('get_filing', args);
-    assert.equal(result.isError, false, JSON.stringify(args));
-    return result.content[0].text.length;
-  };
+test('get_filing: no whole reply passes the size one answer may have, at the usual or at the largest number of lines', async () => {
+  // The whole reply is measured, in characters, as it is sent. The answer is in it once.
+  const tables = localTables({ folder: DATA, now });
   const ids = JSON.parse(await readFile(`${DATA}/340b-state-filings.json`, 'utf8')).filings.map((f) => f.filing_id);
   assert.equal(ids.length, 55);
   let largest = 0;
@@ -296,13 +297,112 @@ test('get_filing: no answer is too long for an assistant to take in, at the usua
     for (const limit of [undefined, FILING_LINES.most]) {
       const step = limit ?? FILING_LINES.usual;
       for (let offset = 0; offset < Math.max(total, 1); offset += step) {
-        const size = await sizeOf({ filing_id: id, ...(limit ? { limit } : {}), ...(offset ? { offset } : {}) });
-        assert.ok(size < MOST_CHARACTERS, `${id} at offset ${offset} with ${step} lines is ${size} characters`);
+        const size = await wholeReply(tables, 'get_filing', { filing_id: id, ...(limit ? { limit } : {}), ...(offset ? { offset } : {}) });
+        assert.ok(size <= REPLY_MOST, `${id} at offset ${offset} with ${step} lines is ${size} characters`);
         largest = Math.max(largest, size);
       }
     }
   }
   assert.ok(largest > 20000, 'the samples do hold a long report, so the check above means something');
+});
+
+test('get_filing: where the lines are long, one answer holds fewer whole lines, says so, and names the next part truly', async () => {
+  // The labels of one report are made long in memory, with quotation marks in them, so that 150
+  // lines no longer fit in one answer. Nothing else about the report is changed.
+  const id = 'ri-2025-rhode-island-hospital';
+  const LONG = ` ${'a "quoted" word and more words to fill the line. '.repeat(24)}`;
+  const tables = changed((name, file) => {
+    if (name !== '340b-state-filings.json') return file;
+    return { ...file, line_items: file.line_items.map((l) => (l.filing_id === id ? { ...l, label_as_filed: l.label_as_filed + LONG } : l)) };
+  });
+  const ask = async (name, args) => read(await callOn(tables)(name, args));
+
+  const first = await ask('get_filing', { filing_id: id, limit: 150 });
+  const held = first.lines.length;
+  assert.ok(held > 1 && held < 150, `${held} lines`);
+  assert.equal(first.lines_returned, held, 'the count is of the lines that are in the answer');
+  assert.equal(first.lines_total, 1030, 'the count of the whole report is not changed');
+  assert.equal(first.offset, 0);
+  assert.equal(first.more, `${1030 - held} more lines: ask again with offset ${held} for the next part, or with schedule to take one schedule at a time. This answer holds ${held} lines: that is as many whole lines as fit in one answer.`);
+  assert.ok(sizeOf(first) <= ANSWER_MOST);
+  assert.ok(sizeOf(first) + 2 * sizeOf(first.lines[0]) > ANSWER_MOST, 'no fewer lines than fit');
+  assert.ok(await wholeReply(tables, 'get_filing', { filing_id: id, limit: 150 }) <= REPLY_MOST);
+
+  // Read part after part, every line comes once and whole: the same line the short labels give,
+  // with the long label complete to its last character.
+  const plain = (await wholeReport(out, id)).lines;
+  let parts = 0;
+  const all = (await wholeReport(async (name, args) => {
+    parts += 1;
+    assert.ok(await wholeReply(tables, name, args) <= REPLY_MOST, `the part at offset ${args.offset ?? 0}`);
+    return ask(name, args);
+  }, id)).lines;
+  assert.equal(all.length, 1030);
+  assert.ok(parts > Math.ceil(1030 / 150), 'more parts than the short labels need');
+  for (const [i, line] of all.entries()) {
+    // A line with no label of its own is given without one when the labels are short.
+    const { label_as_filed: label, ...rest } = line;
+    const { label_as_filed: own = '', ...plainRest } = plain[i];
+    assert.equal(label, own + LONG, `line ${i} is whole`);
+    assert.deepEqual(rest, plainRest, `line ${i}`);
+  }
+
+  // The usual 100 lines are held to the same size, and the last part offers nothing more.
+  const usual = await ask('get_filing', { filing_id: id });
+  assert.ok(usual.lines.length < 100);
+  assert.match(usual.more, /as many whole lines as fit in one answer\.$/);
+  const last = await ask('get_filing', { filing_id: id, offset: 1025, limit: 150 });
+  assert.equal(last.lines.length, 5);
+  assert.equal(last.more, undefined);
+  // A short answer keeps the sentence it always had.
+  assert.match((await ask('get_filing', { filing_id: id, limit: 3 })).more, /One answer holds up to 150 lines\.$/);
+});
+
+test('get_filing: a single line is never cut, however long it is', async () => {
+  const id = 'id-2025-statewide';
+  const LONG = 'word '.repeat(15000);
+  const tables = changed((name, file) => {
+    if (name !== '340b-state-filings.json') return file;
+    let done = false;
+    return { ...file, line_items: file.line_items.map((l) => { if (l.filing_id !== id || done) return l; done = true; return { ...l, label_as_filed: LONG }; }) };
+  });
+  const answer = read(await callOn(tables)('get_filing', { filing_id: id }));
+  assert.equal(answer.lines.length, 1);
+  assert.equal(answer.lines[0].label_as_filed, LONG, 'the line is given whole');
+  assert.equal(answer.lines_returned, 1);
+  assert.match(answer.more, /ask again with offset 1 for the next part/);
+});
+
+test('find_filings: where the rows are long, the list holds as many whole rows as fit and says how many of how many', async () => {
+  const LONG = `A form with a "long" name. ${'More words about the form. '.repeat(110)}`;
+  const tables = changed((name, file) => (name === '340b-state-filings.json' ? { ...file, filings: file.filings.map((f) => ({ ...f, form_revision: LONG })) } : file));
+  const ask = async (args) => read(await callOn(tables)('find_filings', args));
+  const plain = await out('find_filings', { limit: 100 });
+  assert.equal(plain.shown, 55, 'with the forms\' own names, all 55 fit');
+  assert.doesNotMatch(plain.note, /whole rows/);
+
+  const cut = await ask({ limit: 100 });
+  const kept = cut.filings.length;
+  assert.ok(kept > 1 && kept < 55, `${kept} rows`);
+  assert.equal(cut.matched, 55, 'how many matched is not changed');
+  assert.equal(cut.shown, kept, 'the count is of the rows that are in the answer');
+  assert.ok(cut.note.startsWith(`Showing ${kept} of 55, as many whole rows as fit in one answer: narrow it with state, year or entity to see the rest. `), cut.note);
+  assert.doesNotMatch(cut.note, /ask for more with limit/, 'a larger limit would not help, so it is not offered');
+  assert.match(cut.note, /Claim counts of 1 to 5 are never published/, 'the usual caution is still there');
+  for (const [i, row] of cut.filings.entries()) {
+    assert.equal(row.form_revision, LONG, `row ${i} is whole`);
+    assert.deepEqual({ ...row, form_revision: plain.filings[i].form_revision }, plain.filings[i]);
+  }
+  assert.ok(sizeOf(cut) <= ANSWER_MOST);
+  assert.ok(sizeOf(cut) + 2 * sizeOf(cut.filings[0]) > ANSWER_MOST, 'no fewer rows than fit');
+  assert.ok(await wholeReply(tables, 'find_filings', { limit: 100 }) <= REPLY_MOST);
+
+  // Narrowed, the rows left out can be reached; an answer that holds every row asked for says nothing of size.
+  const idaho = await ask({ state: 'ID' });
+  assert.equal(idaho.shown, idaho.matched);
+  assert.doesNotMatch(idaho.note, /whole rows|cut short/);
+  const five = await ask({ limit: 5 });
+  assert.match(five.note, /^Showing 5 of 55\. The list is cut short/, 'a list cut short by limit keeps its own sentence');
 });
 
 test('get_filing: mistakes in what was asked are said back plainly', async () => {
@@ -345,17 +445,17 @@ test('a form, record kind, entity type and check the code has never seen is retu
     return file;
   });
   const call = callOn(tables);
-  const found = (await call('find_filings', { state: 'OH' })).structuredContent;
+  const found = read(await call('find_filings', { state: 'OH' }));
   assert.equal(found.matched, 1);
   assert.deepEqual(found.filings[0], {
     filing_id: 'oh-2025-example-clinic', entity: 'Example Clinic Network', entity_id: 'oh-example-clinic', entity_type: 'clinic_network', state: 'OH', year: '2025',
     form: 'oh-future-form', form_revision: 'Future form, revised 2027', record_kind: 'annual_statement', clinx_page: 'https://clinx.org/scorecard/oh/', official_source: 'https://example.org/oh/example.pdf',
   });
-  assert.equal((await call('find_filings', { record_kind: 'annual_statement' })).structuredContent.matched, 1);
-  assert.equal((await call('get_filing', { filing_id: 'oh-2025-example-clinic' })).structuredContent.clinx_page, 'https://clinx.org/scorecard/oh/', 'only an entity\'s own filing has a page of its own; any other kind points to the state\'s page');
-  assert.equal((await call('find_filings', { form: 'oh-future-form' })).structuredContent.matched, 1);
-  assert.equal((await call('find_filings', { entity: 'ch099999' })).structuredContent.matched, 1);
-  const one = (await call('get_filing', { filing_id: 'oh-2025-example-clinic' })).structuredContent;
+  assert.equal(read(await call('find_filings', { record_kind: 'annual_statement' })).matched, 1);
+  assert.equal(read(await call('get_filing', { filing_id: 'oh-2025-example-clinic' })).clinx_page, 'https://clinx.org/scorecard/oh/', 'only an entity\'s own filing has a page of its own; any other kind points to the state\'s page');
+  assert.equal(read(await call('find_filings', { form: 'oh-future-form' })).matched, 1);
+  assert.equal(read(await call('find_filings', { entity: 'ch099999' })).matched, 1);
+  const one = read(await call('get_filing', { filing_id: 'oh-2025-example-clinic' }));
   assert.equal(one.filing.brand_new_column, 'kept', 'a column the code has not seen is not dropped');
   assert.equal(one.lines[0].extra_cell, 'x');
   assert.equal(one.lines[0].unit, 'dollars', 'an unseen unit is passed on as it is');
@@ -366,10 +466,10 @@ test('a form, record kind, entity type and check the code has never seen is retu
   assert.equal(one.lines[1].claims_withheld, 'fewer_than_6');
   assert.match(one.discrepancies.rows[0].filed, /^10$/);
   assert.equal(one.discrepancies.rows[0].basis_means, undefined);
-  const overview = (await call('state_overview', { state: 'OH' })).structuredContent;
+  const overview = read(await call('state_overview', { state: 'OH' }));
   assert.equal(overview.filings.count, 1);
   assert.deepEqual(overview.filings.by_record_kind, { annual_statement: 1 });
-  const about = (await call('about_the_data')).structuredContent;
+  const about = read(await call('about_the_data'));
   assert.ok(about.filings.forms.includes('oh-future-form') && about.filings.record_kinds.includes('annual_statement') && about.filings.entity_types.includes('clinic_network'));
 });
 
@@ -431,11 +531,11 @@ test('when either new file cannot be read, the nine older tools keep answering a
     assert.equal(filingsSaid === FILINGS_UNREAD, reasons.filings);
     assert.equal(getSaid === FILINGS_UNREAD, reasons.filings);
     assert.equal(statesSaid === REPORTING_UNREAD, reasons.reporting);
-    const overview = (await call('state_overview', { state: 'RI' })).structuredContent;
+    const overview = read(await call('state_overview', { state: 'RI' }));
     assert.equal(overview.laws.count > 0, true);
     assert.equal(overview.filings.unavailable === FILINGS_UNREAD, reasons.filings);
     assert.equal(overview.reporting.unavailable === REPORTING_UNREAD, reasons.reporting);
-    const about = (await call('about_the_data')).structuredContent;
+    const about = read(await call('about_the_data'));
     assert.equal(about.counts.laws, 5);
     assert.equal(about.filings.unavailable === FILINGS_UNREAD, reasons.filings);
   }
@@ -457,7 +557,7 @@ test('a file that is not the filed reports at all counts as unreadable, and a fi
   up = true;
   assert.equal((await call('find_filings')).content[0].text, FILINGS_UNREAD, 'not asked again at once');
   clock += 2 * 60 * 1000;
-  assert.equal((await call('find_filings', { state: 'ID' })).structuredContent.matched, 1, 'asked again after a minute');
+  assert.equal(read(await call('find_filings', { state: 'ID' })).matched, 1, 'asked again after a minute');
 });
 
 test('the new stage Did not pass is accepted, and a bill that did not pass is finished, not pending', async () => {
@@ -470,12 +570,12 @@ test('the new stage Did not pass is accepted, and a bill that did not pass is fi
     return file;
   });
   const call = callOn(tables);
-  const found = (await call('find_bills', { stage: 'Did not pass' })).structuredContent;
+  const found = read(await call('find_bills', { stage: 'Did not pass' }));
   assert.deepEqual(found.bills.map((b) => [b.bill_id, b.stage]), [['il-104th-hb3794', 'Did not pass']]);
-  const others = (await call('find_bills', { stage: 'Introduced' })).structuredContent;
+  const others = read(await call('find_bills', { stage: 'Introduced' }));
   assert.ok(!others.bills.some((b) => b.bill_id === 'il-104th-hb3794'), 'it is not shown as pending or in progress');
-  assert.ok(!(await call('find_bills', { stage: 'Reported by committee' })).structuredContent.bills.some((b) => b.bill_id === 'il-104th-hb3794'));
-  const il = (await call('state_overview', { state: 'IL' })).structuredContent;
+  assert.ok(!read(await call('find_bills', { stage: 'Reported by committee' })).bills.some((b) => b.bill_id === 'il-104th-hb3794'));
+  const il = read(await call('state_overview', { state: 'IL' }));
   assert.equal(il.bills.by_stage['Did not pass'], 1);
   assert.deepEqual(il.bills.did_not_pass.map((b) => b.bill_id), ['il-104th-hb3794']);
   assert.equal(il.bills.count, 6);
@@ -483,9 +583,9 @@ test('the new stage Did not pass is accepted, and a bill that did not pass is fi
   // Without any such bill the answer carries no list of them.
   assert.equal((await out('state_overview', { state: 'IL' })).bills.did_not_pass, undefined);
 
-  const due = (await call('calendar', { kind: 'report due', from: '2027-01-01' })).structuredContent;
+  const due = read(await call('calendar', { kind: 'report due', from: '2027-01-01' }));
   assert.deepEqual(due.events.map((e) => [e.day, e.place, e.kind]), [['2027-03-01', 'RI', 'report due']]);
-  assert.ok((await call('about_the_data')).structuredContent.calendar_kinds['report due']);
+  assert.ok(read(await call('about_the_data')).calendar_kinds['report due']);
   assert.match((await run('find_bills', { stage: 'Dead' })).content[0].text, /Did not pass/);
   assert.match((await run('calendar', { kind: 'nonsense' })).content[0].text, /report due/);
 });

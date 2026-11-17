@@ -76,9 +76,10 @@ Three tools open it.
   words where a figure belongs has the words in `amount_as_filed` and no `amount`. `find_filings`
   finds an Ohio filer by HRSA's name or by its 340B ID.
 - A report with many lines (the largest today has 1,030) comes in parts. One answer holds 100
-  lines, or up to 150 when asked with `limit`, which keeps the largest answer well under
-  100,000 characters. The answer says how many lines are left and how to ask for the next part
-  with `offset`, and it lists the report's schedules so that one schedule can be asked for.
+  lines, or up to 150 when asked with `limit`, and fewer where the lines are long (see "How
+  much one answer holds" below). The answer says how many lines are left and how to ask for the
+  next part with `offset`, and it lists the report's schedules so that one schedule can be asked
+  for.
 
 Questions to try: "Which states require 340B reports, and which of them publish a report for
 each hospital?" (`reporting_states`); "Find the 2025 reports filed in Rhode Island by health
@@ -146,6 +147,19 @@ A mistake in what was asked (a state that is not a two-letter code, a date in th
 date that cannot exist such as 2026-13-45, a bill that is not in the table) is said back in plain
 words, so the assistant can correct itself. A wrong value longer than 80 characters is said back
 as its first 80 and an ellipsis.
+
+### How much one answer holds
+
+A tool's answer is sent once, as JSON in one block of text. An assistant that takes too much at
+once loses the thread, and directories of servers ask that a reply stay small, so one answer is
+held to 60,000 characters, counted as it travels inside the reply.
+
+A list keeps whole rows only: as many as fit, never part of a row and never part of a value. When
+rows are left out for size, the answer says so in a sentence: how many are shown of how many
+matched, and which filters narrow the question to reach the rest. `get_filing` and
+`get_health_center_report` give a long report in parts and name the `offset` of the next part.
+The counts in an answer (`matched`, `shown`, `lines_total`, `lines_returned`) are always the true
+ones. No figure is changed, rounded or left half-written to make an answer fit.
 
 ## Try it
 

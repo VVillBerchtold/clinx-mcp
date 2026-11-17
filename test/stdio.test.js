@@ -36,7 +36,7 @@ test('an older client: handshake, list the tools, call one, close', async () => 
   const byId = Object.fromEntries(replies.map((r) => [r.id, r]));
   assert.equal(byId[0].result.protocolVersion, '2025-06-18');
   assert.equal(byId[1].result.tools.length, 17);
-  assert.equal(byId[2].result.structuredContent.matched, 2);
+  assert.equal(JSON.parse(byId[2].result.content[0].text).matched, 2);
   assert.ok(raw.endsWith('\n'));
   assert.ok(raw.split('\n').filter(Boolean).every((line) => line.startsWith('{')), 'one JSON message per line, nothing else');
 });
@@ -51,7 +51,7 @@ test('a newer client: no handshake, each request names its version', async () =>
   const byId = Object.fromEntries(replies.map((r) => [r.id, r]));
   assert.deepEqual(byId.d.result.supportedVersions, ['2026-07-28']);
   assert.equal(byId.c.result.resultType, 'complete');
-  assert.equal(byId.c.result.structuredContent.laws.count, 3);
+  assert.equal(JSON.parse(byId.c.result.content[0].text).laws.count, 3);
 });
 
 test('a line that is not JSON is answered with an error and the program carries on', async () => {
@@ -79,5 +79,5 @@ test('the messages Claude Code 2.1.306 sent when it connected on 15 November 202
   assert.deepEqual(byId['server-discover-probe-1'].result.supportedVersions, ['2026-07-28']);
   assert.equal(byId[0].result.tools.length, 17);
   assert.equal(byId[1].result.resultType, 'complete');
-  assert.equal(byId[1].result.structuredContent.matched, 2);
+  assert.equal(JSON.parse(byId[1].result.content[0].text).matched, 2);
 });

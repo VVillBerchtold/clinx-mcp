@@ -15,6 +15,7 @@ import { TOOLS } from '../src/tools.js';
 import { HC_FILES, centerFile, areaFile } from '../src/health-centers.js';
 import { HC_UNREAD, HEALTH_CENTER_TOOLS } from '../src/health-center-tools.js';
 import { describeRequest } from '../src/usage.js';
+import { ANSWER_MOST, sizeOf } from '../src/inputs.js';
 
 const DATA = fileURLToPath(new URL('./data', import.meta.url));
 const TODAY = '2026-11-16';
@@ -40,10 +41,12 @@ function tablesWith({ unreadable = [], asked = [], change } = {}) {
 }
 const callOn = (tables) => async (name, args = {}) => (await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, tables)).result;
 const run = callOn(localTables({ folder: DATA, now }));
+/** A tool's answer as an object. The reply carries it once, as JSON in one block of text. */
+const read = (result) => JSON.parse(result.content[0].text);
 const out = async (name, args) => {
   const result = await run(name, args);
   assert.equal(result.isError, false, result.content[0].text);
-  return result.structuredContent;
+  return read(result);
 };
 const refused = async (name, args) => {
   const result = await run(name, args);
@@ -63,7 +66,7 @@ test('the five health center tools are listed after the 340B tools, described pl
   for (const name of NAMES) assert.match(INSTRUCTIONS, new RegExp(name));
   assert.match(INSTRUCTIONS, /ranks no health center/);
   assert.doesNotMatch(INSTRUCTIONS, NEVER);
-  assert.equal(SERVER.version, '0.3.1');
+  assert.equal(SERVER.version, '0.3.2');
   assert.match(SERVER.description, /340B/);
   assert.match(SERVER.description, /[Hh]ealth centers/);
 });
@@ -211,7 +214,7 @@ test('get_health_center_report: a value ClinX withholds, typed text, an exponent
     if (name === centerFile('010120')) file.years['2022'].values.T5_L21a_Cc = '7';
     return file;
   } });
-  const again = (await callOn(tampered)('get_health_center_report', { health_center: '010120', year: 2022, table: 'Table 5' })).structuredContent;
+  const again = read(await callOn(tampered)('get_health_center_report', { health_center: '010120', year: 2022, table: 'Table 5' }));
   assert.deepEqual(again.lines[0].cells.find((c) => c.column === 'Cc'), { column: 'Cc', no_value: 'withheld by ClinX' });
 
   // Typed text is not kept, and a number HRSA published with an exponent is given as published.
@@ -230,6 +233,76 @@ test('get_health_center_report: a value ClinX withholds, typed text, an exponent
   const row = listed.tables.find((t) => t.table === 'Table 5');
   assert.equal(row.status, 'unnamed');
   assert.equal(row.cells_with_a_value, undefined);
+});
+
+test('get_health_center_report: where the lines are long, one answer holds fewer whole lines, says so, and names the next part truly', async () => {
+  // The titles of the report lines are made long in memory, with quotation marks in them, so that
+  // the 39 lines of Table 3A no longer fit in one answer. No value of the report is changed.
+  const LONG = ` ${'a "quoted" word and more words to fill the line. '.repeat(60)}`;
+  const tables = tablesWith({
+    change: (name, file) => {
+      if (name !== HC_FILES.lines) return file;
+      const at = Object.fromEntries(file.columns.map((column, i) => [column, i]));
+      const rows = Object.values(file.years).flat();
+      const titles = new Set(rows.map((row) => row[at.line_title]));
+      for (const column of file.text_columns) if (column !== 'line_title') for (const row of rows) titles.delete(row[at[column]]);
+      return { ...file, texts: file.texts.map((words, i) => (titles.has(i) ? words + LONG : words)) };
+    },
+  });
+  const ask = async (args) => {
+    const reply = await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'get_health_center_report', arguments: { health_center: '010120', table: '3A', ...args } } }, tables);
+    assert.equal(reply.result.isError, false, reply.result.content[0].text);
+    assert.ok(JSON.stringify(reply).length <= ANSWER_MOST + 500, `the whole reply at offset ${args.offset ?? 0}`);
+    return read(reply.result);
+  };
+  const plain = await out('get_health_center_report', { health_center: '010120', table: '3A', limit: 200 });
+  assert.equal(plain.lines.length, 39);
+  assert.equal(plain.more, undefined);
+
+  const first = await ask({ limit: 200 });
+  const held = first.lines.length;
+  assert.ok(held > 1 && held < 39, `${held} lines`);
+  assert.equal(first.lines_total, 39, 'the count of the whole table is not changed');
+  assert.equal(first.lines_returned, held, 'the count is of the lines that are in the answer');
+  assert.equal(first.more, `${39 - held} more lines: ask again with offset ${held}, or narrow with line or text. This answer holds ${held} lines: that is as many whole lines as fit in one answer.`);
+  assert.ok(sizeOf(first) <= ANSWER_MOST);
+  assert.ok(sizeOf(first) + 2 * sizeOf(first.lines[0]) > ANSWER_MOST, 'no fewer lines than fit');
+
+  // Part after part, every line comes once and whole, with every cell as the short titles give it.
+  const all = [...first.lines];
+  for (let part = first; part.more !== undefined;) {
+    const next = Number(/ask again with offset (\d+)/.exec(part.more)[1]);
+    assert.equal(next, all.length, 'the offset the answer names is the next line');
+    part = await ask({ limit: 200, offset: next });
+    all.push(...part.lines);
+  }
+  assert.equal(all.length, 39);
+  for (const [i, line] of all.entries()) {
+    assert.equal(line.title, plain.lines[i].title + LONG, `line ${i} is whole`);
+    assert.deepEqual({ ...line, title: plain.lines[i].title }, plain.lines[i]);
+  }
+  // A part cut at the limit and not for size keeps the sentence it always had.
+  assert.equal((await ask({ limit: 3 })).more, '36 more lines: ask again with offset 3, or narrow with line or text.');
+});
+
+test('shortage_area_changes: where the rows are long, the list holds as many whole rows as fit and says how many of how many', async () => {
+  const LONG = ` ${'More words in the "name" of the area. '.repeat(200)}`;
+  const tables = tablesWith({ change: (name, file) => (name === areaFile('RI') ? { ...file, recent: file.recent.map((r) => ({ ...r, name: r.name + LONG })) } : file) });
+  const plain = await out('shortage_area_changes', { state: 'RI', show: 'recent', limit: 100 });
+  const reply = await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'shortage_area_changes', arguments: { state: 'RI', show: 'recent', limit: 100 } } }, tables);
+  const cut = read(reply.result);
+  const kept = cut.designations.length;
+  assert.ok(kept > 1 && kept < plain.designations.length, `${kept} rows`);
+  assert.equal(cut.matched, plain.matched, 'how many matched is not changed');
+  assert.equal(cut.shown, kept, 'the count is of the rows that are in the answer');
+  assert.ok(cut.note.startsWith(`Showing ${kept} of ${plain.matched}, as many whole rows as fit in one answer: narrow it with kind, event or text to see the rest. `), cut.note);
+  assert.ok(cut.note.endsWith(plain.note), 'the usual note follows');
+  for (const [i, row] of cut.designations.entries()) {
+    assert.equal(row.name, plain.designations[i].name + LONG, `row ${i} is whole`);
+    assert.deepEqual({ ...row, name: plain.designations[i].name }, plain.designations[i]);
+  }
+  assert.ok(sizeOf(cut) <= ANSWER_MOST);
+  assert.ok(JSON.stringify(reply).length <= ANSWER_MOST + 500);
 });
 
 test('get_health_center_report: what was asked wrongly is said back plainly', async () => {
@@ -437,7 +510,7 @@ test('a health center file that cannot be read: its tool says so plainly and eve
   // The 340B tools are not touched, and about_the_data says which part is missing.
   assert.equal((await call('find_bills', { state: 'RI' })).isError, false);
   assert.equal((await call('find_filings', { state: 'RI' })).isError, false);
-  const about = (await call('about_the_data')).structuredContent;
+  const about = read(await call('about_the_data'));
   assert.deepEqual(about.health_centers, { unavailable: HC_UNREAD.sets });
   assert.ok(about.counts.bills > 0);
 
@@ -450,11 +523,11 @@ test('a health center file that cannot be read: its tool says so plainly and eve
   assert.equal((await noState('shortage_area_changes', { state: 'RI', show: 'recent' })).content[0].text, HC_UNREAD.area);
   assert.equal((await noState('shortage_area_changes', { state: 'RI' })).isError, false);
   const noDays = callOn(tablesWith({ unreadable: [HC_FILES.sets] }));
-  const funding = (await noDays('find_funding_opportunities')).structuredContent;
+  const funding = read(await noDays('find_funding_opportunities'));
   assert.equal(funding.matched, 5);
   assert.equal(funding.read_on, undefined);
   assert.match(funding.read_on_unknown, /could not be read just now/);
-  const nation = (await noDays('shortage_area_changes')).structuredContent;
+  const nation = read(await noDays('shortage_area_changes'));
   assert.deepEqual(nation.national_counts, { unavailable: HC_UNREAD.sets });
   assert.equal(nation.read_on, '2026-11-16');
 

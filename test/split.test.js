@@ -51,7 +51,9 @@ async function tablesOf(mode, { log = [], change = (name, file) => file, file } 
   return makeTables({ reader, now });
 }
 const ask = (tables) => async (name, args = {}) => (await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, tables)).result;
-const out = (tables) => async (name, args) => (await ask(tables)(name, args)).structuredContent;
+/** A tool's answer as an object. The reply carries it once, as JSON in one block of text. */
+const read = (result) => JSON.parse(result.content[0].text);
+const out = (tables) => async (name, args) => read(await ask(tables)(name, args));
 
 /** One report read part by part, the largest part each time, until the answer offers no more: every part, in order. */
 async function partsOf(call, filingId) {
@@ -133,7 +135,7 @@ test('both ways give the same answers: the index and one report at a time, or th
   }
   assert.ok(lines > 3321, 'every line of every sample report was compared');
   for (const [name, args] of [['find_filings', { limit: 100 }], ['find_filings', { state: 'OH', limit: 100 }], ['state_overview', { state: 'OH' }], ['state_overview', { state: 'MN' }], ['about_the_data', {}], ['reporting_states', {}]]) {
-    assert.deepEqual((await a(name, args)).structuredContent, (await b(name, args)).structuredContent, name);
+    assert.deepEqual(read(await a(name, args)), read(await b(name, args)), name);
   }
 });
 

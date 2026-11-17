@@ -79,6 +79,39 @@ test('a row that was found is named by its public id, taken from the answer', as
   assert.deepEqual([missing.outcome, missing.looked_up, missing.filters], ['mistake', '', 'bill_id']);
 });
 
+test('the id found is read from the answer the reply was written from, and nothing is added to the reply for it', async () => {
+  const message = { jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'get_bill', arguments: { bill_id: 'RI-2025-HB5634' } } };
+  const reply = await handle(message, tables);
+  assert.deepEqual(Object.keys(reply.result), ['content', 'isError'], 'the reply holds the answer once, as text');
+  assert.deepEqual(Object.keys(reply), ['jsonrpc', 'id', 'result']);
+  assert.equal(describeRequest(message, reply).looked_up, 'ri-2025-hb5634');
+  // What is sent is the reply written out as JSON. Read back, it is the same reply and no more.
+  const sent = JSON.stringify(reply);
+  assert.deepEqual(JSON.parse(sent), reply);
+  assert.doesNotMatch(sent, /structuredContent/);
+  // A copy of the reply is not the reply the server wrote, so no id is taken from it.
+  assert.equal(describeRequest(message, JSON.parse(sent)).looked_up, '');
+
+  // The same through the web door, for each kind of row a tool gives in full.
+  const seen = [];
+  const post = (name, args) => respond(new Request('https://example.test/mcp', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }) }), { tables, origins: 'any', counted: (row) => seen.push(row) });
+  const body = await (await post('get_bill', { bill_id: 'RI-2025-HB5634' })).json();
+  assert.deepEqual(Object.keys(body.result), ['content', 'isError']);
+  await post('get_law', { law_id: 'ri-2025-s114' });
+  await post('get_notice', { notice_id: '91 FR 60568' });
+  await post('get_filing', { filing_id: 'RI-2025-WellOne', limit: 5 });
+  await post('find_bills', { state: 'RI' });
+  await post('get_bill', { bill_id: 'ri-1999-nothing' });
+  assert.deepEqual(seen.map((r) => [r.outcome, r.looked_up]), [
+    ['answered', 'ri-2025-hb5634'],
+    ['answered', 'ri-2025-s114'],
+    ['answered', 'fr-2026-19535'],
+    ['answered', 'ri-2025-wellone'],
+    ['answered', ''],
+    ['mistake', ''],
+  ]);
+});
+
 test('how it went: answered, a mistake, refused, no answer, tables unreachable', async () => {
   assert.equal((await call('find_bills', { limit: 1000 })).outcome, 'mistake');
   assert.equal((await asked({ jsonrpc: '2.0', id: 1, method: 'resources/list' })).outcome, 'refused');
