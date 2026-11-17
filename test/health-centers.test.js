@@ -283,6 +283,8 @@ test('get_health_center_report: where the lines are long, one answer holds fewer
   }
   // A part cut at the limit and not for size keeps the sentence it always had.
   assert.equal((await ask({ limit: 3 })).more, '36 more lines: ask again with offset 3, or narrow with line or text.');
+  // One line left is said as one line.
+  assert.equal((await ask({ limit: 3, offset: 35 })).more, '1 more line: ask again with offset 38, or narrow with line or text.');
 });
 
 test('shortage_area_changes: where the rows are long, the list holds as many whole rows as fit and says how many of how many', async () => {
