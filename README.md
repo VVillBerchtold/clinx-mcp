@@ -259,7 +259,9 @@ tried yet; nor has any other client.
 
 ## Safety and privacy
 
-- **Read-only.** No tool changes anything anywhere.
+- **Read-only.** No tool changes anything anywhere. Each tool says so to the client in its hints,
+  as plain true or false: `readOnlyHint` true, `destructiveHint` false, `idempotentHint` true and
+  `openWorldHint` false.
 - **Nothing about the asker is kept.** No log of questions, no cookies, no sessions, no sign-in.
   Run on your own computer, the server counts nothing at all.
 - **It cannot be turned on another site.** The only addresses it ever fetches are the

@@ -138,6 +138,23 @@ test('every tool is described so a client can show and call it', () => {
   }
 });
 
+test('every tool states its hints as plain true or false: it reads, removes nothing and reaches nothing outside', async () => {
+  assert.equal(TOOLS.length, 17);
+  // As the tools are written, and as a client is sent them, the older way and the newer way.
+  const listed = (await ask('tools/list')).result.tools;
+  const listedModern = (await modern('tools/list')).result.tools;
+  assert.equal(listed.length, 17);
+  assert.equal(listedModern.length, 17);
+  for (const tool of [...TOOLS, ...listed, ...listedModern]) {
+    // A directory that lists servers asks for these three to be said, never left to a default.
+    for (const hint of ['readOnlyHint', 'destructiveHint', 'openWorldHint']) assert.equal(typeof tool.annotations[hint], 'boolean', `${tool.name}.${hint}`);
+    assert.equal(tool.annotations.readOnlyHint, true, tool.name);
+    assert.equal(tool.annotations.destructiveHint, false, tool.name);
+    assert.equal(tool.annotations.idempotentHint, true, tool.name);
+    assert.equal(tool.annotations.openWorldHint, false, tool.name);
+  }
+});
+
 test('find_bills: by state, role, stage, kind and words', async () => {
   const ri = read(await run('find_bills', { state: 'ri' }));
   assert.equal(ri.matched, 3);
