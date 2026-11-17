@@ -73,6 +73,33 @@ test('the older protocol: initialize agrees the version the client asked for', a
   }
 });
 
+test('the server names its icon: the ClinX mark on clinx.org, a PNG first and then a drawing', async () => {
+  assert.deepEqual(SERVER.icons, [
+    { src: 'https://clinx.org/brand/clinx-mark-square-1024.png', mimeType: 'image/png', sizes: ['1024x1024'] },
+    { src: 'https://clinx.org/brand/clinx-mark-square.svg', mimeType: 'image/svg+xml', sizes: ['any'] },
+  ]);
+  for (const icon of SERVER.icons) {
+    // Only what the protocol defines for an icon, and only addresses on clinx.org over https.
+    assert.deepEqual(Object.keys(icon), ['src', 'mimeType', 'sizes']);
+    assert.match(icon.src, /^https:\/\/clinx\.org\/brand\/[a-z0-9-]+\.(png|svg)$/);
+    for (const size of icon.sizes) assert.match(size, /^(\d+x\d+|any)$/);
+  }
+  // The newer protocol says who answered on every answer, so the icon travels with each one.
+  assert.deepEqual((await modern('server/discover')).result._meta[SERVER_KEY].icons, SERVER.icons);
+  assert.deepEqual((await modern('tools/list')).result._meta[SERVER_KEY].icons, SERVER.icons);
+});
+
+test('the older protocol: the website and the icon are told to a client of 2025-11-25, which defines them, and to no earlier one', async () => {
+  for (const version of LEGACY) {
+    const { serverInfo } = (await ask('initialize', { protocolVersion: version, capabilities: {}, clientInfo: { name: 't', version: '0' } })).result;
+    if (version === '2025-11-25') assert.deepEqual(serverInfo, { name: SERVER.name, title: SERVER.title, version: SERVER.version, websiteUrl: SERVER.websiteUrl, icons: SERVER.icons });
+    else assert.deepEqual(serverInfo, { name: SERVER.name, title: SERVER.title, version: SERVER.version });
+  }
+  // A version the server does not know is answered as 2025-11-25, so it gets the same.
+  const unknown = (await ask('initialize', { protocolVersion: '2019-01-01', capabilities: {}, clientInfo: { name: 't', version: '0' } })).result;
+  assert.deepEqual(unknown.serverInfo.icons, SERVER.icons);
+});
+
 test('the older protocol: an unknown version is answered with one the server speaks', async () => {
   const { result } = await ask('initialize', { protocolVersion: '2019-01-01', capabilities: {}, clientInfo: { name: 't', version: '0' } });
   assert.equal(result.protocolVersion, LEGACY[0]);
@@ -568,7 +595,7 @@ test('find_bills: where the rows are long, the list holds as many whole rows as 
 test('the version is the same wherever it is stated', async () => {
   const { readFile } = await import('node:fs/promises');
   const stated = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')).version;
-  assert.equal(stated, '0.3.2');
+  assert.equal(stated, '0.3.3');
   assert.equal(SERVER.version, stated);
   assert.equal((await ask('initialize', { protocolVersion: LEGACY[0], capabilities: {}, clientInfo: { name: 't', version: '0' } })).result.serverInfo.version, stated);
 });

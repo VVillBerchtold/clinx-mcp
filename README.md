@@ -247,6 +247,11 @@ Both kinds of client are in use, so the server answers both: the 2026-07-28 revi
 older 2025-11-25, 2025-06-18, 2025-03-26 and 2024-11-05. A request that names the newer version
 is answered the newer way. Everything else is answered the older way.
 
+Since version 0.3.3 the server also names its website and its icon, the ClinX mark as clinx.org
+serves it (a PNG of 1024 by 1024 and the same mark as an SVG). The 2026-07-28 revision carries
+them on every answer. Of the older revisions only 2025-11-25 has a place for them, in the
+handshake; a client that agrees an earlier one is told the name, title and version as before.
+
 On 15 November 2026 Claude Code 2.1.306 was pointed at the server. It opened with
 `server/discover`, was told 2026-07-28, and listed the tools (seven then, seventeen now). Those exact messages are now
 one of the tests. A whole question asked through an assistant, start to finish, has not been

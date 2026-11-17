@@ -1,6 +1,6 @@
 {
   "name": "clinx-340b-mcp",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "description": "A Model Context Protocol server over ClinX's open data (340B and health centers): 340B state laws, bills, federal notices, filed reports and a calendar of their dates, and health center reports to HRSA, funding opportunities and shortage areas.",
   "license": "MIT",
